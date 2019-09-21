@@ -1,0 +1,49 @@
+﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/Site.Master" CodeBehind="InputSetupFT4.aspx.vb" Inherits="Report_CheckSheet.InputSetupFT4" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+
+    <div class="jumbotron">
+        <h1 class="text-center login-title" style="font-family: 'Waffle Regular'; font-weight: bold;">SET-UP  CHECK  SHEET</h1>
+        <h2 class="text-center login-title" style="font-family : 'Waffle Regular'; font-weight: bold;" >ｾｯﾄｱｯﾌﾟﾁｪｯｸｼｰﾄ</h2>
+    </div>
+
+    <div class="panel panel-warning">
+       <div class="panel-heading">(12) Option 1 (ｵﾌﾟｼｮﾝ名) </div>
+       <asp:TextBox ID="OptionType1TextBox" runat="server" CssClass="form-control" Height="30px" AutoPostBack="True"></asp:TextBox>
+    </div>
+
+     <div class="panel panel-warning">
+       <div class="panel-heading">(13) Option 2 (ｵﾌﾟｼｮﾝ名) </div>
+       <asp:TextBox ID="OptionType2TextBox" runat="server" CssClass="form-control" Height="30px" AutoPostBack="True"></asp:TextBox>
+    </div>
+
+     <div class="panel panel-warning">
+       <div class="panel-heading">(14) Option 3 (ｵﾌﾟｼｮﾝ名) </div>
+       <asp:TextBox ID="OptionType3TextBox" runat="server" CssClass="form-control" Height="30px" AutoPostBack="True"></asp:TextBox>
+    </div>
+
+     <div class="panel panel-warning">
+       <div class="panel-heading">(15) Option 4 (ｵﾌﾟｼｮﾝ名) </div>
+       <asp:TextBox ID="OptionType4TextBox" runat="server" CssClass="form-control" Height="30px" AutoPostBack="True"></asp:TextBox>
+    </div>
+
+     <div class="panel panel-warning">
+       <div class="panel-heading">(16) Option 5 (ｵﾌﾟｼｮﾝ名) </div>
+       <asp:TextBox ID="OptionType5TextBox" runat="server" CssClass="form-control" Height="30px" AutoPostBack="True"></asp:TextBox>
+    </div>
+
+     <div class="panel panel-warning">
+       <div class="panel-heading">(17) Option 6 (ｵﾌﾟｼｮﾝ名) </div>
+       <asp:TextBox ID="OptionType6TextBox" runat="server" CssClass="form-control" Height="30px" AutoPostBack="True"></asp:TextBox>
+    </div>
+
+     <div class="panel panel-warning">
+       <div class="panel-heading">(18) Option 7 (ｵﾌﾟｼｮﾝ名) </div>
+       <asp:TextBox ID="OptionType7TextBox" runat="server" CssClass="form-control" Height="30px" AutoPostBack="True"></asp:TextBox>
+    </div>
+
+    <div class="panel">
+        <asp:Button ID="ButtonPrevious" CssClass="btn btn-default" runat="server" Text="Previous" />
+        <asp:Button ID="ButtonNext" CssClass="btn btn-default pull-right" runat="server" Text="Next" />
+    </div>
+
+</asp:Content>

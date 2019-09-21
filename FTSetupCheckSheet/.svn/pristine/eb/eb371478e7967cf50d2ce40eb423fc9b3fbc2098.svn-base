@@ -1,0 +1,48 @@
+﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/Site.Master" CodeBehind="CheckSetupFT7.aspx.vb" Inherits="Report_CheckSheet.CheckSetupFT7" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+
+    
+    <div class="jumbotron">
+        <h1 class="text-center login-title" style="font-family: 'Waffle Regular'; font-weight: bold;">SET-UP  CHECK  SHEET</h1>
+        <h2 class="text-center login-title" style="font-family : 'Waffle Regular'; font-weight: bold;" >ｾｯﾄｱｯﾌﾟﾁｪｯｸｼｰﾄ</h2>
+     </div>
+
+     <div class="container">  
+         <div class="panel-group">
+            <div class="panel panel-primary">
+              <div class="panel-heading"> กรณีที่มี NG (NGの場合) ให้ทำการตรวจสอบอีกครั้ง (再確認) </div>
+            </div><br />
+    
+        <div class="panel panel-success">
+              <div class="panel-heading"> (19)  สภาพการ 5s </div>
+                  <div class="form-group">
+                      <select runat="server" class="form-control" id="selecBge5s">
+                        <option>    </option>
+                        <option value ="OK">OK</option>
+                        <option value ="NG">NG</option>
+                      </select>
+              </div>
+         </div> 
+
+         <div class="panel panel-success">
+              <div class="panel-heading"> (20)  Setup ผ่านหรือไม่ผ่าน ? </div>
+                  <div class="form-group">
+                      <select runat="server" class="form-control" id="selecCheckSheet">
+                        <option>    </option>
+                        <option value="YES">YES</option>
+                        <option value="NO">NO</option>
+                      </select>
+              </div>
+         </div>
+
+             
+        <asp:Button ID="Savebutton_Check" runat="server" Text="SAVE" CssClass="btn btn-primary btn-block" Font-Bold="True" /><br />
+
+        <div class="panel">
+            <asp:Button ID="ButtonPrevious" CssClass="btn btn-default" runat="server" Text="Previous" BorderColor="Black" BorderStyle="Groove" BorderWidth="2px" />
+        </div>
+
+         </div>
+    </div>
+
+</asp:Content>

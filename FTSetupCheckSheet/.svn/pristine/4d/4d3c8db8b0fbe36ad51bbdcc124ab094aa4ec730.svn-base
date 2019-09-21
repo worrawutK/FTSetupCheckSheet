@@ -1,0 +1,104 @@
+﻿Imports System
+Imports System.IO
+Imports System.Web
+Imports System.Data
+Imports System.Linq
+Imports System.Text
+Imports System.Web.UI
+Imports System.Data.OleDb
+Imports System.Configuration
+Imports System.Data.SqlClient
+Imports System.Collections.Generic
+
+Public Class InputSetupFT5
+    Inherits System.Web.UI.Page
+
+    Private m_Data As FTSetupReport
+
+    Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+
+        Dim tmp As Object = Session("DATA")
+        If tmp Is Nothing Then
+            m_Data = New FTSetupReport()
+        Else
+            m_Data = CType(tmp, FTSetupReport)
+        End If
+
+        If Not IsPostBack Then
+            ProgramNameTextBox.Text = m_Data.ProgramName
+            TypechangepackageTextBox.Text = m_Data.TypeChangePackage
+            QRcodeSocketTextBox.Text = m_Data.QRCodesocket
+        End If
+
+        ProgramNameTextBox.Focus()
+
+    End Sub
+
+    Protected Sub ProgramTextBox_TextChanged(sender As Object, e As EventArgs) Handles ProgramNameTextBox.TextChanged
+        TypechangepackageTextBox.Focus()
+
+        If ProgramNameTextBox.Text.Length = 59 Then
+            Dim r_Program As String = ProgramNameTextBox.Text.Substring(51, 8)
+            ProgramNameTextBox.Text = r_Program
+
+            'ElseIf ProgramTextBox.Text.Length <> 59 Then
+            '    ShowErrorMessage(" PLEASE NEW SCAN QRCODE !!! ERROR ")
+        End If
+    End Sub
+
+    Protected Sub changepackageTextBox_TextChanged(sender As Object, e As EventArgs) Handles TypechangepackageTextBox.TextChanged
+        QRcodeSocketTextBox.Focus()
+
+        If TypechangepackageTextBox.Text.Length = 252 Then
+            Dim r_Package2 As String = TypechangepackageTextBox.Text.Substring(0, 10)
+            TypechangepackageTextBox.Text = r_Package2
+
+            '        'ElseIf changepackageTextBox.Text.Length <> 252 Then
+            '        '    ShowErrorMessage(" PLEASE NEW QRCODE !!! ERROR ")
+        End If
+
+    End Sub
+
+    Protected Sub QRSocketTextBox_TextChanged(sender As Object, e As EventArgs) Handles QRcodeSocketTextBox.TextChanged
+
+        If QRcodeSocketTextBox.Text.Length = 10 Then
+            Dim r_QRSocket As String = QRcodeSocketTextBox.Text.Substring(0, 10)
+
+            Dim conSql As SqlConnection = New SqlConnection()
+            Dim constr As String = My.Settings.DBxConnectionString
+
+            conSql.ConnectionString = constr
+            conSql.Open()
+
+            Dim sdqData As String = "SELECT QRCode, NumberSocket FROM DBx.dbo.OSPSocketSystem WHERE QRName = '" & Me.QRcodeSocketTextBox.Text & "'"
+
+            Using cmd As New SqlCommand(sdqData, conSql)
+                Using d As SqlDataReader = cmd.ExecuteReader()
+                    If d.Read Then
+                        QRcodeSocketTextBox.Text = d("NumberSocket").ToString()
+                    End If
+                End Using
+            End Using
+
+            'ElseIf QRSocketTextBox.Text.Length <> 10 Then
+            '    ShowErrorMessage(" PLEASE NEW SCAN QRCODE !!! ERROR ")
+        End If
+    End Sub
+
+    Private Sub UpdateSessionData()
+        m_Data.ProgramName = ProgramNameTextBox.Text
+        m_Data.TypeChangePackage = TypechangepackageTextBox.Text
+        m_Data.QRCodesocket = QRcodeSocketTextBox.Text
+        Session("DATA") = m_Data
+    End Sub
+
+    Private Sub ButtonNext_Click(sender As Object, e As EventArgs) Handles ButtonNext.Click
+        UpdateSessionData()
+        Response.Redirect("~/CheckSetupFT.aspx")
+    End Sub
+
+    Private Sub ButtonPrevious_Click(sender As Object, e As EventArgs) Handles ButtonPrevious.Click
+        UpdateSessionData()
+        Response.Redirect("~/InputSetupFT4.aspx")
+    End Sub
+End Class

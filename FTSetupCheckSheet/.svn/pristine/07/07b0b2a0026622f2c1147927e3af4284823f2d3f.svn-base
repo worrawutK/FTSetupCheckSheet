@@ -1,0 +1,40 @@
+﻿Public Class SetupStep7CheckSheet8
+    Inherits System.Web.UI.Page
+
+    Private m_Data As FTSetupReport
+
+    Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        Dim tmp As Object = Session(SESSION_KEY_NEW_DATA_SETUP)
+        If tmp Is Nothing Then
+            Response.Redirect("~/SetupMain.aspx")
+        Else
+            m_Data = CType(tmp, FTSetupReport)
+        End If
+        If Not IsPostBack Then
+            selecBge5s.Value = m_Data.Bge5S
+            selecCheckSheet.Value = m_Data.SetupStatus
+        End If
+    End Sub
+
+    Public Sub UpdateSessionData()
+        m_Data.Bge5S = selecBge5s.Value
+        m_Data.SetupStatus = selecCheckSheet.Value
+        Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
+    End Sub
+
+    Private Sub ButtonPrevious_Click(sender As Object, e As EventArgs) Handles ButtonPrevious.Click
+        UpdateSessionData()
+        Response.Redirect("~/SetupStep7CheckSheet7.aspx")
+    End Sub
+
+    Protected Sub Savebutton_Check_Click(sender As Object, e As EventArgs) Handles Savebutton_Check.Click
+
+
+        m_Data.SetupEndDate = Now
+        m_Data.SetupStatus = SETUP_STATUS_WAITING
+
+        Session(SESSION_KEY_DATA) = m_Data
+        Session.Remove(SESSION_KEY_NEW_DATA_SETUP)
+
+    End Sub
+End Class

@@ -1,0 +1,25 @@
+﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/Site.Master" CodeBehind="PrintSetupFT.aspx.vb" Inherits="Report_CheckSheet._555" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+
+     <div class="jumbotron">
+        <h1 class="text-center login-title" style="font-family: 'Waffle Regular'; font-weight: bold;">SET-UP  CHECK  SHEET</h1>
+        <h2 class="text-center login-title" style="font-family : 'Waffle Regular'; font-weight: bold;" >ｾｯﾄｱｯﾌﾟﾁｪｯｸｼｰﾄ</h2>
+    </div>
+
+    <ul class ="nav nav-pills nav-justified">
+        <li class ="active"><a href ="PrintSetupFT.aspx">Print Set-up Check Sheet</a></li>
+        <li ><a href ="PrintShonokoshi.aspx">Print Shohonokoshi</a></li>
+        <li ><a href="ShowDataSetup.aspx">Data Set-up Check Sheet</a></li>
+    </ul>
+
+     <div class="row">
+        <div class="col-md-12">
+            <label class="control-label">Select File</label>
+            <input id="input-1" type="file" class="file">
+        </div>
+     </div>
+
+
+
+
+</asp:Content>

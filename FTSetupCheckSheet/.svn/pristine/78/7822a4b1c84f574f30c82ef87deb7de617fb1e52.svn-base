@@ -1,0 +1,68 @@
+﻿Imports System
+Imports System.IO
+Imports System.Web
+Imports System.Data
+Imports System.Linq
+Imports System.Text
+Imports System.Web.UI
+Imports System.Data.OleDb
+Imports System.Configuration
+Imports System.Data.SqlClient
+Imports System.Collections.Generic
+Imports System.Web.Script.Serialization
+
+Public Class InputSetupFT
+    Inherits System.Web.UI.Page
+
+    Private m_Data As FTSetupReport
+
+    Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+
+        Dim tmp As Object = Session("DATA")
+        If tmp Is Nothing Then
+            m_Data = New FTSetupReport()
+        Else
+            m_Data = CType(tmp, FTSetupReport)
+        End If
+
+        If Not IsPostBack Then
+            lotnoTextbox.Text = m_Data.LotNo
+            PackagenameTextBox.Text = m_Data.PackgeName
+            DeviceNameTextBox.Text = m_Data.DeviceName
+        End If
+
+        QRcodeTextBox.Focus()
+    End Sub
+
+    Protected Sub QRcodeTextBox_TextChanged(sender As Object, e As EventArgs) Handles QRcodeTextBox.TextChanged
+
+        If QRcodeTextBox.Text.Length = 252 Then
+            Dim r_lotno As String = QRcodeTextBox.Text.Substring(30, 10)
+            lotnoTextbox.Text = r_lotno
+            Dim r_Package As String = QRcodeTextBox.Text.Substring(0, 10)
+            PackagenameTextBox.Text = r_Package
+            Dim r_Device As String = QRcodeTextBox.Text.Substring(212, 20)
+            DeviceNameTextBox.Text = r_Device
+        End If
+        QRcodeTextBox.Text = ""
+
+    End Sub
+
+    Private Sub UpdateSessionData()
+        m_Data.LotNo = lotnoTextbox.Text
+        m_Data.PackgeName = PackagenameTextBox.Text
+        m_Data.DeviceName = DeviceNameTextBox.Text
+        Session("DATA") = m_Data
+    End Sub
+
+    Private Sub ButtonNext_Click(sender As Object, e As EventArgs) Handles ButtonNext.Click
+        UpdateSessionData()
+        Response.Redirect("~/InputSetupFT1.aspx")
+    End Sub
+
+    Private Sub ButtonPrevious_Click(sender As Object, e As EventArgs) Handles ButtonPrevious.Click
+        UpdateSessionData()
+        Response.Redirect("~/Default.aspx")
+    End Sub
+
+End Class

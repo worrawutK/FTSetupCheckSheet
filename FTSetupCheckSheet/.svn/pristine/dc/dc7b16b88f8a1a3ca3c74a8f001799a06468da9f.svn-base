@@ -1,0 +1,131 @@
+﻿Imports System
+Imports System.IO
+Imports System.Web
+Imports System.Data
+Imports System.Linq
+Imports System.Text
+Imports System.Web.UI
+Imports System.Data.OleDb
+Imports System.Configuration
+Imports System.Data.SqlClient
+
+Public Class InputSetupFT2
+    Inherits System.Web.UI.Page
+
+    Protected Sub Abox1TextBox_TextChanged(sender As Object, e As EventArgs) Handles Abox1TextBox.TextChanged
+
+        Bbox2TextBox.Focus()
+
+        If Abox1TextBox.Text.Length = 9 Then
+            Dim r_BoxA As String = Abox1TextBox.Text.Substring(0, 9)
+
+            Dim conSql As SqlConnection = New SqlConnection()
+            Dim constr As String = "Data Source=172.16.0.102;Initial Catalog=DBx;User ID=EQPUser"
+
+            conSql.ConnectionString = constr
+            conSql.Open()
+
+            Dim sdqData As String = "SELECT SubType, QRName FROM DBx.EQP.Equipment WHERE (QRName = '" & Me.Abox1TextBox.Text & "')"
+
+            Using cmd As New SqlCommand(sdqData, conSql)
+                Using d As SqlDataReader = cmd.ExecuteReader()
+                    If d.Read Then
+                        Abox1TextBox.Text = d("SubType").ToString()
+                    End If
+                End Using
+            End Using
+
+            conSql.Close()
+
+            'ElseIf Abox1TextBox.Text.Length <> 9 Then
+            '    ShowErrorMessage(" QRCODE BOX CHANNEL A !!! ERROR ")
+        End If
+    End Sub
+
+    Protected Sub Bbox2TextBox_TextChanged(sender As Object, e As EventArgs) Handles Bbox2TextBox.TextChanged
+        Adaptor1TextBox.Focus()
+
+        If Bbox2TextBox.Text.Length = 9 Then
+            Dim r_BoxB As String = Bbox2TextBox.Text.Substring(0, 9)
+
+            Dim conSql As SqlConnection = New SqlConnection()
+            Dim constr As String = "Data Source=172.16.0.102;Initial Catalog=DBx;User ID=EQPUser"
+
+            conSql.ConnectionString = constr
+            conSql.Open()
+
+            Dim sdqData As String = "SELECT SubType, QRName FROM DBx.EQP.Equipment WHERE (QRName = '" & Me.Bbox2TextBox.Text & "')"
+
+            Using cmd As New SqlCommand(sdqData, conSql)
+                Using d As SqlDataReader = cmd.ExecuteReader()
+                    If d.Read Then
+                        Bbox2TextBox.Text = d("SubType").ToString()
+                    End If
+                End Using
+            End Using
+
+            conSql.Close()
+
+            'ElseIf Bbox2TextBox.Text.Length <> 9 Then
+            '    ShowErrorMessage(" QRCODE BOX CHANNEL B !!! ERROR ")
+        End If
+    End Sub
+
+    Protected Sub Adaptor1TextBox_TextChanged(sender As Object, e As EventArgs) Handles Adaptor1TextBox.TextChanged
+        Adaptor2TextBox.Focus()
+
+        If Adaptor1TextBox.Text.Length = 9 Then
+            Dim r_Adaptor1 As String = Adaptor1TextBox.Text.Substring(0, 9)
+
+            Dim conSql As SqlConnection = New SqlConnection()
+            Dim constr As String = "Data Source=172.16.0.102;Initial Catalog=DBx;User ID=EQPUser"
+
+            conSql.ConnectionString = constr
+            conSql.Open()
+
+            Dim sdqData As String = "SELECT SubType, QRName FROM DBx.EQP.Equipment WHERE EquipmentTypeID = '5' AND QRName = '" & Me.Adaptor1TextBox.Text & "'"
+
+            Using cmd As New SqlCommand(sdqData, conSql)
+                Using d As SqlDataReader = cmd.ExecuteReader()
+                    If d.Read Then
+                        Adaptor1TextBox.Text = d("SubType").ToString()
+                    End If
+                End Using
+            End Using
+
+            conSql.Close()
+
+        End If
+    End Sub
+
+    Protected Sub Adaptor2TextBox_TextChanged(sender As Object, e As EventArgs) Handles Adaptor2TextBox.TextChanged
+
+        If Adaptor2TextBox.Text.Length = 9 Then
+            Dim r_Adaptor2 As String = Adaptor2TextBox.Text.Substring(0, 9)
+
+            Dim conSql As SqlConnection = New SqlConnection()
+            Dim constr As String = "Data Source=172.16.0.102;Initial Catalog=DBx;User ID=EQPUser"
+
+            conSql.ConnectionString = constr
+            conSql.Open()
+
+            Dim sdqData As String = "SELECT SubType, QRName FROM DBx.EQP.Equipment WHERE EquipmentTypeID = '5' AND QRName = '" & Me.Adaptor2TextBox.Text & "'"
+
+            Using cmd As New SqlCommand(sdqData, conSql)
+                Using d As SqlDataReader = cmd.ExecuteReader()
+                    If d.Read Then
+                        Adaptor2TextBox.Text = d("SubType").ToString()
+                    End If
+                End Using
+            End Using
+
+            conSql.Close()
+
+        End If
+
+    End Sub
+
+    Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
+        Abox1TextBox.Focus()
+    End Sub
+End Class

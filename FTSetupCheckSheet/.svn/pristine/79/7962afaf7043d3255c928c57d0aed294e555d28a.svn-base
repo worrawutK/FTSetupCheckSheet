@@ -1,0 +1,76 @@
+﻿Imports System
+Imports System.IO
+Imports System.Web
+Imports System.Data
+Imports System.Linq
+Imports System.Text
+Imports System.Web.UI
+Imports System.Data.OleDb
+Imports System.Configuration
+Imports System.Data.SqlClient
+Imports System.Collections.Generic
+
+Public Class InputSetupFT5
+    Inherits System.Web.UI.Page
+
+    Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        ProgramTextBox.Focus()
+    End Sub
+
+    Protected Sub ProgramTextBox_TextChanged(sender As Object, e As EventArgs) Handles ProgramTextBox.TextChanged
+        changepackageTextBox.Focus()
+
+        If ProgramTextBox.Text.Length = 59 Then
+            Dim r_Program As String = ProgramTextBox.Text.Substring(51, 8)
+            ProgramTextBox.Text = r_Program
+
+            'ElseIf ProgramTextBox.Text.Length <> 59 Then
+            '    ShowErrorMessage(" PLEASE NEW SCAN QRCODE !!! ERROR ")
+        End If
+    End Sub
+
+    Protected Sub changepackageTextBox_TextChanged(sender As Object, e As EventArgs) Handles changepackageTextBox.TextChanged
+        QRSocketTextBox.Focus()
+
+        If changepackageTextBox.Text.Length = 252 Then
+            Dim r_Package2 As String = changepackageTextBox.Text.Substring(0, 10)
+            changepackageTextBox.Text = r_Package2
+
+            '        'ElseIf changepackageTextBox.Text.Length <> 252 Then
+            '        '    ShowErrorMessage(" PLEASE NEW QRCODE !!! ERROR ")
+        End If
+
+    End Sub
+
+    Protected Sub QRSocketTextBox_TextChanged(sender As Object, e As EventArgs) Handles QRSocketTextBox.TextChanged
+
+        If QRSocketTextBox.Text.Length = 10 Then
+            Dim r_QRSocket As String = QRSocketTextBox.Text.Substring(0, 10)
+
+            Dim conSql As SqlConnection = New SqlConnection()
+            Dim constr As String = "Data Source=172.16.0.102;Initial Catalog=DBx;User ID=EQPUser"
+
+            conSql.ConnectionString = constr
+            conSql.Open()
+
+            Dim sdqData As String = "SELECT QRCode, NumberSocket FROM DBx.dbo.OSPSocketSystem WHERE QRName = '" & Me.QRSocketTextBox.Text & "'"
+
+            Using cmd As New SqlCommand(sdqData, conSql)
+                Using d As SqlDataReader = cmd.ExecuteReader()
+                    If d.Read Then
+                        QRSocketTextBox.Text = d("NumberSocket").ToString()
+                    End If
+                End Using
+            End Using
+
+            'ElseIf QRSocketTextBox.Text.Length <> 10 Then
+            '    ShowErrorMessage(" PLEASE NEW SCAN QRCODE !!! ERROR ")
+        End If
+    End Sub
+
+    Protected Sub Savebutton_Click(sender As Object, e As EventArgs) Handles Savebutton.Click
+
+
+
+    End Sub
+End Class

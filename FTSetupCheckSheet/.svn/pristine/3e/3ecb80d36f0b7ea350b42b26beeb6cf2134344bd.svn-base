@@ -1,0 +1,57 @@
+﻿Imports System
+Imports System.IO
+Imports System.Web
+Imports System.Data
+Imports System.Linq
+Imports System.Text
+Imports System.Web.UI
+Imports System.Data.OleDb
+Imports System.Configuration
+Imports System.Data.SqlClient
+
+Public Class InputSetupOIS
+    Inherits System.Web.UI.Page
+
+    Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        QRcodeTextBox.Focus()
+    End Sub
+
+    Protected Sub ButtonSetup_Click(sender As Object, e As EventArgs) Handles ButtonSetup.Click
+
+        Response.Redirect("~/InputSetupOIS1.aspx")
+    End Sub
+
+    Protected Sub ButtonConfirm_Click(sender As Object, e As EventArgs) Handles ButtonConfirm.Click
+
+        Response.Redirect("~/ConfirmSetupFT.aspx")
+    End Sub
+
+    Protected Sub QRcodeTextBox_TextChanged(sender As Object, e As EventArgs) Handles QRcodeTextBox.TextChanged
+
+        If QRcodeTextBox.Text.Length = 9 Then
+            Dim r_McNo As String = QRcodeTextBox.Text.Substring(0, 9)
+
+            Dim conSql As SqlConnection = New SqlConnection()
+            Dim constr As String = My.Settings.DBxConnectionString
+
+            conSql.ConnectionString = constr
+            conSql.Open()
+
+            Dim sdqData As String = "SELECT EQP.Equipment.QRName, EQP.Machine.MCNo, FTSetupReport.DeviceName , FTSetupReport.TesterType , FTSetupReport.TestFlow , FTSetupReport.CheckSheet FROM EQP.Equipment INNER JOIN EQP.Machine ON EQP.Equipment.ID = EQP.Machine.ID INNER JOIN FTSetupReport ON EQP.Machine.MCNo = FTSetupReport.MCNo WHERE (EQP.Equipment.ProcessID = 9) AND (EQP.Equipment.EquipmentTypeID = 8) AND (EQP.Equipment.QRName = '" & QRcodeTextBox.Text & "')"
+
+            Using cmd As New SqlCommand(sdqData, conSql)
+                Using d As SqlDataReader = cmd.ExecuteReader()
+                    If d.Read Then
+                        QRcodeTextBox.Text = d("MCNo").ToString()
+                        Devicetext.Text = d("DeviceName").ToString()
+                        TestflowTextBox.Text = d("TestFlow").ToString()
+                        TesterTypeTextBox.Text = d("TesterType").ToString()
+                        Confirmtext.Text = d("CheckSheet").ToString()
+                    End If
+                End Using
+            End Using
+            conSql.Close()
+
+        End If
+    End Sub
+End Class

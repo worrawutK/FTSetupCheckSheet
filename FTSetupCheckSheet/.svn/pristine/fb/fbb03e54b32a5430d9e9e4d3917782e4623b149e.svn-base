@@ -1,0 +1,102 @@
+﻿Imports System
+Imports System.IO
+Imports System.Web
+Imports System.Data
+Imports System.Linq
+Imports System.Text
+Imports System.Web.UI
+Imports System.Data.OleDb
+Imports System.Configuration
+Imports System.Data.SqlClient
+
+Public Class InputSetup1
+    Inherits System.Web.UI.Page
+
+    Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        ATesternoTextBox.Focus()
+    End Sub
+
+    Protected Sub ATesternoTextBox_TextChanged(sender As Object, e As EventArgs) Handles ATesternoTextBox.TextChanged
+        BTestnoTextBox.Focus()
+
+        If ATesternoTextBox.Text.Length = 9 Then
+            Dim r_TesterA As String = ATesternoTextBox.Text.Substring(0, 9)
+
+            Dim conSql As SqlConnection = New SqlConnection()
+            Dim constr As String = "Data Source=172.16.0.102;Initial Catalog=DBx;User ID=EQPUser"
+
+            conSql.ConnectionString = constr
+            conSql.Open()
+
+            Dim sdqData As String = "SELECT Name, QRName FROM DBx.EQP.Equipment WHERE (QRName = '" & Me.ATesternoTextBox.Text & "')"
+
+            Using cmd As New SqlCommand(sdqData, conSql)
+                Using d As SqlDataReader = cmd.ExecuteReader()
+                    If d.Read Then
+                        ATesternoTextBox.Text = d("Name").ToString()
+                    End If
+                End Using
+            End Using
+
+            'ElseIf ATesternoTextBox.Text.Length <> 9 Then
+            '    ShowErrorMessage(" QRCODE TESTER CHANNEL A !!! ERROR ")
+        End If
+    End Sub
+
+    Protected Sub BTestnoTextBox_TextChanged(sender As Object, e As EventArgs) Handles BTestnoTextBox.TextChanged
+        HandlerNoTextBox.Focus()
+
+        If BTestnoTextBox.Text.Length = 9 Then
+            Dim r_TesterB As String = BTestnoTextBox.Text.Substring(0, 9)
+
+            Dim conSql As SqlConnection = New SqlConnection()
+            Dim constr As String = "Data Source=172.16.0.102;Initial Catalog=DBx;User ID=EQPUser"
+
+            conSql.ConnectionString = constr
+            conSql.Open()
+
+            Dim sdqData As String = "SELECT Name, QRName FROM DBx.EQP.Equipment WHERE (QRName = '" & Me.BTestnoTextBox.Text & "')"
+
+            Using cmd As New SqlCommand(sdqData, conSql)
+                Using d As SqlDataReader = cmd.ExecuteReader()
+                    If d.Read Then
+                        BTestnoTextBox.Text = d("Name").ToString()
+                    End If
+                End Using
+            End Using
+
+            'ElseIf BTestnoTextBox.Text.Length <> 9 Then
+            '    ShowErrorMessage(" QRCODE TESTER CHANNEL B !!! ERROR ")
+        End If
+    End Sub
+
+    Protected Sub HandlerNoTextBox_TextChanged(sender As Object, e As EventArgs) Handles HandlerNoTextBox.TextChanged
+
+        If HandlerNoTextBox.Text.Length = 9 Then
+            Dim r_HandlerNo As String = HandlerNoTextBox.Text.Substring(0, 9)
+
+            Dim conSql As SqlConnection = New SqlConnection()
+            Dim constr As String = "Data Source=172.16.0.102;Initial Catalog=DBx;User ID=EQPUser"
+
+            conSql.ConnectionString = constr
+            conSql.Open()
+
+            Dim sdqData As String = "SELECT EQP.Equipment.SubType, EQP.Equipment.QRName, EQP.Machine.MCNo, EQP.Machine.ID
+                                 FROM EQP.Equipment INNER JOIN EQP.Machine ON EQP.Equipment.ID = EQP.Machine.ID
+                                 WHERE (EQP.Equipment.ProcessID = 9) AND (EQP.Equipment.EquipmentTypeID = 8) AND (EQP.Equipment.QRName = '" & Me.HandlerNoTextBox.Text & "')"
+
+            Using cmd As New SqlCommand(sdqData, conSql)
+                Using d As SqlDataReader = cmd.ExecuteReader()
+                    If d.Read Then
+                        HandlerNoTextBox.Text = d("Mcno").ToString()
+
+                    End If
+                End Using
+            End Using
+
+            'ElseIf HandlerNoTextBox.Text.Length <> 9 Then
+            '    ShowErrorMessage(" QRCODE HANDLER !!! ERROR ")
+        End If
+    End Sub
+
+End Class

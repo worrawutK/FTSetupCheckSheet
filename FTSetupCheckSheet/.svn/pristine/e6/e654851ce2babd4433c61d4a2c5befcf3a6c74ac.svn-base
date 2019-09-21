@@ -1,0 +1,48 @@
+﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/Site.Master" CodeBehind="ShowDataSetup.aspx.vb" Inherits="Report_CheckSheet.ShowDataSetup" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+
+      <div class="jumbotron">
+        <h1 class="text-center login-title" style="font-family: 'Waffle Regular'; font-weight: bold;">SET-UP  CHECK  SHEET</h1>
+        <h2 class="text-center login-title" style="font-family : 'Waffle Regular'; font-weight: bold;" >ｾｯﾄｱｯﾌﾟﾁｪｯｸｼｰﾄ</h2>
+      </div>
+
+      <ul class ="nav nav-pills nav-justified">
+        <li ><a href ="PrintSetupFT.aspx">Print Set-up Check Sheet</a></li>
+        <li ><a href ="DataSetup_CheckSheet.aspx">Data Set-up Check Sheet</a></li>
+        <li class ="active"><a href ="ShowDataSetup.aspx">History Set-up Check Sheet</a></li>
+      </ul><br />
+
+<div class ="form-group ">
+     
+       <h3 class="login-title" style="font-family: 'Waffle Regular'; font-weight: bold;">HISTORY SETUP-CHECK SHEET</h3>
+
+      <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="False" DataSourceID="HistorySqlDataSource" BackColor="#CCCCCC" BorderColor="#999999" BorderStyle="Solid" BorderWidth="3px" CellPadding="4" CellSpacing="2" ForeColor="Black">
+          <Columns>
+              <asp:BoundField DataField="MCNo" HeaderText="MCNo" SortExpression="MCNo" />
+              <asp:BoundField DataField="LotNo" HeaderText="LotNo" SortExpression="LotNo" />
+              <asp:BoundField DataField="PackageName" HeaderText="PackageName" SortExpression="PackageName" />
+              <asp:BoundField DataField="DeviceName" HeaderText="DeviceName" SortExpression="DeviceName" />
+              <asp:BoundField DataField="ProgramName" HeaderText="ProgramName" SortExpression="ProgramName" />
+              <asp:BoundField DataField="TesterType" HeaderText="TesterType" SortExpression="TesterType" />
+              <asp:BoundField DataField="TestFlow" HeaderText="TestFlow" SortExpression="TestFlow" />
+              <asp:BoundField DataField="SetupConfirmDate" HeaderText="SetupConfirmDate" SortExpression="SetupConfirmDate" />
+              <asp:BoundField DataField="SetupStartDate" HeaderText="SetupStartDate" SortExpression="SetupStartDate" />
+              <asp:BoundField DataField="SetupEndDate" HeaderText="SetupEndDate" SortExpression="SetupEndDate" />
+              <asp:BoundField DataField="SetupStatus" HeaderText="SetupStatus" SortExpression="SetupStatus" />
+          </Columns>
+          <FooterStyle BackColor="#CCCCCC" />
+          <HeaderStyle BackColor="Black" Font-Bold="True" ForeColor="White" />
+          <PagerStyle BackColor="#CCCCCC" ForeColor="Black" HorizontalAlign="Left" />
+          <RowStyle BackColor="White" />
+          <SelectedRowStyle BackColor="#000099" Font-Bold="True" ForeColor="White" />
+          <SortedAscendingCellStyle BackColor="#F1F1F1" />
+          <SortedAscendingHeaderStyle BackColor="#808080" />
+          <SortedDescendingCellStyle BackColor="#CAC9C9" />
+          <SortedDescendingHeaderStyle BackColor="#383838" />
+     </asp:GridView>
+     <asp:SqlDataSource ID="HistorySqlDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:DBxConnectionString %>" SelectCommand="SELECT  MCNo, LotNo, PackageName, DeviceName, ProgramName, TesterType, TestFlow, SetupConfirmDate, SetupStartDate, SetupEndDate, SetupStatus FROM FTSetupReportHistory WHERE (SetupStatus IS NOT NULL) AND (SetupConfirmDate IS NOT NULL)">
+     </asp:SqlDataSource>
+</div>
+</asp:Content>
+
+

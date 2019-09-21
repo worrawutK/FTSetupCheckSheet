@@ -1,0 +1,49 @@
+﻿Imports System.IO
+Imports System.Web.UI
+Imports System.Data.OleDb
+Imports System.Data.SqlClient
+
+Public Class New_InputSetupOIS
+    Inherits System.Web.UI.Page
+
+    Private m_Data As FTSetupReport
+
+    Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        OISTextBox.Focus()
+
+        Dim tmp As Object = Session("DATA")
+        If tmp Is Nothing Then
+            m_Data = New FTSetupReport()
+        Else
+            m_Data = CType(tmp, FTSetupReport)
+        End If
+        If Not IsPostBack Then
+
+        Else
+            m_Data.SetupStartDate = Now
+        End If
+    End Sub
+
+    Protected Sub ButtonPrevious_Click(sender As Object, e As EventArgs) Handles ButtonPrevious.Click
+
+        Response.Redirect("~/InputSetupOIS.aspx")
+    End Sub
+
+    Protected Sub ButtonNext_Click(sender As Object, e As EventArgs) Handles ButtonNext.Click
+
+        Response.Redirect("~/InputSetupFT1.aspx")
+    End Sub
+
+    Protected Sub TextBox1_TextChanged(sender As Object, e As EventArgs) Handles OISTextBox.TextChanged
+
+        If OISTextBox.Text.Length = 59 Then
+            Dim r_TestFlow As String = OISTextBox.Text.Substring(17, 5)
+            TestflowTextBox.Text = r_TestFlow
+            Dim r_TesterType As String = OISTextBox.Text.Substring(32, 7)
+            TesterTypetext.Text = r_TesterType
+
+        End If
+
+        OISTextBox.Text = ""
+    End Sub
+End Class

@@ -1,0 +1,34 @@
+﻿Imports System
+Imports System.IO
+Imports System.Web
+Imports System.Data
+Imports System.Text
+Imports iTextSharp
+Imports iTextSharp.text
+Imports iTextSharp.text.pdf
+Imports System.Data.SqlClient
+Imports System.Collections.Generic
+
+Public Class DataSetup_CheckSheet
+    Inherits System.Web.UI.Page
+
+    Private Sub GridView1_RowDataBound(sender As Object, e As GridViewRowEventArgs) Handles GridView1.RowDataBound
+        If e.Row.RowIndex > 0 Then
+            Dim rv As DataRowView = CType(e.Row.DataItem, DataRowView)
+            Dim row As DataRow = rv.Row
+            Dim img2 As WebControls.Image = DirectCast(e.Row.FindControl("Image2"), WebControls.Image)
+            If row("SetupStatus").ToString = "CANCELED" Then
+                img2.ImageUrl = "~/images/icon_Canceled.png"
+                img2.CssClass = "animationStatus"
+            ElseIf row("SetupStatus").ToString = "WAITING" Then
+                img2.ImageUrl = "~/images/icon_Waiting1.png"
+                img2.CssClass = "animationStatus"
+            ElseIf row("SetupStatus").ToString = "CONFIRMED"
+                img2.ImageUrl = "~/images/icon_.png"
+            End If
+        End If
+
+
+
+    End Sub
+End Class

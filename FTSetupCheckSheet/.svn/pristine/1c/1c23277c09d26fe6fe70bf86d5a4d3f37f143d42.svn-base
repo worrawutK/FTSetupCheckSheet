@@ -1,0 +1,85 @@
+﻿Imports System
+Imports System.IO
+Imports System.Web
+Imports System.Data
+Imports System.Linq
+Imports System.Text
+Imports System.Web.UI
+Imports System.Data.OleDb
+Imports System.Configuration
+Imports System.Data.SqlClient
+Imports System.Collections.Generic
+
+Public Class SetupStep6
+    Inherits System.Web.UI.Page
+
+    Private m_Data As FTSetupReport
+
+    Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+
+        Dim tmp As Object = Session(SESSION_KEY_NEW_DATA_SETUP)
+        If tmp Is Nothing Then
+            Response.Redirect("~/SetupMain.aspx")
+        Else
+            m_Data = CType(tmp, FTSetupReport)
+        End If
+
+        If Not IsPostBack Then
+            ProgramNameTextBox.Text = m_Data.ProgramName
+            TypechangepackageTextBox.Text = m_Data.TypeChangePackage
+            QRcodeSocketTextBox.Text = m_Data.QRCodesocket
+        End If
+
+        TypechangepackageTextBox.Focus()
+
+    End Sub
+
+    Protected Sub changepackageTextBox_TextChanged(sender As Object, e As EventArgs) Handles TypechangepackageTextBox.TextChanged
+        QRcodeSocketTextBox.Focus()
+
+        If TypechangepackageTextBox.Text.Length = 252 Then
+            Dim changePackage As String = TypechangepackageTextBox.Text.Substring(0, 10)
+            m_Data.TypeChangePackage = changePackage
+            TypechangepackageTextBox.Text = changePackage
+            Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
+        End If
+
+    End Sub
+
+    Protected Sub QRSocketTextBox_TextChanged(sender As Object, e As EventArgs) Handles QRcodeSocketTextBox.TextChanged
+
+        If Not String.IsNullOrEmpty(QRcodeSocketTextBox.Text) Then
+            Dim qrCode As String = QRcodeSocketTextBox.Text
+
+            Using dt As DataTable = DBAccess.GetOSPSocketSystem(qrCode)
+                If dt.Rows.Count = 1 Then
+                    Dim row As DataRow = dt.Rows(0)
+                    m_Data.QRCodesocket = qrCode
+                Else
+                    m_Data.QRCodesocket = ""
+                End If
+
+                QRcodeSocketTextBox.Text = m_Data.QRCodesocket
+                Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
+
+            End Using
+
+        End If
+    End Sub
+
+    Private Sub UpdateSessionData()
+        m_Data.TypeChangePackage = TypechangepackageTextBox.Text
+        m_Data.QRCodesocket = QRcodeSocketTextBox.Text
+        Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
+    End Sub
+
+    Private Sub ButtonNext_Click(sender As Object, e As EventArgs) Handles ButtonNext.Click
+        UpdateSessionData()
+        Response.Redirect("~/SetupStep7CheckSheet1.aspx")
+    End Sub
+
+    Private Sub ButtonPrevious_Click(sender As Object, e As EventArgs) Handles ButtonPrevious.Click
+        UpdateSessionData()
+        Response.Redirect("~/SetupStep5.aspx")
+    End Sub
+End Class

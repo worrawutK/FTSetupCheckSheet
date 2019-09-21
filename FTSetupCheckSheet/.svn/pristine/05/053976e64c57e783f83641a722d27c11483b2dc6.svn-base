@@ -1,0 +1,125 @@
+﻿Imports System
+Imports System.IO
+Imports System.Web
+Imports System.Data
+Imports System.Linq
+Imports System.Text
+Imports System.Web.UI
+Imports System.Data.OleDb
+Imports System.Configuration
+Imports System.Data.SqlClient
+
+Public Class InputSetupFT3
+    Inherits System.Web.UI.Page
+
+    Protected Sub Dutcard1TextBox_TextChanged(sender As Object, e As EventArgs) Handles Dutcard1TextBox.TextChanged
+        Dutcard2TextBox.Focus()
+
+        If Dutcard1TextBox.Text.Length = 9 Then
+            Dim r_Dutcart1 As String = Dutcard1TextBox.Text.Substring(0, 9)
+
+            Dim conSql As SqlConnection = New SqlConnection()
+            Dim constr As String = "Data Source=172.16.0.102;Initial Catalog=DBx;User ID=EQPUser"
+
+            conSql.ConnectionString = constr
+            conSql.Open()
+
+            Dim sdqData As String = "SELECT SubType, QRName FROM DBx.EQP.Equipment WHERE EquipmentTypeID = '13' AND QRName = '" & Me.Dutcard1TextBox.Text & "'"
+
+            Using cmd As New SqlCommand(sdqData, conSql)
+                Using d As SqlDataReader = cmd.ExecuteReader()
+                    If d.Read Then
+                        Dutcard1TextBox.Text = d("SubType").ToString()
+                    End If
+                End Using
+            End Using
+            conSql.Close()
+
+        End If
+
+    End Sub
+
+    Protected Sub Dutcard2TextBox_TextChanged(sender As Object, e As EventArgs) Handles Dutcard2TextBox.TextChanged
+        Bridge1TextBox.Focus()
+
+        If Dutcard2TextBox.Text.Length = 9 Then
+            Dim r_Dutcart2 As String = Dutcard2TextBox.Text.Substring(0, 9)
+
+            Dim conSql As SqlConnection = New SqlConnection()
+            Dim constr As String = "Data Source=172.16.0.102;Initial Catalog=DBx;User ID=EQPUser"
+
+            conSql.ConnectionString = constr
+            conSql.Open()
+
+            Dim sdqData As String = "SELECT SubType, QRName FROM DBx.EQP.Equipment WHERE EquipmentTypeID = '13' AND QRName = '" & Me.Dutcard2TextBox.Text & "'"
+
+            Using cmd As New SqlCommand(sdqData, conSql)
+                Using d As SqlDataReader = cmd.ExecuteReader()
+                    If d.Read Then
+                        Dutcard2TextBox.Text = d("SubType").ToString()
+                    End If
+                End Using
+            End Using
+            conSql.Close()
+
+        End If
+
+    End Sub
+
+    Protected Sub Bridge1TextBox_TextChanged(sender As Object, e As EventArgs) Handles Bridge1TextBox.TextChanged
+        Bridge2TextBox.Focus()
+
+        If Bridge1TextBox.Text.Length = 9 Then
+            Dim r_Bridge1 As String = Bridge1TextBox.Text.Substring(0, 9)
+
+            Dim conSql As SqlConnection = New SqlConnection()
+            Dim constr As String = "Data Source=172.16.0.102;Initial Catalog=DBx;User ID=EQPUser"
+
+            conSql.ConnectionString = constr
+            conSql.Open()
+
+            Dim sdqData As String = "SELECT SubType, QRName FROM DBx.EQP.Equipment WHERE EquipmentTypeID = '6' AND QRName = '" & Me.Bridge1TextBox.Text & "'"
+
+            Using cmd As New SqlCommand(sdqData, conSql)
+                Using d As SqlDataReader = cmd.ExecuteReader()
+                    If d.Read Then
+                        Bridge1TextBox.Text = d("SubType").ToString()
+                    End If
+                End Using
+            End Using
+            conSql.Close()
+
+        End If
+
+    End Sub
+
+    Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
+        Dutcard1TextBox.Focus()
+    End Sub
+
+    Protected Sub Bridge2TextBox_TextChanged(sender As Object, e As EventArgs) Handles Bridge2TextBox.TextChanged
+
+        If Bridge2TextBox.Text.Length = 9 Then
+            Dim r_Bridge2 As String = Bridge2TextBox.Text.Substring(0, 9)
+
+            Dim conSql As SqlConnection = New SqlConnection()
+            Dim constr As String = "Data Source=172.16.0.102;Initial Catalog=DBx;User ID=EQPUser"
+
+            conSql.ConnectionString = constr
+            conSql.Open()
+
+            Dim sdqData As String = "SELECT SubType, QRName FROM DBx.EQP.Equipment WHERE EquipmentTypeID = '6' AND QRName = '" & Me.Bridge2TextBox.Text & "'"
+
+            Using cmd As New SqlCommand(sdqData, conSql)
+                Using d As SqlDataReader = cmd.ExecuteReader()
+                    If d.Read Then
+                        Bridge2TextBox.Text = d("SubType").ToString()
+                    End If
+                End Using
+            End Using
+            conSql.Close()
+
+        End If
+
+    End Sub
+End Class

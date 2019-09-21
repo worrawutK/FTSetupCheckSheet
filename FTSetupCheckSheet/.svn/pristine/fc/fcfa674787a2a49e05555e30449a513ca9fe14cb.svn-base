@@ -1,0 +1,680 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+Report_CheckSheet
+</name>
+</assembly>
+<members>
+<member name="F:Report_CheckSheet.CheckSetup5._sel15">
+<summary>
+sel15 control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Report_CheckSheet.CheckSetup5._sel16">
+<summary>
+sel16 control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Report_CheckSheet.CheckSetupFT2._sel8">
+<summary>
+sel8 control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Report_CheckSheet.CheckSetupFT2._sel9">
+<summary>
+sel9 control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Report_CheckSheet.CheckSetupFT3._sel10">
+<summary>
+sel10 control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Report_CheckSheet.CheckSetupFT3._sel11">
+<summary>
+sel11 control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Report_CheckSheet.CheckupSetupFT4._sel12">
+<summary>
+sel12 control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Report_CheckSheet.CheckupSetupFT4._sel13">
+<summary>
+sel13 control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Report_CheckSheet.CheckupSetupFT4._sel14">
+<summary>
+sel14 control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Report_CheckSheet.CheckSetupFT6._sel17">
+<summary>
+sel17 control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Report_CheckSheet.CheckSetupFT6._sel18">
+<summary>
+sel18 control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Report_CheckSheet.CheckSetupFT7._sel19">
+<summary>
+sel19 control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Report_CheckSheet.CheckSetupFT7._sel20">
+<summary>
+sel20 control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Report_CheckSheet.CheckSetupFT7._Savebutton_Check">
+<summary>
+Savebutton_Check control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Report_CheckSheet.InputSetupFT._Timer1">
+<summary>
+Timer1 control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Report_CheckSheet.InputSetupFT._QRcodeTextBox">
+<summary>
+QRcodeTextBox control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Report_CheckSheet.InputSetupFT._lotnoTextbox">
+<summary>
+lotnoTextbox control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Report_CheckSheet.InputSetupFT._PackagenameTextBox">
+<summary>
+PackagenameTextBox control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Report_CheckSheet.InputSetupFT._DeviceNameTextBox">
+<summary>
+DeviceNameTextBox control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Report_CheckSheet.InputSetup1._ATesternoTextBox">
+<summary>
+ATesternoTextBox control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Report_CheckSheet.InputSetup1._BTestnoTextBox">
+<summary>
+BTestnoTextBox control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Report_CheckSheet.InputSetup1._HandlerNoTextBox">
+<summary>
+HandlerNoTextBox control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Report_CheckSheet.InputSetupFT2._Abox1TextBox">
+<summary>
+Abox1TextBox control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Report_CheckSheet.InputSetupFT2._Bbox2TextBox">
+<summary>
+Bbox2TextBox control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Report_CheckSheet.InputSetupFT2._Adaptor1TextBox">
+<summary>
+Adaptor1TextBox control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Report_CheckSheet.InputSetupFT2._Adaptor2TextBox">
+<summary>
+Adaptor2TextBox control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Report_CheckSheet.InputSetupFT3._Dutcard1TextBox">
+<summary>
+Dutcard1TextBox control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Report_CheckSheet.InputSetupFT3._Dutcard2TextBox">
+<summary>
+Dutcard2TextBox control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Report_CheckSheet.InputSetupFT3._Bridge1TextBox">
+<summary>
+Bridge1TextBox control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Report_CheckSheet.InputSetupFT3._Bridge2TextBox">
+<summary>
+Bridge2TextBox control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Report_CheckSheet.InputSetupFT4._Option1TextBox">
+<summary>
+Option1TextBox control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Report_CheckSheet.InputSetupFT4._Option2TextBox">
+<summary>
+Option2TextBox control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Report_CheckSheet.InputSetupFT4._Option3TextBox">
+<summary>
+Option3TextBox control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Report_CheckSheet.InputSetupFT4._Option4TextBox">
+<summary>
+Option4TextBox control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Report_CheckSheet.InputSetupFT4._Option5TextBox">
+<summary>
+Option5TextBox control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Report_CheckSheet.InputSetupFT4._Option6TextBox">
+<summary>
+Option6TextBox control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Report_CheckSheet.InputSetupFT4._Option7TextBox">
+<summary>
+Option7TextBox control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Report_CheckSheet.InputSetupFT5._ProgramTextBox">
+<summary>
+ProgramTextBox control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Report_CheckSheet.InputSetupFT5._changepackageTextBox">
+<summary>
+changepackageTextBox control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Report_CheckSheet.InputSetupFT5._QRSocketTextBox">
+<summary>
+QRSocketTextBox control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Report_CheckSheet.InputSetupFT5._Savebutton">
+<summary>
+Savebutton control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Report_CheckSheet.AddPhoneNumber._sel4">
+<summary>
+sel4 control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Report_CheckSheet.AddPhoneNumber._sel5">
+<summary>
+sel5 control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Report_CheckSheet.AddPhoneNumber._sel6">
+<summary>
+sel6 control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Report_CheckSheet.AddPhoneNumber._sel7">
+<summary>
+sel7 control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Report_CheckSheet.Login._ErrorMessage">
+<summary>
+ErrorMessage control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Report_CheckSheet.Login._FailureText">
+<summary>
+FailureText control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Report_CheckSheet.Login._Email">
+<summary>
+Email control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Report_CheckSheet.Login._Password">
+<summary>
+Password control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Report_CheckSheet.Login._RememberMe">
+<summary>
+RememberMe control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Report_CheckSheet.Login._RegisterHyperLink">
+<summary>
+RegisterHyperLink control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Report_CheckSheet.Login._OpenAuthLogin">
+<summary>
+OpenAuthLogin control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Report_CheckSheet.OpenAuthProviders._providerDetails">
+<summary>
+providerDetails control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Report_CheckSheet.Register._ErrorMessage">
+<summary>
+ErrorMessage control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Report_CheckSheet.Register._Email">
+<summary>
+Email control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Report_CheckSheet.Register._Password">
+<summary>
+Password control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Report_CheckSheet.Register._ConfirmPassword">
+<summary>
+ConfirmPassword control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Report_CheckSheet.ResetPassword._ErrorMessage">
+<summary>
+ErrorMessage control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Report_CheckSheet.ResetPassword._Email">
+<summary>
+Email control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Report_CheckSheet.ResetPassword._Password">
+<summary>
+Password control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Report_CheckSheet.ResetPassword._ConfirmPassword">
+<summary>
+ConfirmPassword control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Report_CheckSheet.Contact._sel1">
+<summary>
+sel1 control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Report_CheckSheet.Contact._sel2">
+<summary>
+sel2 control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Report_CheckSheet.Contact._sel3">
+<summary>
+sel3 control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="T:Report_CheckSheet.My.MyWebExtension">
+ <summary>
+ Module used to define the properties that are available in the My Namespace for Web projects.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:Report_CheckSheet.My.MyWebExtension.Computer">
+ <summary>
+ Returns information about the host computer.
+ </summary>
+</member>
+<member name="P:Report_CheckSheet.My.MyWebExtension.User">
+ <summary>
+ Returns information for the current Web user.
+ </summary>
+</member>
+<member name="P:Report_CheckSheet.My.MyWebExtension.Request">
+ <summary>
+ Returns Request object.
+ </summary>
+</member>
+<member name="P:Report_CheckSheet.My.MyWebExtension.Response">
+ <summary>
+ Returns Response object.
+ </summary>
+</member>
+<member name="P:Report_CheckSheet.My.MyWebExtension.Log">
+ <summary>
+ Returns the Asp log object.
+ </summary>
+</member>
+<member name="F:Report_CheckSheet.SiteMaster._MainContent">
+<summary>
+MainContent control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Report_CheckSheet.Site_Mobile._Head1">
+<summary>
+Head1 control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Report_CheckSheet.Site_Mobile._HeadContent">
+<summary>
+HeadContent control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Report_CheckSheet.Site_Mobile._form1">
+<summary>
+form1 control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Report_CheckSheet.Site_Mobile._FeaturedContent">
+<summary>
+FeaturedContent control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Report_CheckSheet.Site_Mobile._MainContent">
+<summary>
+MainContent control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Report_CheckSheet.Site_Mobile._ViewSwitcher1">
+<summary>
+ViewSwitcher1 control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+</members>
+</doc>

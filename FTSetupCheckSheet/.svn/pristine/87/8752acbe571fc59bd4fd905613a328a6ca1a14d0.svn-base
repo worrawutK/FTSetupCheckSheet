@@ -1,0 +1,157 @@
+﻿
+Public Class SetupMain
+    Inherits System.Web.UI.Page
+
+    Private m_Data As FTSetupReport
+
+    Private Const BUTTON_TEXT_SETUP As String = "SET-UP"
+    Private Const BUTTON_TEXT_CANCEL As String = "CANCEL"
+
+    Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+
+        Dim tmp As Object = Session(SESSION_KEY_DATA)
+        If tmp Is Nothing Then
+            m_Data = New FTSetupReport()
+            Session(SESSION_KEY_DATA) = m_Data
+        Else
+            m_Data = CType(tmp, FTSetupReport)
+        End If
+
+        If Not IsPostBack Then
+            TextBoxMCNo.Text = m_Data.MCNo
+            Devicetext.Text = m_Data.DeviceName
+            TestflowTextBox.Text = m_Data.TestFlow
+            TesterTypeTextBox.Text = m_Data.TesterType
+            TextBoxSetupStatus.Text = m_Data.SetupStatus
+            SetStatusColor(TextBoxSetupStatus.Text)
+        End If
+
+        QRcodeTextBox.Focus()
+    End Sub
+
+    Protected Sub ButtonSetup_Click(sender As Object, e As EventArgs) Handles ButtonSetup.Click
+
+        If m_Data Is Nothing OrElse String.IsNullOrEmpty(m_Data.MCNo) Then
+            Exit Sub
+        End If
+
+        Select Case ButtonSetup.Text
+            Case BUTTON_TEXT_CANCEL
+                '1. save to database with status = 'CANCELED' before clear all data
+
+                '2. do cancel no need reson
+                Dim mcNo As String = m_Data.MCNo
+                m_Data = New FTSetupReport()
+                m_Data.MCNo = mcNo
+
+                m_Data.SetupStatus = SETUP_STATUS_CANCELED
+
+                TextBoxMCNo.Text = m_Data.MCNo
+                Devicetext.Text = m_Data.DeviceName
+                TestflowTextBox.Text = m_Data.TestFlow
+                TesterTypeTextBox.Text = m_Data.TesterType
+                TextBoxSetupStatus.Text = m_Data.SetupStatus
+                SetStatusColor(TextBoxSetupStatus.Text)
+
+                Session(SESSION_KEY_DATA) = m_Data
+            Case BUTTON_TEXT_SETUP
+                Dim newData As FTSetupReport = CType(Session(SESSION_KEY_NEW_DATA_SETUP), FTSetupReport)
+
+                If newData Is Nothing OrElse newData.MCNo <> m_Data.MCNo Then
+                    newData = New FTSetupReport()
+                    newData.MCNo = m_Data.MCNo
+                    Session(SESSION_KEY_NEW_DATA_SETUP) = newData
+                End If
+
+                Response.Redirect("~/SetupStep1.aspx")
+        End Select
+
+
+
+    End Sub
+
+    Protected Sub ButtonConfirm_Click(sender As Object, e As EventArgs) Handles ButtonConfirm.Click
+        Response.Redirect("~/SetupConfirm.aspx")
+    End Sub
+
+    Protected Sub QRcodeTextBox_TextChanged(sender As Object, e As EventArgs) Handles QRcodeTextBox.TextChanged
+
+        If Not String.IsNullOrEmpty(QRcodeTextBox.Text) Then
+
+            Dim qrMc As String = QRcodeTextBox.Text.Trim()
+            QRcodeTextBox.Text = ""
+
+            Using dt As DataTable = DBAccess.GetEquipmentByQRName(qrMc)
+
+                If dt.Rows.Count = 1 Then
+
+                    Dim row As DataRow = dt.Rows(0)
+
+                    m_Data.MCNo = row("Name").ToString()
+                    If m_Data.MCNo.StartsWith("FT-") Then
+                        m_Data.MCNo = m_Data.MCNo.Replace("FT-", "")
+                    End If
+
+                    Using dt2 As DataTable = DBAccess.GetFTSetupReportByMCNo(m_Data.MCNo)
+
+                        If dt2.Rows.Count = 1 Then
+
+                            row = dt2.Rows(0)
+
+                            m_Data.DeviceName = row("DeviceName").ToString()
+                            m_Data.TestFlow = row("TestFlow").ToString()
+                            m_Data.TesterType = row("TesterType").ToString()
+                            m_Data.SetupStatus = row("SetupStatus").ToString()
+
+                        Else
+                            'first time of record
+
+                            m_Data.DeviceName = ""
+                            m_Data.TestFlow = ""
+                            m_Data.TesterType = ""
+                            m_Data.SetupStatus = ""
+
+                            DBAccess.CreateBlankFTSetupRecord(m_Data.MCNo)
+
+                        End If
+
+                    End Using
+
+                    TextBoxMCNo.Text = m_Data.MCNo
+                    Devicetext.Text = m_Data.DeviceName
+                    TestflowTextBox.Text = m_Data.TestFlow
+                    TesterTypeTextBox.Text = m_Data.TesterType
+                    TextBoxSetupStatus.Text = m_Data.SetupStatus
+                    SetStatusColor(TextBoxSetupStatus.Text)
+
+                    Session(SESSION_KEY_DATA) = m_Data
+
+                End If
+
+            End Using
+
+        End If
+    End Sub
+
+    Private Sub SetStatusColor(statusText As String)
+        Select Case statusText
+            Case SETUP_STATUS_WAITING
+                TextBoxSetupStatus.ForeColor = Drawing.Color.Orange
+                ButtonConfirm.Visible = True
+                ButtonSetup.Text = BUTTON_TEXT_CANCEL
+            Case SETUP_STATUS_CONFIRMED
+                TextBoxSetupStatus.ForeColor = Drawing.Color.Green
+                ButtonConfirm.Visible = False
+                ButtonSetup.Text = BUTTON_TEXT_SETUP
+            Case SETUP_STATUS_CANCELED
+                TextBoxSetupStatus.ForeColor = Drawing.Color.Blue
+                ButtonConfirm.Visible = False
+                ButtonSetup.Text = BUTTON_TEXT_SETUP
+            Case Else
+                TextBoxSetupStatus.ForeColor = Drawing.Color.Black
+                ButtonConfirm.Visible = False
+                ButtonSetup.Text = BUTTON_TEXT_SETUP
+        End Select
+    End Sub
+
+End Class

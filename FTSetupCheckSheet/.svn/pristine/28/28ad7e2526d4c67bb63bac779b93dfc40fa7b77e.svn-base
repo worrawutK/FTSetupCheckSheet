@@ -1,0 +1,43 @@
+﻿Imports System.Threading.Tasks
+Imports Microsoft.AspNet.Identity
+Imports Microsoft.AspNet.Identity.Owin
+
+Partial Public Class CheckSetupFT1
+    Inherits System.Web.UI.Page
+
+    Private m_Data As FTSetupReport
+
+    Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        Dim tmp As Object = Session("DATA")
+        If tmp Is Nothing Then
+            m_Data = New FTSetupReport()
+        Else
+            m_Data = CType(tmp, FTSetupReport)
+        End If
+        If Not IsPostBack Then
+            selecQfpDecisionLeadPress.Value = m_Data.QfpDecisionLeadPress
+            selecQfpSocketDecision.Value = m_Data.QfpSocketDecision
+            selecQfpTray.Value = m_Data.QfpTray
+            selecQfpVacuumPad.Value = m_Data.QfpVacuumPad
+        End If
+    End Sub
+
+    Public Sub UpdateSessionData()
+        m_Data.QfpDecisionLeadPress = selecQfpDecisionLeadPress.Value
+        m_Data.QfpSocketDecision = selecQfpSocketDecision.Value
+        m_Data.QfpTray = selecQfpTray.Value
+        m_Data.QfpVacuumPad = selecQfpVacuumPad.Value
+        Session("DATA") = m_Data
+    End Sub
+
+    Protected Sub ButtonPrevious_Click(sender As Object, e As EventArgs) Handles ButtonPrevious.Click
+        UpdateSessionData()
+        Response.Redirect("~/CheckSetupFT.aspx")
+    End Sub
+
+    Protected Sub ButtonNext_Click(sender As Object, e As EventArgs) Handles ButtonNext.Click
+        UpdateSessionData()
+        Response.Redirect("~/CheckSetupFT2.aspx")
+    End Sub
+
+End Class

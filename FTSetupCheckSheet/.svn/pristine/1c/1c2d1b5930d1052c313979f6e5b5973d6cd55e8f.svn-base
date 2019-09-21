@@ -1,0 +1,36 @@
+﻿Imports System
+Imports System.IO
+Imports System.Web
+Imports System.Data
+Imports System.Text
+Imports iTextSharp
+Imports iTextSharp.text
+Imports iTextSharp.text.pdf
+Imports System.Data.SqlClient
+
+Public Class ShowDataSetup
+    Inherits System.Web.UI.Page
+
+    Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+
+    End Sub
+
+
+
+    'Dim iRow As Integer = e.RowIndex
+
+    'Dim r As DataGridViewRow = GridView1.Rows(iRow)
+
+    'Dim cellValue As Double = Convert.ToDouble(r.Cells(5).Value)
+    ''UnitPrice
+    'If cellValue <= 20 Then
+
+
+    '    r.DefaultCellStyle.BackColor = Color.Yellow
+
+
+    '    r.DefaultCellStyle.ForeColor = Color.Red
+    'End If
+
+
+End Class

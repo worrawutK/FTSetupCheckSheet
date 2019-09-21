@@ -1,0 +1,69 @@
+﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/Site.Master" CodeBehind="DataSetup_CheckSheet.aspx.vb" Inherits="Report_CheckSheet.DataSetup_CheckSheet" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+     <div class="jumbotron">
+        <h1 class="text-center login-title" style="font-family: 'Waffle Regular'; font-weight: bold;">SET-UP  CHECK  SHEET</h1>
+        <h2 class="text-center login-title" style="font-family : 'Waffle Regular'; font-weight: bold;" >ｾｯﾄｱｯﾌﾟﾁｪｯｸｼｰﾄ</h2>
+     </div>
+
+     <ul class ="nav nav-pills nav-justified">
+        <li ><a href ="PrintSetupFT.aspx">Print Set-up Check Sheet</a></li>
+        <li ><a href="ShowDataSetup.aspx">Data Set-up Check Sheet</a></li>
+        <li class ="active"><a href ="DataSetup_CheckSheet.aspx">History Set-up Check Sheet</a></li>
+    </ul>
+
+<div class="container"> 
+    <h3 class="login-title" style="font-family: 'Waffle Regular'; font-weight: bold;">HISTORY SETUP-CHECK SHEET</h3><br />
+  <div class="panel-group"> 
+
+      <table style="width:100%;">
+           <tr>
+               <td style="height: 22px"></td>
+               <td style="height: 22px"></td>
+               <td style="height: 22px"></td>
+           </tr>
+           <tr>
+               <td colspan="3">&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>
+           </tr>
+           </table>
+       <br />
+
+
+      <div style="text-align: left">
+      <asp:GridView ID="GridView1" runat="server" DataSourceID="DataSetupHistorySqlDataSource" AutoGenerateColumns="False" BackColor="#CCCCCC" BorderColor="#999999" BorderStyle="Solid" BorderWidth="3px" CellPadding="4" CellSpacing="2" DataKeyNames="MCNo" ForeColor="Black" AllowPaging="True">
+          <Columns>
+              <asp:BoundField DataField="MCNo" HeaderText="MCNo" ReadOnly="True" SortExpression="MCNo" />
+              <asp:BoundField DataField="LotNo" HeaderText="LotNo" SortExpression="LotNo" />
+              <asp:BoundField DataField="PackageName" HeaderText="PackageName" SortExpression="PackageName" />
+              <asp:BoundField DataField="DeviceName" HeaderText="DeviceName" SortExpression="DeviceName" />
+              <asp:BoundField DataField="ProgramName" HeaderText="ProgramName" SortExpression="ProgramName" />
+              <asp:BoundField DataField="TesterType" HeaderText="TesterType" SortExpression="TesterType" />
+              <asp:BoundField DataField="TestFlow" HeaderText="TestFlow" SortExpression="TestFlow" />
+              <asp:BoundField DataField="SetupStartDate" HeaderText="SetupStartDate" SortExpression="SetupStartDate" />
+              <asp:BoundField DataField="SetupEndDate" HeaderText="SetupEndDate" SortExpression="SetupEndDate" />
+             <asp:TemplateField HeaderText="Status">
+                  <ItemTemplate>
+                      <asp:Image ID="Image2" runat="server" Height="30px" ImageUrl="~/images/icon_Waiting1.png" Width="36px" />
+                  </ItemTemplate>
+              </asp:TemplateField>
+          </Columns>
+          <FooterStyle BackColor="#CCCCCC" />
+          <HeaderStyle BackColor="Black" Font-Bold="True" ForeColor="White" />
+          <PagerStyle BackColor="#CCCCCC" ForeColor="Black" HorizontalAlign="Left" />
+          <RowStyle BackColor="White" />
+          <SelectedRowStyle BackColor="#000099" Font-Bold="True" ForeColor="White" />
+          <SortedAscendingCellStyle BackColor="#F1F1F1" />
+          <SortedAscendingHeaderStyle BackColor="#808080" />
+          <SortedDescendingCellStyle BackColor="#CAC9C9" />
+          <SortedDescendingHeaderStyle BackColor="#383838" />
+      </asp:GridView>
+      </div>
+      <asp:SqlDataSource ID="DataSetupHistorySqlDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:DBxConnectionString %>" SelectCommand="SELECT MCNo, LotNo, PackageName, DeviceName, ProgramName, TesterType, TestFlow, SetupEndDate, SetupConfirmDate, SetupStartDate, SetupStatus FROM FTSetupReport ORDER BY SetupStartDate"></asp:SqlDataSource>
+   </div> 
+ </div>
+     <br /> <br />
+
+
+     <br /><br />
+
+</asp:Content>

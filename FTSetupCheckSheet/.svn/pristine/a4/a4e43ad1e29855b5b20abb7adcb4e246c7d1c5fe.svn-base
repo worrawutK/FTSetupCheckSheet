@@ -1,0 +1,213 @@
+﻿Imports System
+Imports System.IO
+Imports System.Web
+Imports System.Data
+Imports System.Linq
+Imports System.Text
+Imports System.Web.UI
+Imports System.Data.OleDb
+Imports System.Configuration
+Imports System.Data.SqlClient
+Imports System.Collections.Generic
+
+Public Class InputSetupFT4
+    Inherits System.Web.UI.Page
+
+    Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        Option1TextBox.Focus()
+    End Sub
+
+    Protected Sub Option1TextBox_TextChanged(sender As Object, e As EventArgs) Handles Option1TextBox.TextChanged
+        Option2TextBox.Focus()
+
+        If Option1TextBox.Text.Length = 9 Then
+            Dim r_Option1 As String = Option1TextBox.Text.Substring(0, 9)
+
+            Dim conSql As SqlConnection = New SqlConnection()
+            Dim constr As String = "Data Source=172.16.0.102;Initial Catalog=DBx;User ID=EQPUser"
+
+            conSql.ConnectionString = constr
+            conSql.Open()
+
+            Dim sdqData As String = "Select SubType, QRName FROM DBx.EQP.Equipment WHERE EquipmentTypeID = '9' AND QRName = '" & Me.Option1TextBox.Text & "'"
+
+            Using cmd As New SqlCommand(sdqData, conSql)
+                Using d As SqlDataReader = cmd.ExecuteReader()
+                    If d.Read Then
+                        Option1TextBox.Text = d("SubType").ToString()
+                    End If
+                End Using
+            End Using
+
+            conSql.Close()
+
+        End If
+    End Sub
+
+    Protected Sub Option2TextBox_TextChanged(sender As Object, e As EventArgs) Handles Option2TextBox.TextChanged
+
+        Option3TextBox.Focus()
+
+        If Option2TextBox.Text.Length = 9 Then
+            Dim r_Option2 As String = Option2TextBox.Text.Substring(0, 9)
+
+            Dim conSql As SqlConnection = New SqlConnection()
+            Dim constr As String = "Data Source=172.16.0.102;Initial Catalog=DBx;User ID=EQPUser"
+
+            conSql.ConnectionString = constr
+            conSql.Open()
+
+            Dim sdqData As String = "Select SubType, QRName FROM DBx.EQP.Equipment WHERE EquipmentTypeID = '9' AND QRName = '" & Me.Option2TextBox.Text & "'"
+
+            Using cmd As New SqlCommand(sdqData, conSql)
+                Using d As SqlDataReader = cmd.ExecuteReader()
+                    If d.Read Then
+                        Option2TextBox.Text = d("SubType").ToString()
+                    End If
+                End Using
+            End Using
+
+            conSql.Close()
+
+        End If
+    End Sub
+
+    Protected Sub Option3TextBox_TextChanged(sender As Object, e As EventArgs) Handles Option3TextBox.TextChanged
+
+        Option4TextBox.Focus()
+
+        If Option3TextBox.Text.Length = 9 Then
+            Dim r_Option3 As String = Option3TextBox.Text.Substring(0, 9)
+
+            Dim conSql As SqlConnection = New SqlConnection()
+            Dim constr As String = "Data Source=172.16.0.102;Initial Catalog=DBx;User ID=EQPUser"
+
+            conSql.ConnectionString = constr
+            conSql.Open()
+
+            Dim sdqData As String = "Select SubType, QRName FROM DBx.EQP.Equipment WHERE EquipmentTypeID = '9' AND QRName = '" & Me.Option3TextBox.Text & "'"
+
+            Using cmd As New SqlCommand(sdqData, conSql)
+                Using d As SqlDataReader = cmd.ExecuteReader()
+                    If d.Read Then
+                        Option3TextBox.Text = d("SubType").ToString()
+                    End If
+                End Using
+            End Using
+
+            conSql.Close()
+
+        End If
+    End Sub
+
+    Protected Sub Option4TextBox_TextChanged(sender As Object, e As EventArgs) Handles Option4TextBox.TextChanged
+
+        Option5TextBox.Focus()
+
+        If Option4TextBox.Text.Length = 9 Then
+            Dim r_Option4 As String = Option4TextBox.Text.Substring(0, 9)
+
+            Dim conSql As SqlConnection = New SqlConnection()
+            Dim constr As String = "Data Source=172.16.0.102;Initial Catalog=DBx;User ID=EQPUser"
+
+            conSql.ConnectionString = constr
+            conSql.Open()
+
+            Dim sdqData As String = "Select SubType, QRName FROM DBx.EQP.Equipment WHERE EquipmentTypeID = '9' AND QRName = '" & Me.Option4TextBox.Text & "'"
+
+            Using cmd As New SqlCommand(sdqData, conSql)
+                Using d As SqlDataReader = cmd.ExecuteReader()
+                    If d.Read Then
+                        Option4TextBox.Text = d("SubType").ToString()
+                    End If
+                End Using
+            End Using
+
+            conSql.Close()
+
+        End If
+    End Sub
+
+    Protected Sub Option5TextBox_TextChanged(sender As Object, e As EventArgs) Handles Option5TextBox.TextChanged
+
+        Option6TextBox.Focus()
+
+        If Option5TextBox.Text.Length = 9 Then
+            Dim r_Option5 As String = Option5TextBox.Text.Substring(0, 9)
+
+            Dim conSql As SqlConnection = New SqlConnection()
+            Dim constr As String = "Data Source=172.16.0.102;Initial Catalog=DBx;User ID=EQPUser"
+
+            conSql.ConnectionString = constr
+            conSql.Open()
+
+            Dim sdqData As String = "Select SubType, QRName FROM DBx.EQP.Equipment WHERE EquipmentTypeID = '9' AND QRName = '" & Me.Option5TextBox.Text & "'"
+
+            Using cmd As New SqlCommand(sdqData, conSql)
+                Using d As SqlDataReader = cmd.ExecuteReader()
+                    If d.Read Then
+                        Option5TextBox.Text = d("SubType").ToString()
+                    End If
+                End Using
+            End Using
+
+            conSql.Close()
+
+        End If
+    End Sub
+
+    Protected Sub Option6TextBox_TextChanged(sender As Object, e As EventArgs) Handles Option6TextBox.TextChanged
+
+        Option7TextBox.Focus()
+
+        If Option6TextBox.Text.Length = 9 Then
+            Dim r_Option6 As String = Option6TextBox.Text.Substring(0, 9)
+
+            Dim conSql As SqlConnection = New SqlConnection()
+            Dim constr As String = "Data Source=172.16.0.102;Initial Catalog=DBx;User ID=EQPUser"
+
+            conSql.ConnectionString = constr
+            conSql.Open()
+
+            Dim sdqData As String = "Select SubType, QRName FROM DBx.EQP.Equipment WHERE EquipmentTypeID = '9' AND QRName = '" & Me.Option6TextBox.Text & "'"
+
+            Using cmd As New SqlCommand(sdqData, conSql)
+                Using d As SqlDataReader = cmd.ExecuteReader()
+                    If d.Read Then
+                        Option6TextBox.Text = d("SubType").ToString()
+                    End If
+                End Using
+            End Using
+
+            conSql.Close()
+
+        End If
+    End Sub
+
+    Protected Sub Option7TextBox_TextChanged(sender As Object, e As EventArgs) Handles Option7TextBox.TextChanged
+
+        If Option7TextBox.Text.Length = 9 Then
+            Dim r_Option7 As String = Option7TextBox.Text.Substring(0, 9)
+
+            Dim conSql As SqlConnection = New SqlConnection()
+            Dim constr As String = "Data Source=172.16.0.102;Initial Catalog=DBx;User ID=EQPUser"
+
+            conSql.ConnectionString = constr
+            conSql.Open()
+
+            Dim sdqData As String = "Select SubType, QRName FROM DBx.EQP.Equipment WHERE EquipmentTypeID = '9' AND QRName = '" & Me.Option7TextBox.Text & "'"
+
+            Using cmd As New SqlCommand(sdqData, conSql)
+                Using d As SqlDataReader = cmd.ExecuteReader()
+                    If d.Read Then
+                        Option7TextBox.Text = d("SubType").ToString()
+                    End If
+                End Using
+            End Using
+
+            conSql.Close()
+
+        End If
+
+    End Sub
+End Class

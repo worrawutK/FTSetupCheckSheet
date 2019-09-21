@@ -1,0 +1,27 @@
+﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/Site.Master" CodeBehind="PrintSetupFT.aspx.vb" Inherits="Report_CheckSheet._555" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+
+     <div class="jumbotron">
+        <h1 class="text-center login-title" style="font-family: 'Waffle Regular'; font-weight: bold;">SET-UP  CHECK  SHEET</h1>
+        <h2 class="text-center login-title" style="font-family : 'Waffle Regular'; font-weight: bold;" >ｾｯﾄｱｯﾌﾟﾁｪｯｸｼｰﾄ</h2>
+   </div>
+
+    <ul class ="nav nav-pills nav-justified">
+        <li class ="active"><a href ="PrintSetupFT.aspx">Print Set-up Check Sheet</a></li>
+        <li ><a href ="PrintShonokoshi.aspx">Print Shohonokoshi</a></li>
+        <li ><a href="ShowDataSetup.aspx">Data Set-up Check Sheet</a></li>
+    </ul><br /><br />
+
+<div class="fileinput fileinput-new" data-provides="fileinput">
+  <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
+      <img src="Pictures.png" class="img-responsive" alt="Cinque Terre">
+  </div><br />
+<%--<span class="fileinput-new">Select image</span><span class="fileinput-exists">Change</span>--%>
+  <div>
+    <span class="btn btn-default btn-file"><input type="file" name="..."></span>
+    <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
+  </div>
+</div>
+    
+    <br />
+</asp:Content>

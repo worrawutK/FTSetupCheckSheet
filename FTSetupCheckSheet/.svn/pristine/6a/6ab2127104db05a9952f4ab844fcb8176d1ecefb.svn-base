@@ -1,0 +1,37 @@
+﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/Site.Master" CodeBehind="InputSetupFT.aspx.vb" Inherits="Report_CheckSheet.InputSetupFT" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+
+
+    <div class="jumbotron">
+        <h1 class="text-center login-title" style="font-family: 'Waffle Regular'; font-weight: bold;">SET-UP  CHECK  SHEET</h1>
+        <h2 class="text-center login-title" style="font-family : 'Waffle Regular'; font-weight: bold;" >ｾｯﾄｱｯﾌﾟﾁｪｯｸｼｰﾄ</h2>
+        <asp:Timer ID="Timer1" runat="server">
+        </asp:Timer>
+    </div>
+
+    <div class="panel panel-primary">
+      <div class="panel-heading">(1) QR CODE (QRコード)</div>
+        <asp:TextBox ID="QRcodeTextBox" runat="server" CssClass="form-control" AutoPostBack="True"></asp:TextBox>
+    </div>
+
+  <div class="panel panel-primary">
+      <div class="panel-heading">(2) DEVICE NAME  (機種名)</div>
+      <asp:TextBox ID="lotnoTextbox" runat="server" CssClass="form-control" ReadOnly="True"></asp:TextBox>
+     </div>
+
+    <div class="panel panel-primary">
+      <div class="panel-heading">(3) PACKAGE NAME  (形状名)</div>
+      <asp:TextBox ID="PackagenameTextBox" runat="server" CssClass="form-control" ReadOnly="True"></asp:TextBox>
+    </div>
+    
+     <div class="panel panel-primary">
+      <div class="panel-heading">(4) DEVICE NAME  (機種名)</div>
+      <asp:TextBox ID="DeviceNameTextBox" runat="server" CssClass="form-control" ReadOnly="True"></asp:TextBox>
+     </div><br />
+
+     <ul class="pager">
+           <li class="previous"><a href="Default.aspx">Previous</a></li>
+           <li class="next"><a href="InputSetupFT1.aspx">Next</a></li>
+     </ul><br />
+
+</asp:Content>

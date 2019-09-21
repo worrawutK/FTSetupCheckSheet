@@ -1,0 +1,48 @@
+﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/Site.Master" CodeBehind="CheckSetupFT7.aspx.vb" Inherits="Report_CheckSheet.CheckSetupFT7" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+
+    
+    <div class="jumbotron">
+        <h1 class="text-center login-title" style="font-family: 'Waffle Regular'; font-weight: bold;">SET-UP  CHECK  SHEET</h1>
+        <h2 class="text-center login-title" style="font-family : 'Waffle Regular'; font-weight: bold;" >ｾｯﾄｱｯﾌﾟﾁｪｯｸｼｰﾄ</h2>
+     </div>
+
+     <div class="container">  
+         <div class="panel-group">
+            <div class="panel panel-primary">
+              <div class="panel-heading"> กรณที่มี NG (NGの場合) ให้ทำการตรวจสอบอีกครั้ง (再確認) </div>
+            </div><br />
+    
+        <div class="panel panel-success">
+              <div class="panel-heading"> (19)  สภาพการ 5s </div>
+                  <div class="form-group">
+                      <select runat="server" class="form-control" id="sel19">
+                        <option>    </option>
+                        <option value ="OK"> OK </option>
+                        <option value ="NG"> NG </option>
+                      </select>
+              </div>
+         </div><br />
+
+         <div class="panel panel-success">
+              <div class="panel-heading"> (20)  สภาพการ 5s </div>
+                  <div class="form-group">
+                      <select runat="server" class="form-control" id="sel20">
+                        <option>    </option>
+                        <option value="YES"> YES </option>
+                        <option value="NO"> NO </option>
+                      </select>
+              </div>
+         </div><br />
+
+        <asp:Button ID="Savebutton_Check" runat="server" Text="SAVE" CssClass="btn btn-primary btn-block" Font-Bold="True" />
+
+        <ul class="pager">
+           <li class="previous"><a href="CheckSetupFT6.aspx">Previous</a></li>
+           <li class="next"><a href="PrintSetupFT.aspx">Next</a></li>
+        </ul><br />
+
+         </div>
+    </div>
+
+</asp:Content>

@@ -1,0 +1,66 @@
+﻿Imports System
+Imports System.IO
+Imports System.Web
+Imports System.Data
+Imports System.Linq
+Imports System.Text
+Imports System.Web.UI
+Imports System.Data.OleDb
+Imports System.Configuration
+Imports System.Data.SqlClient
+
+Public Class SetupConfirm
+    Inherits System.Web.UI.Page
+
+    Private m_Data As FTSetupReport
+
+    Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+
+        Dim tmp As Object = Session(SESSION_KEY_DATA)
+        If tmp Is Nothing Then
+            Response.Redirect("~/SetupMain.aspx")
+            Exit Sub
+        Else
+            m_Data = CType(tmp, FTSetupReport)
+        End If
+
+        If IsPostBack AndAlso m_Data.SetupStatus = "CONFIRMED" Then
+            Response.Redirect("~/SetupMain.aspx")
+            Exit Sub
+        Else
+            lotnoTextbox.Text = m_Data.LotNo
+            PackagenameTextBox.Text = m_Data.PackgeName
+            DeviceNameTextBox.Text = m_Data.DeviceName
+        End If
+
+        QRcodeTextBox.Focus()
+    End Sub
+
+    Protected Sub ButtonPrevious_Click(sender As Object, e As EventArgs) Handles ButtonPrevious.Click
+        Response.Redirect("~/SetupMain.aspx")
+    End Sub
+
+    Protected Sub QRcodeTextBox_TextChanged(sender As Object, e As EventArgs) Handles QRcodeTextBox.TextChanged
+
+        If QRcodeTextBox.Text.Length = 252 Then
+            Dim qrTest As String = QRcodeTextBox.Text
+            m_Data.LotNo = qrTest.Substring(30, 10)
+            m_Data.PackgeName = QRcodeTextBox.Text.Substring(0, 10)
+            m_Data.DeviceName = QRcodeTextBox.Text.Substring(212, 20)
+
+            DeviceNameTextBox.Text = m_Data.DeviceName
+            PackagenameTextBox.Text = m_Data.PackgeName
+            lotnoTextbox.Text = m_Data.LotNo
+
+            Session(SESSION_KEY_DATA) = m_Data
+
+
+        End If
+        QRcodeTextBox.Text = ""
+
+    End Sub
+
+    Protected Sub Confirmbutton_Click(sender As Object, e As EventArgs) Handles Confirmbutton_Check.Click
+
+    End Sub
+End Class

@@ -1,0 +1,38 @@
+﻿Imports System
+Imports System.IO
+Imports System.Web
+Imports System.Data
+Imports System.Linq
+Imports System.Text
+Imports System.Web.UI
+Imports System.Data.OleDb
+Imports System.Configuration
+Imports System.Data.SqlClient
+Imports System.Collections.Generic
+
+Public Class InputSetupFT
+    Inherits System.Web.UI.Page
+
+    Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        QRcodeTextBox.Focus()
+    End Sub
+
+    Protected Sub QRcodeTextBox_TextChanged(sender As Object, e As EventArgs) Handles QRcodeTextBox.TextChanged
+
+        If QRcodeTextBox.Text.Length = 252 Then
+            Dim r_lotno As String = QRcodeTextBox.Text.Substring(30, 10)
+            lotnoTextbox.Text = r_lotno
+            Dim r_Package As String = QRcodeTextBox.Text.Substring(0, 10)
+            PackagenameTextBox.Text = r_Package
+            Dim r_Device As String = QRcodeTextBox.Text.Substring(212, 20)
+            DeviceNameTextBox.Text = r_Device
+
+            'ElseIf QRcodeTextBox.Text.Length <> 252 Then
+            '    ShowErrorMessage(" PLEASE NEW QRCODE !!! ERROR ")
+            'End If
+
+        End If
+        QRcodeTextBox.Text = ""
+
+    End Sub
+End Class

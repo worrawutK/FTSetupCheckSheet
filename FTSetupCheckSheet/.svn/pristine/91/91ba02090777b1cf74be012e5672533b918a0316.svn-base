@@ -1,0 +1,105 @@
+﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/Site.Master" CodeBehind="PrintSetupFT.aspx.vb" Inherits="Report_CheckSheet.PrintSetupFT" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+
+    <script src="Scripts/bootstrap.min.js"></script>
+    <script src="Scripts/jquery-1.10.2.min.js"></script>
+    <script src="Scripts/bootstrap.min.js"></script>
+
+     <div class="jumbotron">
+        <h1 class="text-center login-title" style="font-family: 'Waffle Regular'; font-weight: bold;">SET-UP  CHECK  SHEET</h1>
+        <h2 class="text-center login-title" style="font-family : 'Waffle Regular'; font-weight: bold;" >ｾｯﾄｱｯﾌﾟﾁｪｯｸｼｰﾄ</h2>
+   </div>
+
+    <ul class ="nav nav-pills nav-justified">
+        <li class ="active"><a href ="PrintSetupFT.aspx">Print Set-up Check Sheet</a></li> 
+        <li ><a href="ShowDataSetup.aspx">Data Set-up Check Sheet</a></li>
+        <li ><a href ="DataSetup_CheckSheet.aspx">History Set-up Check Sheet</a></li>
+    </ul>
+    <div class="container"> 
+        <div class="panel-group"> 
+            <div class="form-group has-success has-feedback"><br /><br />
+                <center><asp:DropDownList ID="MCnoDropDownList" runat="server" DataSourceID="McnoSqlDataSource" DataTextField="MCNo" DataValueField="MCNo" Font-Bold="True">
+                </asp:DropDownList><br />
+                <asp:SqlDataSource ID="McnoSqlDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:DBxConnectionString %>" SelectCommand="SELECT DISTINCT MCNo FROM FTSetupReport"></asp:SqlDataSource>
+                    <br />
+                    <asp:Label ID="dateTimesetupLabel" runat="server" Text="dateTimesetup"></asp:Label>
+                    <br />
+                <br/></center>
+
+                <div class="container"> 
+  <div class="panel-group"> 
+      <asp:Panel ID="Panel1" runat="server" BorderColor="#6699FF" BorderStyle="Groove"><br />
+          <table style="width:100%;">
+             <tr>
+                  <td style="height: 23px; width: 423px">
+                      &nbsp;</td>
+                  <td style="height: 23px; width: 369px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                      <asp:FileUpload ID="FileUpload1" runat="server" BorderColor="#0099FF" Width="300px" />
+                  </td>
+                  <td style="height: 23px">
+                      &nbsp;</td>
+              </tr>
+              <tr>
+                  <td style="width: 423px; height: 44px">
+                      &nbsp;</td>
+                  <td style="width: 369px; height: 44px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                      <asp:FileUpload ID="FileUpload2" runat="server" BorderColor="#0099FF" Width="297px" />
+                  </td>
+                  <td style="height: 44px">
+                      &nbsp;
+                  </td>
+              </tr>
+              <tr>
+                  <td style="width: 423px">
+                      &nbsp;</td>
+                  <td style="width: 369px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                      <asp:FileUpload ID="FileUpload3" runat="server" BorderColor="#0099FF" Width="297px" />
+                  </td>
+                  <td>
+                      &nbsp;&nbsp;
+                  </td>
+              </tr>
+          </table>
+          <table style="width:100%;">
+              <tr>
+                  <td style="height: 23px; width: 423px">&nbsp;</td>
+                  <td style="height: 23px; width: 369px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      <asp:FileUpload ID="FileUpload4" runat="server" BorderColor="#0099FF" Width="300px" />
+                  </td>
+                  <td style="height: 23px">&nbsp;</td>
+              </tr>
+              <tr>
+                  <td style="width: 423px">&nbsp;</td>
+                  <td style="width: 369px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      <asp:FileUpload ID="FileUpload5" runat="server" BorderColor="#0099FF" Width="297px" />
+                  </td>
+                  <td>&nbsp; </td>
+              </tr>
+              <tr>
+                  <td style="width: 423px">&nbsp;</td>
+                  <td style="width: 369px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>
+                  <td>&nbsp;&nbsp; </td>
+              </tr>
+          </table>
+          <table style="width:100%;">
+              <tr>
+                  <td style="height: 23px; width: 423px">&nbsp;</td>
+                  <td style="height: 23px; width: 369px; text-align: center;">
+                    <%--  <asp:DropDownList ID="MCnoDropDownList" runat="server" DataSourceID="McnoSqlDataSource" DataTextField="MCNo" DataValueField="MCNo" Font-Bold="True">
+                      </asp:DropDownList>--%>
+                  </td>
+                  <td style="height: 23px">&nbsp;</td>
+              </tr>
+          </table>
+          <br />
+      </asp:Panel>
+   </div> 
+ </div><br /> <br />
+          <center><asp:Button ID="Export_Check" runat="server" Text="Export To PDF" CssClass="btn btn-primary" Font-Bold="True" style="height: 36px" /></center><br />
+      </div>
+    </div>
+   </div><br />
+
+ 
+
+</asp:Content>

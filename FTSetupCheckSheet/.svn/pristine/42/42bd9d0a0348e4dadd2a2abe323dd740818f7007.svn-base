@@ -1,0 +1,289 @@
+﻿Imports System.Data.SqlClient
+
+Public Class DBAccess
+    Private Sub New()
+    End Sub
+
+    Public Shared Function CreateBlankFTSetupRecord(mcNo As String) As Integer
+        Dim ret As Integer = 0
+
+        Using con As SqlConnection = New SqlConnection()
+
+            Using cmd As SqlCommand = con.CreateCommand()
+                cmd.CommandText = "INSERT INTO FTSetupReport (MCNo) VALUES (@MCNo)"
+                cmd.Parameters.Add("@MCNo", SqlDbType.VarChar, 15).Value = mcNo
+
+                ret = cmd.ExecuteNonQuery()
+
+            End Using
+
+        End Using
+
+        Return ret
+    End Function
+
+    Public Shared Function UpdateFTSetupReport(mcno As String, lotNo As String, packgeName As String, deviceName As String, programName As String, testerType As String, testFlow As String,
+            qRCodesocket As String, testerNoA As String, testerNoB As String, channelAFTB As String, channelBFTB As String, testBoxA As String,
+            testBoxB As String, adaptorA As String, adaptorB As String, dutcardA As String, dutcardB As String, bridgecableA As String,
+            bridgecableB As String, typeChangePackage As String, setupStartDate As System.Nullable(Of DateTime), setupEndDate As System.Nullable(Of DateTime), boxTesterConnection As String, optionSetup As String,
+            optionConnection As String, optionName1 As String, optionName2 As String, optionName3 As String, optionName4 As String, optionName5 As String,
+            optionName6 As String, optionName7 As String, optionType1 As String, optionType2 As String, optionType3 As String, optionType4 As String,
+            optionType5 As String, optionType6 As String, optionType7 As String, optionSetting1 As String, optionSetting2 As String, optionSetting3 As String,
+            optionSetting4 As String, optionSetting5 As String, optionSetting6 As String, optionSetting7 As String, qfpVacuumPad As String, qfpSocketSetup As String,
+            qfpSocketDecision As String, qfpDecisionLeadPress As String, qfpTray As String, sopStopper As String, sopSocketDecision As String, sopDecisionLeadPress As String,
+            manualCheckTest As System.Nullable(Of Integer), manualCheckTE As String, pkgGood As String, pkgNG As String, pkgNishikiCamara As String, pkqBantLead As String,
+            pkqKakeHige As String, bgaSmallBall As String, bgaBentTape As String, bge5S As String, dateTimeTotal As String, setupStatus As String,
+            setupConfirmDate As System.Nullable(Of DateTime)) As Integer
+
+        Dim strSql As String = "UPDATE [dbo].[FTSetupReport]" &
+                    "SET [LotNo] = @LotNo," &
+                    "[PackgeName] = @PackgeName," &
+                    "[DeviceName] = @DeviceName," &
+                    "[ProgramName] = @ProgramName," &
+                    "[TesterType] = @TesterType," &
+                    "[TestFlow] = @TestFlow," &
+                    "[QRCodesocket] = @QRCodesocket," &
+                    "[TesterNoA] = @TesterNoA," &
+                    "[TesterNoB] = @TesterNoB," &
+                    "[ChannelAFTB] = @ChannelAFTB," &
+                    "[ChannelBFTB] = @ChannelBFTB," &
+                    "[TestBoxA] = @TestBoxA," &
+                    "[TestBoxB] = @TestBoxB," &
+                    "[AdaptorA] = @AdaptorA," &
+                    "[AdaptorB] = @AdaptorB," &
+                    "[DutcardA] = @DutcardA," &
+                    "[DutcardB] = @DutcardB," &
+                    "[BridgecableA] = @BridgecableA," &
+                    "[BridgecableB] = @BridgecableB," &
+                    "[TypeChangePackage] = @TypeChangePackage," &
+                    "[SetupStartDate] = @SetupStartDate," &
+                    "[SetupEndDate] = @SetupEndDate," &
+                    "[BoxTesterConnection] = @BoxTesterConnection," &
+                    "[OptionSetup] = @OptionSetup," &
+                    "[OptionConnection] = @OptionConnection," &
+                    "[OptionName1] = @OptionName1," &
+                    "[OptionName2] = @OptionName2," &
+                    "[OptionName3] = @OptionName3," &
+                    "[OptionName4] = @OptionName4," &
+                    "[OptionName5] = @OptionName5," &
+                    "[OptionName6] = @OptionName6," &
+                    "[OptionName7] = @OptionName7," &
+                    "[OptionType1] = @OptionType1," &
+                    "[OptionType2] = @OptionType2," &
+                    "[OptionType3] = @OptionType3," &
+                    "[OptionType4] = @OptionType4," &
+                    "[OptionType5] = @OptionType5," &
+                    "[OptionType6] = @OptionType6," &
+                    "[OptionType7] = @OptionType7," &
+                    "[OptionSetting1] = @OptionSetting1," &
+                    "[OptionSetting2] = @OptionSetting2," &
+                    "[OptionSetting3] = @OptionSetting3," &
+                    "[OptionSetting4] = @OptionSetting4," &
+                    "[OptionSetting5] = @OptionSetting5," &
+                    "[OptionSetting6] = @OptionSetting6," &
+                    "[OptionSetting7] = @OptionSetting7," &
+                    "[QfpVacuumPad] = @QfpVacuumPad," &
+                    "[QfpSocketSetup] = @QfpSocketSetup," &
+                    "[QfpSocketDecision] = @QfpSocketDecision," &
+                    "[QfpDecisionLeadPress] = @QfpDecisionLeadPress," &
+                    "[QfpTray] = @QfpTray," &
+                    "[SopStopper] = @SopStopper," &
+                    "[SopSocketDecision] = @SopSocketDecision," &
+                    "[SopDecisionLeadPress] = @SopDecisionLeadPress," &
+                    "[ManualCheckTest] = @ManualCheckTest," &
+                    "[ManualCheckTE] = @ManualCheckTE," &
+                    "[PkgGood] = @PkgGood," &
+                    "[PkgNG] = @PkgNG," &
+                    "[PkgNishikiCamara] = @PkgNishikiCamara," &
+                    "[PkqBantLead] = @PkqBantLead," &
+                    "[PkqKakeHige] = @PkqKakeHige," &
+                    "[BgaSmallBall] = @BgaSmallBall," &
+                    "[BgaBentTape] = @BgaBentTape," &
+                    "[Bge5S] = @Bge5S," &
+                    "[DateTimeTotal] = @DateTimeTotal," &
+                    "[SetupStatus] = @SetupStatus," &
+                    "[SetupConfirmDat] = @SetupConfirmDat," &
+                    " WHERE [MCNo] = @MCNo"
+
+        Using con As SqlConnection = New SqlConnection(My.Settings.DBxConnectionString)
+
+            Using cmd As SqlCommand = con.CreateCommand()
+
+                cmd.CommandText = strSql
+                cmd.Parameters.Add("@MCNo", SqlDbType.VarChar, 15).Value = mcno
+                cmd.Parameters.Add("@LotNo", SqlDbType.VarChar, 10).Value = lotNo
+                cmd.Parameters.Add("@PackgeName", SqlDbType.VarChar, 20).Value = packgeName
+                cmd.Parameters.Add("@DeviceName", SqlDbType.VarChar, 20).Value = deviceName
+                cmd.Parameters.Add("@ProgramName", SqlDbType.VarChar, 30).Value = programName
+                cmd.Parameters.Add("@TesterType", SqlDbType.VarChar, 30).Value = testerType
+                cmd.Parameters.Add("@TestFlow", SqlDbType.VarChar, 30).Value = testFlow
+                cmd.Parameters.Add("@QRCodesocket", SqlDbType.VarChar, 30).Value = qRCodesocket
+                cmd.Parameters.Add("@TesterNoA", SqlDbType.VarChar, 30).Value = testerNoA
+                cmd.Parameters.Add("@TesterNoB", SqlDbType.VarChar, 30).Value = testerNoB
+                cmd.Parameters.Add("@ChannelAFTB", SqlDbType.VarChar, 30).Value = channelAFTB
+                cmd.Parameters.Add("@ChannelBFTB", SqlDbType.VarChar, 30).Value = channelBFTB
+                cmd.Parameters.Add("@TestBoxA", SqlDbType.VarChar, 30).Value = testBoxA
+                cmd.Parameters.Add("@TestBoxB", SqlDbType.VarChar, 30).Value = testBoxB
+                cmd.Parameters.Add("@AdaptorA", SqlDbType.VarChar, 30).Value = adaptorA
+                cmd.Parameters.Add("@AdaptorB", SqlDbType.VarChar, 30).Value = adaptorB
+                cmd.Parameters.Add("@DutcardA", SqlDbType.VarChar, 30).Value = dutcardA
+                cmd.Parameters.Add("@DutcardB", SqlDbType.VarChar, 30).Value = dutcardB
+                cmd.Parameters.Add("@BridgecableA", SqlDbType.VarChar, 30).Value = bridgecableA
+                cmd.Parameters.Add("@BridgecableB", SqlDbType.VarChar, 30).Value = bridgecableB
+                cmd.Parameters.Add("@TypeChangePackage", SqlDbType.VarChar, 30).Value = typeChangePackage
+                cmd.Parameters.Add("@SetupStartDate", SqlDbType.SmallDateTime).Value = IIf(setupStartDate.HasValue, setupStartDate.Value, DBNull.Value)
+                cmd.Parameters.Add("@SetupEndDate", SqlDbType.SmallDateTime).Value = IIf(setupEndDate.HasValue, setupEndDate.Value, DBNull.Value)
+                cmd.Parameters.Add("@BoxTesterConnection", SqlDbType.VarChar, 10).Value = boxTesterConnection
+                cmd.Parameters.Add("@OptionSetup", SqlDbType.VarChar, 10).Value = optionSetup
+                cmd.Parameters.Add("@OptionConnection", SqlDbType.VarChar, 10).Value = optionConnection
+                cmd.Parameters.Add("@OptionName1", SqlDbType.VarChar, 10).Value = optionName1
+                cmd.Parameters.Add("@OptionName2", SqlDbType.VarChar, 10).Value = optionName2
+                cmd.Parameters.Add("@OptionName3", SqlDbType.VarChar, 10).Value = optionName3
+                cmd.Parameters.Add("@OptionName4", SqlDbType.VarChar, 10).Value = optionName4
+                cmd.Parameters.Add("@OptionName5", SqlDbType.VarChar, 10).Value = optionName5
+                cmd.Parameters.Add("@OptionName6", SqlDbType.VarChar, 10).Value = optionName6
+                cmd.Parameters.Add("@OptionName7", SqlDbType.VarChar, 10).Value = optionName7
+                cmd.Parameters.Add("@OptionType1", SqlDbType.VarChar, 10).Value = optionType1
+                cmd.Parameters.Add("@OptionType2", SqlDbType.VarChar, 10).Value = optionType2
+                cmd.Parameters.Add("@OptionType3", SqlDbType.VarChar, 10).Value = optionType3
+                cmd.Parameters.Add("@OptionType4", SqlDbType.VarChar, 10).Value = optionType4
+                cmd.Parameters.Add("@OptionType5", SqlDbType.VarChar, 10).Value = optionType5
+                cmd.Parameters.Add("@OptionType6", SqlDbType.VarChar, 10).Value = optionType6
+                cmd.Parameters.Add("@OptionType7", SqlDbType.VarChar, 10).Value = optionType7
+                cmd.Parameters.Add("@OptionSetting1", SqlDbType.VarChar, 10).Value = optionSetting1
+                cmd.Parameters.Add("@OptionSetting2", SqlDbType.VarChar, 10).Value = optionSetting2
+                cmd.Parameters.Add("@OptionSetting3", SqlDbType.VarChar, 10).Value = optionSetting3
+                cmd.Parameters.Add("@OptionSetting4", SqlDbType.VarChar, 10).Value = optionSetting4
+                cmd.Parameters.Add("@OptionSetting5", SqlDbType.VarChar, 10).Value = optionSetting5
+                cmd.Parameters.Add("@OptionSetting6", SqlDbType.VarChar, 10).Value = optionSetting6
+                cmd.Parameters.Add("@OptionSetting7", SqlDbType.VarChar, 10).Value = optionSetting7
+                cmd.Parameters.Add("@QfpVacuumPad", SqlDbType.VarChar, 10).Value = qfpVacuumPad
+                cmd.Parameters.Add("@QfpSocketSetup", SqlDbType.VarChar, 10).Value = qfpSocketSetup
+                cmd.Parameters.Add("@QfpSocketDecision", SqlDbType.VarChar, 10).Value = qfpSocketDecision
+                cmd.Parameters.Add("@QfpDecisionLeadPress", SqlDbType.VarChar, 10).Value = qfpDecisionLeadPress
+                cmd.Parameters.Add("@QfpTray", SqlDbType.VarChar, 10).Value = qfpTray
+                cmd.Parameters.Add("@SopStopper", SqlDbType.VarChar, 10).Value = sopStopper
+                cmd.Parameters.Add("@SopSocketDecision", SqlDbType.VarChar, 10).Value = sopSocketDecision
+                cmd.Parameters.Add("@SopDecisionLeadPress", SqlDbType.VarChar, 10).Value = sopDecisionLeadPress
+                cmd.Parameters.Add("@ManualCheckTest", SqlDbType.Int).Value = manualCheckTest
+                cmd.Parameters.Add("@ManualCheckTE", SqlDbType.VarChar, 10).Value = manualCheckTE
+                cmd.Parameters.Add("@PkgGood", SqlDbType.VarChar, 10).Value = pkgGood
+                cmd.Parameters.Add("@PkgNG", SqlDbType.VarChar, 10).Value = pkgNG
+                cmd.Parameters.Add("@PkgNishikiCamara", SqlDbType.VarChar, 10).Value = pkgNishikiCamara
+                cmd.Parameters.Add("@PkqBantLead", SqlDbType.VarChar, 10).Value = pkqBantLead
+                cmd.Parameters.Add("@PkqKakeHige", SqlDbType.VarChar, 10).Value = pkqKakeHige
+                cmd.Parameters.Add("@BgaSmallBall", SqlDbType.VarChar, 10).Value = bgaSmallBall
+                cmd.Parameters.Add("@BgaBentTape", SqlDbType.VarChar, 10).Value = bgaBentTape
+                cmd.Parameters.Add("@Bge5S", SqlDbType.VarChar, 10).Value = bge5S
+                cmd.Parameters.Add("@DateTimeTotal", SqlDbType.VarChar, 30).Value = dateTimeTotal
+                cmd.Parameters.Add("@SetupStatus", SqlDbType.VarChar, 10).Value = setupStatus
+                cmd.Parameters.Add("@SetupConfirmDate", SqlDbType.DateTime).Value = IIf(setupConfirmDate.HasValue, setupConfirmDate.Value, DBNull.Value)
+
+
+
+            End Using
+        End Using
+
+
+    End Function
+
+    Public Shared Function GetEquipmentByQRName(qrName As String) As DataTable
+        Dim dt As DataTable = New DataTable()
+
+        Using conSql As SqlConnection = New SqlConnection()
+            Dim constr As String = My.Settings.DBxConnectionString
+
+            conSql.ConnectionString = constr
+            conSql.Open()
+
+            Dim sdqData As String = "SELECT [ID],[EquipmentTypeID],[FixAsset],[SubType],[Name],[ControlNo],[SpecialCtrl]" &
+                ",[StatusID],[Location],[Register],[RegisteredDate],[ProcessID],[QRName] " &
+                "FROM [EQP].[Equipment] WHERE [QRName] = @QRName"
+
+            Using cmd As New SqlCommand(sdqData, conSql)
+                cmd.Parameters.Add("@QRName", SqlDbType.NVarChar, 9)
+                cmd.Parameters(0).Value = qrName
+                dt.Load(cmd.ExecuteReader())
+
+
+            End Using
+        End Using
+
+        Return dt
+    End Function
+
+    Public Shared Function GetFTSetupReportByMCNo(mcNo As String) As DataTable
+        Dim dt As DataTable = New DataTable()
+
+        Using conSql As SqlConnection = New SqlConnection()
+            Dim constr As String = My.Settings.DBxConnectionString
+
+            conSql.ConnectionString = constr
+            conSql.Open()
+
+            Dim sdqData As String = "SELECT [MCNo],[LotNo],[PackgeName],[DeviceName],[ProgramName],[TesterType],[TestFlow]" &
+              ",[QRCodesocket],[TesterNoA],[TesterNoB],[ChannelAFTB],[ChannelBFTB],[TestBoxA]" &
+              ",[TestBoxB],[AdaptorA],[AdaptorB],[DutcardA],[DutcardB],[BridgecableA]" &
+              ",[BridgecableB],[TypeChangePackage],[SetupStartDate],[SetupEndDate]" &
+              ",[BoxTesterConnection],[OptionSetup],[OptionConnection],[OptionName1]" &
+              ",[OptionName2],[OptionName3],[OptionName4],[OptionName5],[OptionName6]" &
+              ",[OptionName7],[OptionType1],[OptionType2],[OptionType3],[OptionType4]" &
+              ",[OptionType5],[OptionType6],[OptionType7],[OptionSetting1],[OptionSetting2]" &
+              ",[OptionSetting3],[OptionSetting4],[OptionSetting5],[OptionSetting6]" &
+              ",[OptionSetting7],[QfpVacuumPad],[QfpSocketSetup],[QfpSocketDecision]" &
+              ",[QfpDecisionLeadPress],[QfpTray],[SopStopper],[SopSocketDecision]" &
+              ",[SopDecisionLeadPress],[ManualCheckTest],[ManualCheckTE],[PkgGood]" &
+              ",[PkgNG],[PkgNishikiCamara],[PkqBantLead],[PkqKakeHige],[BgaSmallBall]" &
+              ",[BgaBentTape],[Bge5S],[DateTimeTotal],[SetupStatus],[SetupConfirmDate] " &
+              "FROM [DBxTemp].[dbo].[FTSetupReport] WHERE [MCNo] = @MCNo"
+
+            Using cmd As New SqlCommand(sdqData, conSql)
+                cmd.Parameters.Add("@MCNo", SqlDbType.VarChar, 15)
+                cmd.Parameters(0).Value = mcNo
+                dt.Load(cmd.ExecuteReader())
+            End Using
+        End Using
+
+        Return dt
+    End Function
+
+    Public Shared Function GetOSPSocketSystem(qrCode As String) As DataTable
+        Dim dt As DataTable = New DataTable()
+
+        Using con As SqlConnection = New SqlConnection()
+            con.ConnectionString = My.Settings.DBxConnectionString
+            con.Open()
+
+            Using cmd As SqlCommand = con.CreateCommand()
+                cmd.CommandText = "SELECT [QRCode],[NumberSocket],[SocketPinID],[SocketTypeID],[MakerID]" &
+                      ",[PackageUse],[Status],[Machine],[Location],[Mode],[Recycle]" &
+                      ",[DateAddSocket],[StartDate],[EndDate],[TotalOfTest] " &
+                      "FROM [OSPSocketSystem] WHERE [QRCode] = @QRCode"
+                cmd.Parameters.Add("@QRCode", SqlDbType.VarChar, 50).Value = qrCode
+                dt.Load(cmd.ExecuteReader())
+            End Using
+        End Using
+
+        Return dt
+    End Function
+
+    Public Shared Function SaveFTReoprtSetup(data As FTSetupReport) As Integer
+
+        Using con As SqlConnection = New SqlConnection()
+
+            con.ConnectionString = My.Settings.DBxConnectionString
+            con.Open()
+
+            Using cmd As SqlCommand = con.CreateCommand()
+
+                cmd.CommandType = CommandType.StoredProcedure
+
+
+
+            End Using
+
+        End Using
+
+    End Function
+
+End Class

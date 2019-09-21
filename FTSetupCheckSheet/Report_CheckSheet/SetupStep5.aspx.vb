@@ -1,0 +1,253 @@
+﻿Imports System
+Imports System.IO
+Imports System.Web
+Imports System.Data
+Imports System.Linq
+Imports System.Text
+Imports System.Web.UI
+Imports System.Data.OleDb
+Imports System.Configuration
+Imports System.Data.SqlClient
+Imports System.Collections.Generic
+
+Public Class SetupStep5
+    Inherits System.Web.UI.Page
+
+    Private m_Data As FTSetupReport
+
+    Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+
+        Dim tmp As Object = Session(SESSION_KEY_NEW_DATA_SETUP)
+        If tmp Is Nothing Then
+            Response.Redirect("~/SetupMain.aspx")
+        Else
+            m_Data = CType(tmp, FTSetupReport)
+        End If
+
+        If Not IsPostBack Then
+            OptionType1TextBox.Text = m_Data.OptionName1
+            OptionType2TextBox.Text = m_Data.OptionName2
+            OptionType3TextBox.Text = m_Data.OptionName3
+            OptionType4TextBox.Text = m_Data.OptionName4
+            OptionType5TextBox.Text = m_Data.OptionName5
+            OptionType6TextBox.Text = m_Data.OptionName6
+            OptionType7TextBox.Text = m_Data.OptionName7
+        End If
+
+        OptionType1TextBox.Focus()
+    End Sub
+
+
+    Private Sub UpdateSessionData()
+        m_Data.OptionName1 = OptionType1TextBox.Text
+        m_Data.OptionName2 = OptionType2TextBox.Text
+        m_Data.OptionName3 = OptionType3TextBox.Text
+        m_Data.OptionName4 = OptionType4TextBox.Text
+        m_Data.OptionName5 = OptionType5TextBox.Text
+        m_Data.OptionName6 = OptionType6TextBox.Text
+        m_Data.OptionName7 = OptionType7TextBox.Text
+
+        Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
+    End Sub
+
+    Private Sub ButtonNext_Click(sender As Object, e As EventArgs) Handles ButtonNext.Click
+        UpdateSessionData()
+        Response.Redirect("~/SetupStep6.aspx")
+    End Sub
+
+    Private Sub ButtonPrevious_Click(sender As Object, e As EventArgs) Handles ButtonPrevious.Click
+        UpdateSessionData()
+        Response.Redirect("~/SetupStep4.aspx")
+    End Sub
+
+    Protected Sub Option1TextBox_TextChanged(sender As Object, e As EventArgs) Handles OptionType1TextBox.TextChanged
+        OptionType2TextBox.Focus()
+
+        If Not String.IsNullOrEmpty(OptionType1TextBox.Text) Then
+            Dim qrName As String = OptionType1TextBox.Text.ToUpper
+            m_Data.OptionType1QRcode = OptionType1TextBox.Text
+
+            Using dt As DataTable = DBAccess.GetEquipmentByQRName(qrName, EQUIPMENT_TYPE_ID_OPTION)
+
+                If dt.Rows.Count = 1 Then
+                    Dim row As DataRow = dt.Rows(0)
+                    m_Data.OptionName1 = row("Name").ToString()
+                    m_Data.OptionType1 = row("SubType").ToString()
+                    m_Data.OptionSetting1 = ""
+                Else
+                    m_Data.OptionName1 = ""
+                    m_Data.OptionType1 = ""
+                    m_Data.OptionSetting1 = ""
+                End If
+                OptionType1TextBox.Text = m_Data.OptionType1
+                Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
+            End Using
+
+        End If
+    End Sub
+
+    Protected Sub Option2TextBox_TextChanged(sender As Object, e As EventArgs) Handles OptionType2TextBox.TextChanged
+        OptionType3TextBox.Focus()
+
+        If Not String.IsNullOrEmpty(OptionType2TextBox.Text) Then
+            Dim qrName As String = OptionType2TextBox.Text.ToUpper
+            m_Data.OptionType2QRcode = OptionType2TextBox.Text
+
+            Using dt As DataTable = DBAccess.GetEquipmentByQRName(qrName, EQUIPMENT_TYPE_ID_OPTION)
+
+                If dt.Rows.Count = 1 Then
+                    Dim row As DataRow = dt.Rows(0)
+                    m_Data.OptionName2 = row("Name").ToString()
+                    m_Data.OptionType2 = row("SubType").ToString()
+                    m_Data.OptionSetting2 = ""
+                Else
+                    m_Data.OptionName2 = ""
+                    m_Data.OptionType2 = ""
+                    m_Data.OptionSetting2 = ""
+                End If
+                OptionType2TextBox.Text = m_Data.OptionType2
+                Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
+            End Using
+
+        End If
+    End Sub
+
+    Protected Sub Option3TextBox_TextChanged(sender As Object, e As EventArgs) Handles OptionType3TextBox.TextChanged
+
+        OptionType4TextBox.Focus()
+
+        If Not String.IsNullOrEmpty(OptionType3TextBox.Text) Then
+            Dim qrName As String = OptionType3TextBox.Text.ToUpper
+            m_Data.OptionType3QRcode = OptionType3TextBox.Text
+
+            Using dt As DataTable = DBAccess.GetEquipmentByQRName(qrName, EQUIPMENT_TYPE_ID_OPTION)
+
+                If dt.Rows.Count = 1 Then
+                    Dim row As DataRow = dt.Rows(0)
+                    m_Data.OptionName3 = row("Name").ToString()
+                    m_Data.OptionType3 = row("SubType").ToString()
+                    m_Data.OptionSetting3 = ""
+                Else
+                    m_Data.OptionName3 = ""
+                    m_Data.OptionType3 = ""
+                    m_Data.OptionSetting3 = ""
+                End If
+                OptionType3TextBox.Text = m_Data.OptionType3
+                Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
+            End Using
+
+        End If
+
+    End Sub
+
+    Protected Sub Option4TextBox_TextChanged(sender As Object, e As EventArgs) Handles OptionType4TextBox.TextChanged
+
+        OptionType5TextBox.Focus()
+
+        If Not String.IsNullOrEmpty(OptionType4TextBox.Text) Then
+            Dim qrName As String = OptionType4TextBox.Text.ToUpper
+            m_Data.OptionType4QRcode = OptionType4TextBox.Text
+
+            Using dt As DataTable = DBAccess.GetEquipmentByQRName(qrName, EQUIPMENT_TYPE_ID_OPTION)
+
+                If dt.Rows.Count = 1 Then
+                    Dim row As DataRow = dt.Rows(0)
+                    m_Data.OptionName4 = row("Name").ToString()
+                    m_Data.OptionType4 = row("SubType").ToString()
+                    m_Data.OptionSetting4 = ""
+                Else
+                    m_Data.OptionName4 = ""
+                    m_Data.OptionType4 = ""
+                    m_Data.OptionSetting4 = ""
+                End If
+                OptionType4TextBox.Text = m_Data.OptionType4
+                Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
+            End Using
+
+        End If
+
+    End Sub
+
+    Protected Sub Option5TextBox_TextChanged(sender As Object, e As EventArgs) Handles OptionType5TextBox.TextChanged
+
+        OptionType6TextBox.Focus()
+
+        If Not String.IsNullOrEmpty(OptionType5TextBox.Text) Then
+            Dim qrName As String = OptionType5TextBox.Text.ToUpper
+            m_Data.OptionType5QRcode = OptionType5TextBox.Text
+
+            Using dt As DataTable = DBAccess.GetEquipmentByQRName(qrName, EQUIPMENT_TYPE_ID_OPTION)
+
+                If dt.Rows.Count = 1 Then
+                    Dim row As DataRow = dt.Rows(0)
+                    m_Data.OptionName5 = row("Name").ToString()
+                    m_Data.OptionType5 = row("SubType").ToString()
+                    m_Data.OptionSetting5 = ""
+                Else
+                    m_Data.OptionName5 = ""
+                    m_Data.OptionType5 = ""
+                    m_Data.OptionSetting5 = ""
+                End If
+                OptionType5TextBox.Text = m_Data.OptionType5
+                Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
+            End Using
+
+        End If
+
+    End Sub
+
+    Protected Sub Option6TextBox_TextChanged(sender As Object, e As EventArgs) Handles OptionType6TextBox.TextChanged
+
+        OptionType7TextBox.Focus()
+
+        If Not String.IsNullOrEmpty(OptionType6TextBox.Text) Then
+            Dim qrName As String = OptionType6TextBox.Text.ToUpper
+            m_Data.OptionType6QRcode = OptionType6TextBox.Text
+
+            Using dt As DataTable = DBAccess.GetEquipmentByQRName(qrName, EQUIPMENT_TYPE_ID_OPTION)
+
+                If dt.Rows.Count = 1 Then
+                    Dim row As DataRow = dt.Rows(0)
+                    m_Data.OptionName6 = row("Name").ToString()
+                    m_Data.OptionType6 = row("SubType").ToString()
+                    m_Data.OptionSetting6 = ""
+                Else
+                    m_Data.OptionName6 = ""
+                    m_Data.OptionType6 = ""
+                    m_Data.OptionSetting6 = ""
+                End If
+                OptionType6TextBox.Text = m_Data.OptionType6
+                Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
+            End Using
+
+        End If
+
+    End Sub
+
+    Protected Sub Option7TextBox_TextChanged(sender As Object, e As EventArgs) Handles OptionType7TextBox.TextChanged
+
+        If Not String.IsNullOrEmpty(OptionType7TextBox.Text) Then
+            Dim qrName As String = OptionType7TextBox.Text.ToUpper
+            m_Data.OptionType7QRcode = OptionType7TextBox.Text
+
+            Using dt As DataTable = DBAccess.GetEquipmentByQRName(qrName, EQUIPMENT_TYPE_ID_OPTION)
+
+                If dt.Rows.Count = 1 Then
+                    Dim row As DataRow = dt.Rows(0)
+                    m_Data.OptionName7 = row("Name").ToString()
+                    m_Data.OptionType7 = row("SubType").ToString()
+                    m_Data.OptionSetting7 = ""
+                Else
+                    m_Data.OptionName7 = ""
+                    m_Data.OptionType7 = ""
+                    m_Data.OptionSetting7 = ""
+                End If
+                OptionType7TextBox.Text = m_Data.OptionType7
+                Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
+            End Using
+
+        End If
+
+    End Sub
+
+End Class
