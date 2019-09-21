@@ -62,6 +62,15 @@
             </tr>        
          </table>
     <hr />
+    
+    <br />
+        <div class="auto-style2">
+            
+            <asp:TextBox ID="MCNoTextBox" runat="server"></asp:TextBox>
+&nbsp;&nbsp;
+            <asp:Button ID="SearchButton" runat="server" Font-Bold="True" ForeColor="#CC6699" Text="Search" />
+            
+        </div>
      <br />
 
           <div style="text-align: center">
@@ -173,21 +182,12 @@
                   <SortedDescendingHeaderStyle BackColor="#383838" />
               </asp:GridView>
               .</div>
-          <asp:SqlDataSource ID="ConfirmedReportSqlDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:Report_CheckSheet.My.MySettings.DBxConnectionString %>" SelectCommand="SELECT MCNo, LotNo, PackageName, SetupStatus, SetupStartDate, SetupEndDate, ConfirmedCheckSheetOp, ConfirmedCheckSheetSection, ConfirmedCheckSheetGL, StatusShonoOP, ConfirmedShonoOp, ConfirmedShonoSection, ConfirmedShonoGL, TestFlow, DeviceName FROM FTSetupReportHistory WHERE (LotNo LIKE @LotNo) AND (SetupStatus = 'CONFIRMED') AND (MCNo LIKE @MCNo) ORDER BY SetupEndDate DESC">
+          <asp:SqlDataSource ID="ConfirmedReportSqlDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:Report_CheckSheet.My.MySettings.DBxConnectionString %>" SelectCommand="SELECT MCNo, LotNo, PackageName, SetupStatus, SetupStartDate, SetupEndDate, ConfirmedCheckSheetOp, ConfirmedCheckSheetSection, ConfirmedCheckSheetGL, StatusShonoOP, ConfirmedShonoOp, ConfirmedShonoSection, ConfirmedShonoGL, TestFlow, DeviceName FROM FTSetupReport WHERE (SetupStatus = 'CONFIRMED') AND (MCNo LIKE @MCNo) ORDER BY SetupEndDate DESC">
               <SelectParameters>
-                  <asp:QueryStringParameter DefaultValue="%" Name="LotNo" QueryStringField="LotNo" />
-                  <asp:QueryStringParameter DefaultValue="%" Name="MCNo" QueryStringField="MCNo" />
+                  <asp:ControlParameter ControlID="MCNoTextBox" DefaultValue="%" Name="MCNo" PropertyName="Text" />
               </SelectParameters>
      </asp:SqlDataSource>
 
         
-    
-        <div class="auto-style2">
-            
-            <asp:TextBox ID="MCNoTextBox" runat="server"></asp:TextBox>
-&nbsp;&nbsp;
-            <asp:Button ID="SearchButton" runat="server" Font-Bold="True" ForeColor="#CC6699" Text="Search" />
-            
-        </div>
 
 </asp:Content>

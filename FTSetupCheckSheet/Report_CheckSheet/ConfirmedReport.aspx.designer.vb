@@ -12,7 +12,7 @@ Option Explicit On
 
 
 Partial Public Class ConfirmedReport
-    
+
     '''<summary>
     '''ImageButton1 control.
     '''</summary>
@@ -21,7 +21,7 @@ Partial Public Class ConfirmedReport
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents ImageButton1 As Global.System.Web.UI.WebControls.ImageButton
-    
+
     '''<summary>
     '''Image2 control.
     '''</summary>
@@ -30,7 +30,7 @@ Partial Public Class ConfirmedReport
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents Image2 As Global.System.Web.UI.WebControls.Image
-    
+
     '''<summary>
     '''LabelConfirmed control.
     '''</summary>
@@ -39,7 +39,7 @@ Partial Public Class ConfirmedReport
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents LabelConfirmed As Global.System.Web.UI.WebControls.Label
-    
+
     '''<summary>
     '''Image3 control.
     '''</summary>
@@ -48,7 +48,7 @@ Partial Public Class ConfirmedReport
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents Image3 As Global.System.Web.UI.WebControls.Image
-    
+
     '''<summary>
     '''LabelCanceled control.
     '''</summary>
@@ -57,25 +57,7 @@ Partial Public Class ConfirmedReport
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents LabelCanceled As Global.System.Web.UI.WebControls.Label
-    
-    '''<summary>
-    '''ConfirmedReportGridView control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents ConfirmedReportGridView As Global.System.Web.UI.WebControls.GridView
-    
-    '''<summary>
-    '''ConfirmedReportSqlDataSource control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents ConfirmedReportSqlDataSource As Global.System.Web.UI.WebControls.SqlDataSource
-    
+
     '''<summary>
     '''MCNoTextBox control.
     '''</summary>
@@ -84,7 +66,7 @@ Partial Public Class ConfirmedReport
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents MCNoTextBox As Global.System.Web.UI.WebControls.TextBox
-    
+
     '''<summary>
     '''SearchButton control.
     '''</summary>
@@ -93,4 +75,22 @@ Partial Public Class ConfirmedReport
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents SearchButton As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''ConfirmedReportGridView control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents ConfirmedReportGridView As Global.System.Web.UI.WebControls.GridView
+
+    '''<summary>
+    '''ConfirmedReportSqlDataSource control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents ConfirmedReportSqlDataSource As Global.System.Web.UI.WebControls.SqlDataSource
 End Class

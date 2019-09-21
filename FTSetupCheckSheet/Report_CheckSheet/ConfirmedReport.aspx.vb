@@ -155,7 +155,12 @@ Public Class ConfirmedReport
     End Sub
 
     Private Sub ConfirmedReport_Load(sender As Object, e As EventArgs) Handles Me.Load
-
+        If Not IsPostBack Then
+            If Not String.IsNullOrEmpty(Request.QueryString("MCNo")) Then
+                MCNoTextBox.Text = Request.QueryString("MCNo")
+                ConfirmedReportSqlDataSource.DataBind()
+            End If
+        End If
     End Sub
 End Class
 
