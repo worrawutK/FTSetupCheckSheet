@@ -253,6 +253,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Account\Web.config" />
+    <None Include="My Project\PublishProfiles\FolderProfile.pubxml" />
     <None Include="My Project\PublishProfiles\Report_CheckSheet.pubxml" />
     <None Include="My Project\PublishProfiles\SetupFT.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
