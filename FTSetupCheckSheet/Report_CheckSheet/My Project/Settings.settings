@@ -10,5 +10,8 @@
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
       <Value Profile="(Default)">Data Source=172.16.0.102;Initial Catalog=DBx;Persist Security Info=True;User ID=system;Password=p@$$w0rd</Value>
     </Setting>
+    <Setting Name="ShonokokoshiPDFPath" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">\\172.16.0.100\FTCheckSheet\ShonokoshiPDF\</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

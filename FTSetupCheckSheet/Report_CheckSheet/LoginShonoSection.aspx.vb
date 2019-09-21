@@ -80,8 +80,8 @@ Public Class LoginShonoSection
         End Using
 
         Dim pdffile1 As New Document(PageSize.A4)
-        Dim pdfReader As PdfReader = New PdfReader(System.IO.File.ReadAllBytes("\\172.16.0.100\FTCheckSheet\ShonokoshiPDF\" & Request.QueryString("LotNo") & "_" & Request.QueryString("MCNo") & ".pdf"))
-        Dim dt As New FileStream("\\172.16.0.100\FTCheckSheet\ShonokoshiPDF\" & Request.QueryString("LotNo") & "_" & Request.QueryString("MCNo") & ".pdf", FileMode.Create)
+        Dim pdfReader As PdfReader = New PdfReader(System.IO.File.ReadAllBytes(My.Settings.ShonokokoshiPDFPath & Request.QueryString("LotNo") & "_" & Request.QueryString("MCNo") & ".pdf"))
+        Dim dt As New FileStream(My.Settings.ShonokokoshiPDFPath & Request.QueryString("LotNo") & "_" & Request.QueryString("MCNo") & ".pdf", FileMode.Create)
 
         Dim pdfWriter As PdfWriter = PdfWriter.GetInstance(pdffile1, dt)
 
@@ -115,6 +115,7 @@ Public Class LoginShonoSection
         pdfReader.Close()
 
 
-        Response.Redirect("~/ConfirmedReport.aspx")
+        Response.Redirect(String.Format("~/ConfirmedReport.aspx?LotNo={0}&MCNo={1}",
+                                        Request.QueryString("LotNo"), Request.QueryString("MCNo")))
     End Sub
 End Class

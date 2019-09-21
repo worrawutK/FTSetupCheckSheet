@@ -62,7 +62,7 @@ Public Class OpenPDF_zion
         Dim pdffile1 As New Document(PageSize.A4)
         Dim dt As New MemoryStream()
         Dim pdfWriter As PdfWriter = PdfWriter.GetInstance(pdffile1, dt)
-        Dim pdfReader As PdfReader = New PdfReader("\\172.16.0.100\FTCheckSheet\ShonokoshiPDF\" + s_LotNo + "_" + s_MCNo + ".pdf")
+        Dim pdfReader As PdfReader = New PdfReader(My.Settings.ShonokokoshiPDFPath + s_LotNo + "_" + s_MCNo + ".pdf")
         Dim pdfimportopen As PdfImportedPage = pdfWriter.GetImportedPage(pdfReader, 1)
 
         pdffile1.Open()

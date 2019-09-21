@@ -64,7 +64,7 @@ Public Class ConfirmShono
         Dim pdffile1 As New Document(PageSize.A4)
         Dim dt As New MemoryStream()
         Dim pdfWriter As PdfWriter = PdfWriter.GetInstance(pdffile1, dt)
-        Dim pdfReader As PdfReader = New PdfReader("\\172.16.0.100\FTCheckSheet\ShonokoshiPDF\" + s_LotNo + "_" + s_MCNo + ".pdf")
+        Dim pdfReader As PdfReader = New PdfReader(My.Settings.ShonokokoshiPDFPath + s_LotNo + "_" + s_MCNo + ".pdf")
         Dim pdfimportopen As PdfImportedPage = pdfWriter.GetImportedPage(pdfReader, 1)
 
         pdffile1.Open()
@@ -89,9 +89,9 @@ Public Class ConfirmShono
 
 
 
-        'Dim pdfWriter As PdfWriter = PdfWriter.GetInstance(pdffile1, New FileStream("\\172.16.0.100\FTCheckSheet\ShonokoshiPDF\" + s_LotNo + "_" + s_MCNo + ".pdf", FileMode.Create))
-        'Dim rt As FileStream = New FileStream("\\172.16.0.100\FTCheckSheet\ShonokoshiPDF\" + s_LotNo + "_" + s_MCNo + ".pdf", FileMode.Create)
-        'Dim pdfReader As PdfReader = New PdfReader(System.IO.File.ReadAllBytes("\\172.16.0.100\FTCheckSheet\ShonokoshiPDF\" + s_LotNo + "_" + s_MCNo + ".pdf"))
+        'Dim pdfWriter As PdfWriter = PdfWriter.GetInstance(pdffile1, New FileStream(My.Settings.ShonokokoshiPDFPath + s_LotNo + "_" + s_MCNo + ".pdf", FileMode.Create))
+        'Dim rt As FileStream = New FileStream(My.Settings.ShonokokoshiPDFPath + s_LotNo + "_" + s_MCNo + ".pdf", FileMode.Create)
+        'Dim pdfReader As PdfReader = New PdfReader(System.IO.File.ReadAllBytes(My.Settings.ShonokokoshiPDFPath + s_LotNo + "_" + s_MCNo + ".pdf"))
 
         'Dim pdfimportopen As PdfImportedPage = pdfWriter.GetImportedPage(pdfReader, 1)
 

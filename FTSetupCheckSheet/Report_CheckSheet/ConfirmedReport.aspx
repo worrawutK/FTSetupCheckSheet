@@ -174,9 +174,10 @@
                   <SortedDescendingHeaderStyle BackColor="#383838" />
               </asp:GridView>
               .</div>
-          <asp:SqlDataSource ID="ConfirmedReportSqlDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:Report_CheckSheet.My.MySettings.DBxConnectionString %>" SelectCommand="SELECT MCNo, LotNo, PackageName, SetupStatus, SetupStartDate, SetupEndDate, ConfirmedCheckSheetOp, ConfirmedCheckSheetSection, ConfirmedCheckSheetGL, StatusShonoOP, ConfirmedShonoOp, ConfirmedShonoSection, ConfirmedShonoGL, TestFlow, DeviceName FROM FTSetupReportHistory WHERE (LotNo IS NOT NULL) AND (LotNo &lt;&gt; '') AND (SetupStatus = 'CONFIRMED') AND MCNo Like @MCNo ORDER BY SetupEndDate DESC">
+          <asp:SqlDataSource ID="ConfirmedReportSqlDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:Report_CheckSheet.My.MySettings.DBxConnectionString %>" SelectCommand="SELECT MCNo, LotNo, PackageName, SetupStatus, SetupStartDate, SetupEndDate, ConfirmedCheckSheetOp, ConfirmedCheckSheetSection, ConfirmedCheckSheetGL, StatusShonoOP, ConfirmedShonoOp, ConfirmedShonoSection, ConfirmedShonoGL, TestFlow, DeviceName FROM FTSetupReportHistory WHERE (LotNo LIKE @LotNo) AND (SetupStatus = 'CONFIRMED') AND (MCNo LIKE @MCNo) ORDER BY SetupEndDate DESC">
               <SelectParameters>
-                  <asp:ControlParameter ControlID="MCNoTextBox" DefaultValue="%" Name="MCNo" PropertyName="Text" />
+                  <asp:QueryStringParameter DefaultValue="%" Name="LotNo" QueryStringField="LotNo" />
+                  <asp:QueryStringParameter DefaultValue="%" Name="MCNo" QueryStringField="MCNo" />
               </SelectParameters>
      </asp:SqlDataSource>
 

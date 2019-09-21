@@ -154,14 +154,8 @@ Public Class ConfirmedReport
         Response.Redirect("ShowDataSetup.aspx")
     End Sub
 
+    Private Sub ConfirmedReport_Load(sender As Object, e As EventArgs) Handles Me.Load
 
-    'If My.Computer.FileSystem.FileExists("\\172.16.0.100\_Setup\SelfCon FT  Ray\FTCheckSheet\" & Request.QueryString("LotNo") & "_" & Request.QueryString("MCNo") & ".pdf") = True Then
-    ''        Process.Start("\\172.16.0.100\_Setup\SelfCon FT  Ray\FTCheckSheet\" & Request.QueryString("LotNo") & "_" & Request.QueryString("MCNo") & ".pdf")
-    ''    Else
-    ''        Response.Redirect("PrintSetupFT.aspx?MCNo=" + Request.QueryString("MCNo").ToString)
-    ''    End If..
-
-
-    'End Sub
+    End Sub
 End Class
 

@@ -106,8 +106,8 @@ Public Class ShowDataSetup
         Response.Redirect("~/ShowDataSetup3.aspx")
     End Sub
 
-    'If My.Computer.FileSystem.FileExists("\\172.16.0.100\FTCheckSheet\ShonokoshiPDF\" & row("LotNo").ToString & "_" & row("MCNo").ToString & ".pdf") = True Then
-    '    'Process.Start("\\172.16.0.100\FTCheckSheet\ShonokoshiPDF\" & Request.QueryString("LotNo") & "_" & Request.QueryString("MCNo") & ".pdf")
+    'If My.Computer.FileSystem.FileExists(My.Settings.ShonokokoshiPDFPath & row("LotNo").ToString & "_" & row("MCNo").ToString & ".pdf") = True Then
+    '    'Process.Start(My.Settings.ShonokokoshiPDFPath & Request.QueryString("LotNo") & "_" & Request.QueryString("MCNo") & ".pdf")
 
     '    linkReport.NavigateUrl = "OpenPDFfile.aspx?LotNo=" + row("LotNo").ToString + "&MCNo=" + row("MCNo").ToString
     '    img3.ImageUrl = "~/images/icon_Shono.png"

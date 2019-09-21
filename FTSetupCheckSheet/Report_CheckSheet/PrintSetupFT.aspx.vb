@@ -94,7 +94,7 @@ Public Class PrintSetupFT
         'Create File PDF
         Dim pdf As New Document(PageSize.A4, 1, 1, 1, 1)
         'Open file
-        Dim rt As FileStream = New FileStream("\\172.16.0.100\FTCheckSheet\ShonokoshiPDF\" + s_LotNo + "_" + s_MCNo + ".pdf", FileMode.Create)
+        Dim rt As FileStream = New FileStream(My.Settings.ShonokokoshiPDFPath + s_LotNo + "_" + s_MCNo + ".pdf", FileMode.Create)
 
         'Dim fileType As String
         'fileType = Replace(LBound.rt, "png", "jpg", "pdf", vbTextCompare)

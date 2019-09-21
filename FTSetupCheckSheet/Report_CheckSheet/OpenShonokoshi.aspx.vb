@@ -12,6 +12,7 @@ Public Class OpenShonokoshi
     Inherits System.Web.UI.Page
 
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
+
         Dim s_MCNo As String
         Dim s_LotNo As String
         Dim s_PackageName As String

@@ -75,6 +75,7 @@ Public Class LoginSection
             End Using
         End Using
 
-        Response.Redirect("~/ConfirmedReport.aspx")
+        Response.Redirect(String.Format("~/ConfirmedReport.aspx?LotNo={0}&MCNo={1}",
+                                        Request.QueryString("LotNo"), Request.QueryString("MCNo")))
     End Sub
 End Class
