@@ -50,11 +50,10 @@
                         <span class="icon-bar"></span>
                     </button>
                     <a class="navbar-brand" runat="server" href="~/Default">Set-up Check Sheet</a>
-                    <span>Release Date: 2019/09/21</span>
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">    
-                        <li><a runat="server" href="~/SetupMain">Scan QRcod</a></li>
+                        <li><a runat="server" href="~/SetupMain">Scan QRcode</a></li>
                         <li><a runat="server" href="~/SetupStep7CheckSheet1">Check Sheet</a></li>
                         <li><a runat="server" href="~/PrintSetupFT">PrintReport</a></li>
                         <li><a runat="server" href="~/ShowDataSetup">DataSetup</a></li>

@@ -84,7 +84,7 @@
       </div>
 
       <ul class ="nav nav-pills nav-justified">
-        <li ><a href ="PrintSetupFT.aspx">Upload Picture for Shono</a></li>
+        <li ><a href ="PrintSetupFT.aspx">Upload Picture for Shoko</a></li>
         <li ><a href="ShowDataSetup.aspx">MONITORING</a></li>
         <li class ="active"><a href ="ShowDataSetupHistory.aspx">Search Data History</a></li>
       </ul><br />
@@ -92,7 +92,7 @@
 
      <div class ="row">
           <td colspan="2" align="center" class="auto-style33">
-              <h2 class="text-center login-title" style="font-family: 'Waffle Regular'; font-weight: bold;">DATA FT PAROCESS</h2>
+              <h2 class="text-center login-title" style="font-family: 'Waffle Regular'; font-weight: bold;">DATA FT PROCESS</h2>
 
 
           </td><br />

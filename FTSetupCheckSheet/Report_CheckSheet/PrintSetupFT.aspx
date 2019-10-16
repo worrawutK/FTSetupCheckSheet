@@ -11,7 +11,7 @@
    </div>
 
     <ul class ="nav nav-pills nav-justified">
-        <li class ="active"><a href ="PrintSetupFT.aspx">Upload Picture for Shono</a></li> 
+        <li class ="active"><a href ="PrintSetupFT.aspx">Upload Picture for Shoko</a></li> 
         <li ><a href="ShowDataSetup.aspx">MONITORING</a></li>
         <li ><a href ="ShowDataSetupHistory.aspx">Search Data History</a></li>
     </ul>

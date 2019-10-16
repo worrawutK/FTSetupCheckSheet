@@ -102,10 +102,10 @@
 
                       <asp:BoundField DataField="ConfirmedCheckSheetSection" HeaderText="ConfirmedCheckSheetSection" SortExpression="ConfirmedCheckSheetSection" Visible="False" />
                       <asp:BoundField DataField="ConfirmedCheckSheetGL" HeaderText="ConfirmedCheckSheetGL" SortExpression="ConfirmedCheckSheetGL" Visible="False" />
-                      <asp:BoundField DataField="StatusShonoOP" HeaderText="StatusShonoOP" SortExpression="StatusShonoOP" Visible="False" />
-                      <asp:BoundField DataField="ConfirmedShonoOp" HeaderText="ConfirmedShonoOp" SortExpression="ConfirmedShonoOp" Visible="False" />
-                      <asp:BoundField DataField="ConfirmedShonoSection" HeaderText="ConfirmedShonoSection" SortExpression="ConfirmedShonoSection" Visible="False" />
-                      <asp:BoundField DataField="ConfirmedShonoGL" HeaderText="ConfirmedShonoGL" SortExpression="ConfirmedShonoGL" Visible="False" />
+                      <asp:BoundField DataField="StatusShokoOP" HeaderText="StatusShokoOP" SortExpression="StatusShonoOP" Visible="False" />
+                      <asp:BoundField DataField="ConfirmedShokoOp" HeaderText="ConfirmedShokoOp" SortExpression="ConfirmedShonoOp" Visible="False" />
+                      <asp:BoundField DataField="ConfirmedShokoSection" HeaderText="ConfirmedShokoSection" SortExpression="ConfirmedShonoSection" Visible="False" />
+                      <asp:BoundField DataField="ConfirmedShokoGL" HeaderText="ConfirmedShokoGL" SortExpression="ConfirmedShonoGL" Visible="False" />
 
                       <asp:TemplateField HeaderText="CS_OP" >
                         <ItemTemplate>
@@ -163,7 +163,7 @@
                         </ItemTemplate>            
                       </asp:TemplateField>
 
-                      <asp:TemplateField HeaderText="Shono" >
+                      <asp:TemplateField HeaderText="Shoko" >
                          <ItemTemplate>
                             <asp:HyperLink ID="linkShono" runat="server">
                                 <asp:Image ID="Image8" runat="server" Height="30px" ImageUrl="" Width="33px" />

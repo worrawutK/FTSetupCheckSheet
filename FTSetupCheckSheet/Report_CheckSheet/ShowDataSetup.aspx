@@ -46,7 +46,7 @@
     </div>
 
     <ul class="nav nav-pills nav-justified">
-        <li><a href="PrintSetupFT.aspx">Upload Picture for Shono</a></li>
+        <li><a href="PrintSetupFT.aspx">Upload Picture for Shoko</a></li>
         <li class="active"><a href="ShowDataSetup.aspx">MONITORING</a></li>
         <li><a href="ShowDataSetupHistory.aspx">Search Data History</a></li>
     </ul>
@@ -101,7 +101,7 @@
                     <asp:BoundField DataField="TesterType" HeaderText="TesterType" SortExpression="TesterType" />
                     <asp:BoundField DataField="TestFlow" HeaderText="TestFlow" SortExpression="TestFlow" />
 
-                    <asp:BoundField DataField="StatusShonoOP" HeaderText="StatusShonoOP" SortExpression="StatusShonoOP" Visible="False"  />
+                    <asp:BoundField DataField="StatusShokoOP" HeaderText="StatusShokoOP" SortExpression="StatusShonoOP" Visible="False"  />
 
                     <asp:BoundField DataField="SetupStatus" HeaderText="SetupStatus" SortExpression="SetupStatus"  Visible="False" />
 
@@ -135,7 +135,7 @@
                     </asp:TemplateField>
 
 
-                    <asp:TemplateField HeaderText="Shono">
+                    <asp:TemplateField HeaderText="Shoko">
                         <ItemTemplate>
                             <asp:HyperLink ID="linkReport" runat="server">
                                 <asp:Image ID="Image3" runat="server" Height="35px" ImageUrl="" Width="36px" />                           
