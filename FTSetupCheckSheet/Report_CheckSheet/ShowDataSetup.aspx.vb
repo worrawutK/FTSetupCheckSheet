@@ -106,6 +106,14 @@ Public Class ShowDataSetup
         Response.Redirect("~/ShowDataSetup3.aspx")
     End Sub
 
+    Protected Sub dataCheckSheetGridView_SelectedIndexChanged(sender As Object, e As EventArgs) Handles dataCheckSheetGridView.SelectedIndexChanged
+
+    End Sub
+
+    Protected Sub dataFtsetupchecksheetSqlDataSource_Selecting(sender As Object, e As SqlDataSourceSelectingEventArgs) Handles dataFtsetupchecksheetSqlDataSource.Selecting
+
+    End Sub
+
     'If My.Computer.FileSystem.FileExists(My.Settings.ShonokokoshiPDFPath & row("LotNo").ToString & "_" & row("MCNo").ToString & ".pdf") = True Then
     '    'Process.Start(My.Settings.ShonokokoshiPDFPath & Request.QueryString("LotNo") & "_" & Request.QueryString("MCNo") & ".pdf")
 
