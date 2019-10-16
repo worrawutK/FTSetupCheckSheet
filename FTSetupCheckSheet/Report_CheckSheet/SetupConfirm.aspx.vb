@@ -261,122 +261,122 @@ Public Class SetupConfirm
 
     Protected Sub Confirmbutton_Click(sender As Object, e As EventArgs) Handles Confirmbutton_Check.Click
 
-#Region "XXX"
+#Region "BOM"
 
-        '        'get PCMain
-        '        Dim pcMain As String = DBAccess.GetPCMain(m_Data.MCNo)
+        'get PCMain
+        Dim pcMain As String = DBAccess.GetPCMain(m_Data.MCNo)
 
-        '        If String.IsNullOrEmpty(pcMain) Then
-        '            ShowErrorMessage("Could not find PCMain of MCNo:" & m_Data.MCNo)
-        '            Exit Sub
-        '        End If
+        If String.IsNullOrEmpty(pcMain) Then
+            ShowErrorMessage("Could not find PCMain of MCNo:" & m_Data.MCNo)
+            Exit Sub
+        End If
 
-        '        'get BOM's main record without machine
-        '        Dim bomTbl As DataTable
-        '        Try
-        '            bomTbl = DBAccess.GetBOM(m_Data.DeviceName, m_Data.PackageName, m_Data.TestFlow, m_Data.TesterType, pcMain)
-        '        Catch ex As Exception
-        '            ShowErrorMessage("Failed to get BOM :" & ex.Message)
-        '            Exit Sub
-        '        End Try
+        'get BOM's main record without machine
+        Dim bomTbl As DataTable
+        Try
+            bomTbl = DBAccess.GetBOM(m_Data.DeviceName, m_Data.PackageName, m_Data.TestFlow, m_Data.TesterType, pcMain)
+        Catch ex As Exception
+            ShowErrorMessage("Failed to get BOM :" & ex.Message)
+            Exit Sub
+        End Try
 
-        '        If bomTbl.Rows.Count = 0 Then
-        '            'show error message
-        '            ShowErrorMessage(String.Format("BOM not found <br/> Device:={0}<br/> Package:={1}<br/> TestFlow:={2}<br/> TesterType:={3}<br/> PCMain:={4}",
-        '                m_Data.DeviceName, m_Data.PackageName, m_Data.TestFlow, m_Data.TesterType, pcMain))
-        '            Exit Sub
-        '        End If
+        If bomTbl.Rows.Count = 0 Then
+            'show error message
+            ShowErrorMessage(String.Format("BOM not found <br/> Device:={0}<br/> Package:={1}<br/> TestFlow:={2}<br/> TesterType:={3}<br/> PCMain:={4}",
+                m_Data.DeviceName, m_Data.PackageName, m_Data.TestFlow, m_Data.TesterType, pcMain))
+            Exit Sub
+        End If
 
-        '        Dim bomId As Integer = -1
-        '        Dim bomPcMachineType As String = ""
-        '        Dim bomTesterType As String = ""
+        Dim bomId As Integer = -1
+        Dim bomPcMachineType As String = ""
+        Dim bomTesterType As String = ""
 
-        '        Dim bomRow As DataRow = bomTbl.Rows(0)
+        Dim bomRow As DataRow = bomTbl.Rows(0)
 
-        '        bomId = CType(bomRow("ID"), Integer)
+        bomId = CType(bomRow("ID"), Integer)
 
-        '        'for store all message at once
-        '        Dim errorMessageList As List(Of String) = New List(Of String)
+        'for store all message at once
+        Dim errorMessageList As List(Of String) = New List(Of String)
 
-        '        Dim bomOptionTbl As DataTable
-        '        Dim bomTestEqiupmentTbl As DataTable
+        Dim bomOptionTbl As DataTable
+        Dim bomTestEqiupmentTbl As DataTable
 
-        '#Region "Check BOMOption"
+#Region "Check BOMOption"
 
-        '        'in some case, there is no option
-        '        bomOptionTbl = DBAccess.GetBOMOption(bomId)
-        '        If bomOptionTbl.Rows.Count > 0 Then
+        'in some case, there is no option
+        bomOptionTbl = DBAccess.GetBOMOption(bomId)
+        If bomOptionTbl.Rows.Count > 0 Then
 
-        '            Dim sumDic As Dictionary(Of String, OptionSummary) = OptionSummary.GetOptionSummaryList(m_Data)
+            Dim sumDic As Dictionary(Of String, OptionSummary) = OptionSummary.GetOptionSummaryList(m_Data)
 
-        '            Dim matchCount As Integer = 0
-        '            Dim expectedMatchCount As Integer = bomOptionTbl.Rows.Count
-        '            Dim dummyOptionName As String
-        '            Dim dummyOptionQty As Integer
+            Dim matchCount As Integer = 0
+            Dim expectedMatchCount As Integer = bomOptionTbl.Rows.Count
+            Dim dummyOptionName As String
+            Dim dummyOptionQty As Integer
 
-        '            Dim dummyOtionSum As OptionSummary
+            Dim dummyOtionSum As OptionSummary
 
-        '            For Each row As DataRow In bomOptionTbl.Rows
+            For Each row As DataRow In bomOptionTbl.Rows
 
-        '                dummyOptionName = row("Name").ToString()
-        '                dummyOptionQty = CType(row("Quantity"), Integer)
+                dummyOptionName = row("Name").ToString()
+                dummyOptionQty = CType(row("Quantity"), Integer)
 
-        '                If sumDic.ContainsKey(dummyOptionName) Then
-        '                    dummyOtionSum = sumDic(dummyOptionName)
-        '                    If dummyOtionSum.Quantity = dummyOptionQty Then
-        '                        matchCount += 1
-        '                    End If
-        '                End If
+                If sumDic.ContainsKey(dummyOptionName) Then
+                    dummyOtionSum = sumDic(dummyOptionName)
+                    If dummyOtionSum.Quantity = dummyOptionQty Then
+                        matchCount += 1
+                    End If
+                End If
 
-        '            Next
+            Next
 
-        '            If matchCount <> expectedMatchCount Then
-        '                errorMessageList.Add("Option is Not match with BOM")
-        '            End If
+            If matchCount <> expectedMatchCount Then
+                errorMessageList.Add("Option is Not match with BOM")
+            End If
 
-        '        End If
-        '#End Region
+        End If
+#End Region
 
-        '#Region "Check BOMTestEquipment"
-        '        'must have atlease 1
-        '        bomTestEqiupmentTbl = DBAccess.GetBOMTestEquipment(bomId)
-        '        If bomTestEqiupmentTbl.Rows.Count > 0 Then
+#Region "Check BOMTestEquipment"
+        'must have atlease 1
+        bomTestEqiupmentTbl = DBAccess.GetBOMTestEquipment(bomId)
+        If bomTestEqiupmentTbl.Rows.Count > 0 Then
 
-        '            Dim dicEq As Dictionary(Of String, EquipmentSummary) = EquipmentSummary.GetEquipmentSummaryDictionary(m_Data)
+            Dim dicEq As Dictionary(Of String, EquipmentSummary) = EquipmentSummary.GetEquipmentSummaryDictionary(m_Data)
 
-        '            Dim dummyName As String
-        '            Dim dummyTypeName As String
-        '            Dim dummyIsAdaptor As Boolean
-        '            Dim dummyIsLoadBoard As Boolean
+            Dim dummyName As String
+            Dim dummyTypeName As String
+            Dim dummyIsAdaptor As Boolean
+            Dim dummyIsLoadBoard As Boolean
 
-        '            Dim matchCount As Integer = 0
-        '            Dim expectedMatchCount As Integer = dicEq.Count
+            Dim matchCount As Integer = 0
+            Dim expectedMatchCount As Integer = dicEq.Count
 
-        '            For Each row As DataRow In bomTestEqiupmentTbl.Rows
+            For Each row As DataRow In bomTestEqiupmentTbl.Rows
 
-        '                dummyName = row("Name").ToString()
-        '                dummyTypeName = row("TypeName").ToString()
-        '                dummyIsAdaptor = CBool(row("IsAdaptor"))
-        '                dummyIsLoadBoard = CBool(row("IsLoadboard"))
+                dummyName = row("Name").ToString()
+                dummyTypeName = row("TypeName").ToString()
+                dummyIsAdaptor = CBool(row("IsAdaptor"))
+                dummyIsLoadBoard = CBool(row("IsLoadboard"))
 
-        '                If dicEq.ContainsKey(dummyName) Then
-        '                    matchCount += 1
-        '                    dicEq.Remove(dummyName) 'in case of use 2 unit of same box
-        '                End If
+                If dicEq.ContainsKey(dummyName) Then
+                    matchCount += 1
+                    dicEq.Remove(dummyName) 'in case of use 2 unit of same box
+                End If
 
-        '            Next
+            Next
 
-        '            If matchCount <> expectedMatchCount Then
-        '                errorMessageList.Add("Test Equipment is not match with BOM")
-        '            End If
+            If matchCount <> expectedMatchCount Then
+                errorMessageList.Add("Test Equipment is not match with BOM")
+            End If
 
-        '        End If
-        '#End Region
+        End If
+#End Region
 
-        '        If errorMessageList.Count > 0 Then
-        '            ShowErrorMessage(String.Join("<br/>", errorMessageList.ToArray()))
-        '            Exit Sub
-        '        End If
+        If errorMessageList.Count > 0 Then
+            ShowErrorMessage(String.Join("<br/>", errorMessageList.ToArray()))
+            Exit Sub
+        End If
 
 #End Region
 
