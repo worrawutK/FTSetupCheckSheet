@@ -40,6 +40,7 @@ Public Class SetupConfirm
         Response.Redirect("~/SetupMain.aspx")
     End Sub
 
+    'Input Working Slip
     Protected Sub QRcodeTextBox_TextChanged(sender As Object, e As EventArgs) Handles QRcodeTextBox.TextChanged
 
         If QRcodeTextBox.Text.Length = 252 Then

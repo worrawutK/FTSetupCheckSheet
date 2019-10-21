@@ -328,22 +328,18 @@ Public Class DBAccess
     End Function
 
     Friend Shared Function GetPCMain(fullMCNo As String) As String
-        Dim strSql As String = "SELECT EQP.FTPCType.ID, EQP.FTPCType.PCType, EQP.FTPCType.PCMain
-            FROM EQP.FTMachine INNER JOIN
-             EQP.Equipment ON EQP.FTMachine.MachineID = EQP.Equipment.ID INNER JOIN
-              EQP.FTPCType ON EQP.FTMachine.PCType = EQP.FTPCType.PCType
-            WHERE (EQP.Equipment.Name = @FullMCNo)"
+        'ConfirmedReport Working Slip 1
+        Dim tbl = New DataTable()
 
-        Using con As SqlConnection = New SqlConnection(My.Settings.DBxConnectionString)
+        Using connection As New SqlConnection(My.Settings.SPConnectionString)
+            connection.Open()
 
-            Using cmd As SqlCommand = con.CreateCommand()
+            Using cmd As New SqlCommand
+                cmd.Connection = connection
+                cmd.CommandType = CommandType.StoredProcedure
+                cmd.CommandText = "[dbo].[sp_get_setupchecksheet_getpcmain]"
+                cmd.Parameters.Add("@FullMCNo", SqlDbType.VarChar, 15).Value = fullMCNo
 
-                cmd.CommandText = strSql
-                cmd.Parameters.Add("@FullMCNo", SqlDbType.VarChar, 50).Value = fullMCNo
-
-                con.Open()
-
-                Dim tbl = New DataTable()
                 tbl.Load(cmd.ExecuteReader())
 
                 If tbl.Rows.Count > 0 Then
@@ -352,44 +348,101 @@ Public Class DBAccess
                     Return ""
                 End If
 
+                connection.Close()
             End Using
-
         End Using
+
+        'comment by Pattarapan M. since 2019-10-19
+        'Dim strSql As String = "SELECT EQP.FTPCType.ID, EQP.FTPCType.PCType, EQP.FTPCType.PCMain
+        '    FROM EQP.FTMachine INNER JOIN
+        '     EQP.Equipment ON EQP.FTMachine.MachineID = EQP.Equipment.ID INNER JOIN
+        '      EQP.FTPCType ON EQP.FTMachine.PCType = EQP.FTPCType.PCType
+        '    WHERE (EQP.Equipment.Name = @FullMCNo)"
+
+        'Using con As SqlConnection = New SqlConnection(My.Settings.DBxConnectionString)
+
+        '    Using cmd As SqlCommand = con.CreateCommand()
+
+        '        cmd.CommandText = strSql
+        '        cmd.Parameters.Add("@FullMCNo", SqlDbType.VarChar, 50).Value = fullMCNo
+
+        '        con.Open()
+
+        '        Dim tbl = New DataTable()
+        '        tbl.Load(cmd.ExecuteReader())
+
+        '        If tbl.Rows.Count > 0 Then
+        '            Return tbl.Rows(0)("PCMain").ToString()
+        '        Else
+        '            Return ""
+        '        End If
+
+        '    End Using
+
+        'End Using
 
     End Function
 
     Public Shared Function GetEquipmentByQRName(qrName As String, ParamArray quipmentTypeIdArray As Integer()) As DataTable
+        'ConfirmedReport Machine QRCode
         Dim dt As DataTable = New DataTable()
 
         If quipmentTypeIdArray Is Nothing OrElse quipmentTypeIdArray.Length = 0 Then
             Throw New Exception("quipmentTypeIdArray must not be Nothing or 0-length")
         End If
 
-        Using conSql As SqlConnection = New SqlConnection(My.Settings.DBxConnectionString)
+        Dim strINCondition As String = Nothing
 
-            conSql.Open()
+        For Each eqtId As Integer In quipmentTypeIdArray
+            If String.IsNullOrEmpty(strINCondition) Then
+                strINCondition = eqtId.ToString()
+            Else
+                strINCondition &= "," & eqtId
+            End If
+        Next
 
-            Dim strINCondition As String = Nothing
+        Using connection As New SqlConnection(My.Settings.SPConnectionString)
+            connection.Open()
 
-            For Each eqtId As Integer In quipmentTypeIdArray
-                If String.IsNullOrEmpty(strINCondition) Then
-                    strINCondition = eqtId.ToString()
-                Else
-                    strINCondition &= "," & eqtId
-                End If
-            Next
-
-            Dim sdqData As String = "SELECT [ID],[EquipmentTypeID],[FixAsset],[SubType],[Name],[ControlNo],[SpecialCtrl]" &
-                ",[StatusID],[Location],[Register],[RegisteredDate],[ProcessID],[QRName] " &
-                "FROM [EQP].[Equipment] WHERE [QRName] = @QRName AND [EquipmentTypeID] IN ( " & strINCondition & ")"
-
-            Using cmd As New SqlCommand(sdqData, conSql)
-                cmd.Parameters.Add("@QRName", SqlDbType.NVarChar, 9).Value = qrName
+            Using cmd As New SqlCommand
+                cmd.Connection = connection
+                cmd.CommandType = CommandType.StoredProcedure
+                cmd.CommandText = "[dbo].[sp_get_setupchecksheet_getequipmentbyqrcode]"
+                cmd.Parameters.Add("@QRName", SqlDbType.VarChar, 9).Value = qrName
+                cmd.Parameters.Add("@strINCondition", SqlDbType.Int).Value = strINCondition
 
                 dt.Load(cmd.ExecuteReader())
 
+                connection.Close()
             End Using
         End Using
+
+        'comment by Pattarapan M. since 2019-10-19
+        'Using conSql As SqlConnection = New SqlConnection(My.Settings.DBxConnectionString)
+
+        '    conSql.Open()
+
+        '    Dim strINCondition As String = Nothing
+
+        '    For Each eqtId As Integer In quipmentTypeIdArray
+        '        If String.IsNullOrEmpty(strINCondition) Then
+        '            strINCondition = eqtId.ToString()
+        '        Else
+        '            strINCondition &= "," & eqtId
+        '        End If
+        '    Next
+
+        '    Dim sdqData As String = "SELECT [ID],[EquipmentTypeID],[FixAsset],[SubType],[Name],[ControlNo],[SpecialCtrl]" &
+        '        ",[StatusID],[Location],[Register],[RegisteredDate],[ProcessID],[QRName] " &
+        '        "FROM [EQP].[Equipment] WHERE [QRName] = @QRName AND [EquipmentTypeID] IN ( " & strINCondition & ")"
+
+        '    Using cmd As New SqlCommand(sdqData, conSql)
+        '        cmd.Parameters.Add("@QRName", SqlDbType.NVarChar, 9).Value = qrName
+        '        'cmd.Parameters.Add("@strINCondition", SqlDbType.NVarChar, 9).value = ""
+
+        '        dt.Load(cmd.ExecuteReader())
+        '    End Using
+        'End Using
 
         Return dt
     End Function
@@ -401,7 +454,7 @@ Public Class DBAccess
 
             conSql.Open()
 
-            Dim sdqData As String = "SELECT MCNo,LotNo,PackageName,DeviceName,ProgramName,TesterType,TestFlow,QRCodesocket1,QRCodesocket2,QRCodesocket3" &
+            Dim sdqData As String = "Select MCNo,LotNo,PackageName,DeviceName,ProgramName,TesterType,TestFlow,QRCodesocket1,QRCodesocket2,QRCodesocket3" &
                            ",QRCodesocket4,QRCodesocketChannel1,QRCodesocketChannel2,QRCodesocketChannel3,QRCodesocketChannel4,TesterNoA" &
                            ",TesterNoAQRcode,TesterNoB,TesterNoBQRcode,ChannelAFTB,ChannelAFTBQRcode,ChannelBFTB,ChannelBFTBQRcode,TestBoxA" &
                            ",TestBoxAQRcode,TestBoxB,TestBoxBQRcode,AdaptorA,AdaptorAQRcode,AdaptorB,AdaptorBQRcode,DutcardA,DutcardAQRcode,DutcardB" &
@@ -450,10 +503,29 @@ Public Class DBAccess
     End Function
 
 
-    Public Shared Function GetBOM(customerDeviceName As String, assyPackageName As String,
-                                  testFlowName As String, testerType As String,
-                                  pcMain As String) As DataTable
+    Public Shared Function GetBOM(customerDeviceName As String, assyPackageName As String, testFlowName As String, testerType As String, pcMain As String) As DataTable
+        'ConfirmedReport Working Slip 2
+        Dim tbl As DataTable = Nothing
 
+        Using connection As New SqlConnection(My.Settings.SPConnectionString)
+            connection.Open()
+
+            Using cmd As New SqlCommand
+                cmd.Connection = connection
+                cmd.CommandType = CommandType.StoredProcedure
+                cmd.CommandText = "[dbo].[sp_get_setupchecksheet_getbom]"
+                cmd.Parameters.Add("@CustomerDeviceName", SqlDbType.VarChar, 20).Value = customerDeviceName
+                cmd.Parameters.Add("@PackageName", SqlDbType.VarChar, 10).Value = assyPackageName
+                cmd.Parameters.Add("@TestFlowName", SqlDbType.VarChar, 20).Value = testFlowName
+                cmd.Parameters.Add("@TesterTypeName", SqlDbType.VarChar, 50).Value = testerType
+                cmd.Parameters.Add("@PCMain", SqlDbType.VarChar, 50).Value = pcMain
+
+                tbl = New DataTable()
+                tbl.Load(cmd.ExecuteReader())
+
+                connection.Close()
+            End Using
+        End Using
         'comment by Tanapat S. since 2019-09-08
         'Dim strSql As String = "Select BOM.FTBom.ID,BOM.FTDevice.Name As CustomerDeviceName, TesterType.Name As Tester, BOM.FTBom.TestChannel As Channel, " &
         '    "TestFlow.Name As TestFlow, EQP.FTPCType.PCMain As BaseHandler, EQP.FTPCType.PCType As Handler, " &
@@ -477,51 +549,52 @@ Public Class DBAccess
         '    "And TestFlow.Name = @TestFlowName " &
         '    "And TesterType.Name = @TesterTypeName"
 
-        Dim strSql As String = "SELECT BOM.FTBom.ID, BOM.FTBom.PackageID, BOM.FTBom.FTDeviceID, BOM.BomTesterType.TesterTypeID, BOM.FTBom.BomTesterTypeID, BOM.FTBom.TestChannel, 
-                      BOM.FTBom.TestFlowID, BOM.FTBom.BomTestFlowID, BOM.FTBom.PCMachineTypeID, BOM.FTBom.TempOfProduct, BOM.FTBom.TempOfMachine, 
-                      BOM.FTBom.DSStartDate, BOM.FTBom.ESStartDate, BOM.FTBom.CSSTartDate, BOM.FTBom.PLStartDate, BOM.FTBom.MPStartDate, BOM.FTBom.SocketTypeID, 
-                      BOM.FTBom.TestProgram, BOM.FTBom.TestTime, BOM.FTBom.SpecialRank, BOM.FTBom.InspectionCondition, BOM.FTBom.RPM, BOM.FTBom.BoxCapa, 
-                      BOM.FTBom.TotalBoxCapa, BOM.FTBom.LeadTimeOfLot, BOM.FTBom.ProductionLine, BOM.FTBom.TubeTray, BOM.FTBom.Emboss, BOM.FTBom.Reel, 
-                      BOM.FTBom.HandlerLeadTime, BOM.FTBom.TesterLoadTime
-                      FROM BOM.FTBom INNER JOIN
-                      BOM.FTDevice ON BOM.FTBom.FTDeviceID = BOM.FTDevice.ID INNER JOIN
-                      TestFlow ON BOM.FTBom.TestFlowID = TestFlow.ID INNER JOIN
-                      BOM.Package ON BOM.FTBom.PackageID = BOM.Package.ID INNER JOIN
-                      EQP.FTPCType ON BOM.FTBom.PCMachineTypeID = EQP.FTPCType.ID INNER JOIN
-                      BOM.BomTesterType ON BOM.FTBom.BomTesterTypeID = BOM.BomTesterType.ID INNER JOIN
-                      TesterType ON BOM.BomTesterType.TesterTypeID = TesterType.ID
-                      WHERE (BOM.FTDevice.Name = @CustomerDeviceName) 
-                      AND (EQP.FTPCType.PCMain = @PCMain) AND (TestFlow.Name = @TestFlowName) AND 
-                      (TesterType.Name = @TesterTypeName) AND (BOM.Package.AssyName = @PackageName)"
+        'comment by Pattarapan M. since 2019-10-19
+        'Dim strSql As String = "SELECT BOM.FTBom.ID, BOM.FTBom.PackageID, BOM.FTBom.FTDeviceID, BOM.BomTesterType.TesterTypeID, BOM.FTBom.BomTesterTypeID, BOM.FTBom.TestChannel, 
+        '              BOM.FTBom.TestFlowID, BOM.FTBom.BomTestFlowID, BOM.FTBom.PCMachineTypeID, BOM.FTBom.TempOfProduct, BOM.FTBom.TempOfMachine, 
+        '              BOM.FTBom.DSStartDate, BOM.FTBom.ESStartDate, BOM.FTBom.CSSTartDate, BOM.FTBom.PLStartDate, BOM.FTBom.MPStartDate, BOM.FTBom.SocketTypeID, 
+        '              BOM.FTBom.TestProgram, BOM.FTBom.TestTime, BOM.FTBom.SpecialRank, BOM.FTBom.InspectionCondition, BOM.FTBom.RPM, BOM.FTBom.BoxCapa, 
+        '              BOM.FTBom.TotalBoxCapa, BOM.FTBom.LeadTimeOfLot, BOM.FTBom.ProductionLine, BOM.FTBom.TubeTray, BOM.FTBom.Emboss, BOM.FTBom.Reel, 
+        '              BOM.FTBom.HandlerLeadTime, BOM.FTBom.TesterLoadTime
+        '              FROM BOM.FTBom INNER JOIN
+        '              BOM.FTDevice ON BOM.FTBom.FTDeviceID = BOM.FTDevice.ID INNER JOIN
+        '              TestFlow ON BOM.FTBom.TestFlowID = TestFlow.ID INNER JOIN
+        '              BOM.Package ON BOM.FTBom.PackageID = BOM.Package.ID INNER JOIN
+        '              EQP.FTPCType ON BOM.FTBom.PCMachineTypeID = EQP.FTPCType.ID INNER JOIN
+        '              BOM.BomTesterType ON BOM.FTBom.BomTesterTypeID = BOM.BomTesterType.ID INNER JOIN
+        '              TesterType ON BOM.BomTesterType.TesterTypeID = TesterType.ID
+        '              WHERE (BOM.FTDevice.Name = @CustomerDeviceName) 
+        '              AND (EQP.FTPCType.PCMain = @PCMain) AND (TestFlow.Name = @TestFlowName) AND 
+        '              (TesterType.Name = @TesterTypeName) AND (BOM.Package.AssyName = @PackageName)"
 
-        Dim tbl As DataTable = Nothing
+        'Dim tbl As DataTable = Nothing
 
-        Using con As SqlConnection = New SqlConnection(My.Settings.DBxConnectionString)
+        'Using con As SqlConnection = New SqlConnection(My.Settings.DBxConnectionString)
 
-            Using cmd As SqlCommand = con.CreateCommand()
+        '    Using cmd As SqlCommand = con.CreateCommand()
 
-                cmd.CommandText = strSql
-                cmd.Parameters.Add("@PackageName", SqlDbType.VarChar, 10).Value = assyPackageName
-                cmd.Parameters.Add("@CustomerDeviceName", SqlDbType.VarChar, 20).Value = customerDeviceName
-                cmd.Parameters.Add("@TestFlowName", SqlDbType.VarChar, 20).Value = testFlowName
-                cmd.Parameters.Add("@TesterTypeName", SqlDbType.VarChar, 20).Value = testerType
-                cmd.Parameters.Add("@PCMain", SqlDbType.VarChar, 50).Value = pcMain
+        '        cmd.CommandText = strSql
+        '        cmd.Parameters.Add("@PackageName", SqlDbType.VarChar, 10).Value = assyPackageName
+        '        cmd.Parameters.Add("@CustomerDeviceName", SqlDbType.VarChar, 20).Value = customerDeviceName
+        '        cmd.Parameters.Add("@TestFlowName", SqlDbType.VarChar, 20).Value = testFlowName
+        '        cmd.Parameters.Add("@TesterTypeName", SqlDbType.VarChar, 20).Value = testerType
+        '        cmd.Parameters.Add("@PCMain", SqlDbType.VarChar, 50).Value = pcMain
 
-                con.Open()
+        '        con.Open()
 
-                tbl = New DataTable()
-                tbl.Load(cmd.ExecuteReader())
+        '        tbl = New DataTable()
+        '        tbl.Load(cmd.ExecuteReader())
 
-            End Using
+        '    End Using
 
-        End Using
+        'End Using
 
         Return tbl
 
     End Function
 
     Public Shared Function GetBOMOption(bomId As Integer) As DataTable
-
+        'ConfirmedReport Working Slip 3
         Dim strSql As String = "Select B.Name, B.OptionName, A.Quantity, A.Setting " &
             "From BOM.FTBomOption As A " &
             "INNER JOIN EQP.OptionType As B On A.OptionTypeID = B.ID " &

@@ -13,15 +13,15 @@ Option Explicit On
 
 
 Namespace My
-    
-    <Global.System.Runtime.CompilerServices.CompilerGeneratedAttribute(),  _
-     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.2.0.0"),  _
-     Global.System.ComponentModel.EditorBrowsableAttribute(Global.System.ComponentModel.EditorBrowsableState.Advanced)>  _
+
+    <Global.System.Runtime.CompilerServices.CompilerGeneratedAttribute(),
+     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.3.0.0"),
+     Global.System.ComponentModel.EditorBrowsableAttribute(Global.System.ComponentModel.EditorBrowsableState.Advanced)>
     Partial Friend NotInheritable Class MySettings
         Inherits Global.System.Configuration.ApplicationSettingsBase
-        
-        Private Shared defaultInstance As MySettings = CType(Global.System.Configuration.ApplicationSettingsBase.Synchronized(New MySettings()),MySettings)
-        
+
+        Private Shared defaultInstance As MySettings = CType(Global.System.Configuration.ApplicationSettingsBase.Synchronized(New MySettings()), MySettings)
+
 #Region "My.Settings Auto-Save Functionality"
 #If _MyType = "WindowsForms" Then
     Private Shared addedHandler As Boolean
@@ -36,10 +36,10 @@ Namespace My
     End Sub
 #End If
 #End Region
-        
+
         Public Shared ReadOnly Property [Default]() As MySettings
             Get
-                
+
 #If _MyType = "WindowsForms" Then
                If Not addedHandler Then
                     SyncLock addedHandlerLockObject
@@ -53,24 +53,35 @@ Namespace My
                 Return defaultInstance
             End Get
         End Property
-        
-        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("Data Source=172.16.0.102;Initial Catalog=DBx;Persist Security Info=True;User ID=s"& _ 
-            "ystem;Password=p@$$w0rd")>  _
-        Public ReadOnly Property DBxConnectionString() As String
-            Get
-                Return CType(Me("DBxConnectionString"),String)
-            End Get
-        End Property
-        
-        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("\\172.16.0.100\FTCheckSheet\ShonokoshiPDF\")>  _
+
+        <Global.System.Configuration.ApplicationScopedSettingAttribute(),
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),
+         Global.System.Configuration.DefaultSettingValueAttribute("\\172.16.0.100\FTCheckSheet\ShonokoshiPDF\")>
         Public ReadOnly Property ShonokokoshiPDFPath() As String
             Get
-                Return CType(Me("ShonokokoshiPDFPath"),String)
+                Return CType(Me("ShonokokoshiPDFPath"), String)
+            End Get
+        End Property
+
+        <Global.System.Configuration.ApplicationScopedSettingAttribute(),
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),
+         Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString),
+         Global.System.Configuration.DefaultSettingValueAttribute("Data Source=172.16.0.102;Initial Catalog=StoredProcedureDB;Persist Security Info=" &
+            "True;User ID=system;Password=p@$$w0rd")>
+        Public ReadOnly Property SPConnectionString() As String
+            Get
+                Return CType(Me("SPConnectionString"), String)
+            End Get
+        End Property
+
+        <Global.System.Configuration.ApplicationScopedSettingAttribute(),
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),
+         Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString),
+         Global.System.Configuration.DefaultSettingValueAttribute("Data Source=172.16.0.102;Initial Catalog=DBx;Persist Security Info=True;User ID=s" &
+            "ystem;Password=p@$$w0rd")>
+        Public ReadOnly Property DBxConnectionString() As String
+            Get
+                Return CType(Me("DBxConnectionString"), String)
             End Get
         End Property
     End Class
