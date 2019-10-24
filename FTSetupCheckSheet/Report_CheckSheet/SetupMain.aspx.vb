@@ -260,9 +260,6 @@ Public Class SetupMain
                             m_Data.ConfirmedShonoOp = row("ConfirmedShonoOp").ToString().ToUpper
                             m_Data.StatusShonoOP = row("StatusShonoOP").ToString().ToUpper
 
-
-
-
                         Else
                             'first time of MC
 
