@@ -204,7 +204,7 @@ Public Class SetupConfirm
                 dic.Add(data.AdaptorA, dummy)
             End If
 
-            If Not String.IsNullOrEmpty(data.AdaptorB) Then
+            If Not String.IsNullOrEmpty(data.AdaptorB) And (data.AdaptorA <> data.AdaptorB) Then    'If (AdapterA Name == AdaptorB Name) Then Error cause SAME Key
                 dummy = New EquipmentSummary()
                 dummy.Name = data.AdaptorB
                 dummy.TypeID = EQUIPMENT_TYPE_ID_ADAPTOR
@@ -218,7 +218,7 @@ Public Class SetupConfirm
                 dic.Add(data.BridgecableA, dummy)
             End If
 
-            If Not String.IsNullOrEmpty(data.BridgecableB) Then
+            If Not String.IsNullOrEmpty(data.BridgecableB) And (data.BridgecableA <> data.BridgecableB) Then
                 dummy = New EquipmentSummary()
                 dummy.Name = data.BridgecableB
                 dummy.TypeID = EQUIPMENT_TYPE_ID_BRIDGE_CABLE
@@ -232,7 +232,7 @@ Public Class SetupConfirm
                 dic.Add(data.DutcardA, dummy)
             End If
 
-            If Not String.IsNullOrEmpty(data.DutcardB) Then
+            If Not String.IsNullOrEmpty(data.DutcardB) And (data.DutcardA <> data.DutcardB) Then
                 dummy = New EquipmentSummary()
                 dummy.Name = data.DutcardB
                 dummy.TypeID = EQUIPMENT_TYPE_ID_DUTCARD
@@ -246,7 +246,7 @@ Public Class SetupConfirm
                 dic.Add(data.TestBoxA, dummy)
             End If
 
-            If Not String.IsNullOrEmpty(data.TestBoxB) Then
+            If Not String.IsNullOrEmpty(data.TestBoxB) And (data.TestBoxA <> data.TestBoxB) Then
                 dummy = New EquipmentSummary()
                 dummy.Name = data.TestBoxB
                 dummy.TypeID = EQUIPMENT_TYPE_ID_BOX
@@ -305,10 +305,10 @@ Public Class SetupConfirm
 #Region "Check BOMOption"
 
         'in some case, there is no option
-        bomOptionTbl = DBAccess.GetBOMOption(bomId)
+        bomOptionTbl = DBAccess.GetBOMOption(bomId) 'From DB
         If bomOptionTbl.Rows.Count > 0 Then
 
-            Dim sumDic As Dictionary(Of String, OptionSummary) = OptionSummary.GetOptionSummaryList(m_Data)
+            Dim sumDic As Dictionary(Of String, OptionSummary) = OptionSummary.GetOptionSummaryList(m_Data) 'From Input
 
             Dim matchCount As Integer = 0
             Dim expectedMatchCount As Integer = bomOptionTbl.Rows.Count
@@ -316,6 +316,7 @@ Public Class SetupConfirm
             Dim dummyOptionQty As Integer
 
             Dim dummyOtionSum As OptionSummary
+            Dim lstOption As New List(Of String)
 
             For Each row As DataRow In bomOptionTbl.Rows
 
@@ -327,11 +328,15 @@ Public Class SetupConfirm
                     If dummyOtionSum.Quantity = dummyOptionQty Then
                         matchCount += 1
                     End If
+                    'Else
+                    '    lstOption.Add(sumDic.Keys.First())
+                    '    lstOption.Add(dummyOptionName)
                 End If
 
             Next
 
             If matchCount <> expectedMatchCount Then
+                'errorMessageList.Add(String.Format("Option is Not match with BOM <br/> {0}:={1}<br/>", lstOption(0), lstOption(1)))
                 errorMessageList.Add("Option is Not match with BOM")
             End If
 
@@ -351,7 +356,9 @@ Public Class SetupConfirm
             Dim dummyIsLoadBoard As Boolean
 
             Dim matchCount As Integer = 0
-            Dim expectedMatchCount As Integer = dicEq.Count
+            Dim expectedMatchCount As Integer = bomTestEqiupmentTbl.Rows.Count 'dicEq.Count
+
+            Dim lstEquipment As New List(Of String)
 
             For Each row As DataRow In bomTestEqiupmentTbl.Rows
 
@@ -363,12 +370,16 @@ Public Class SetupConfirm
                 If dicEq.ContainsKey(dummyName) Then
                     matchCount += 1
                     dicEq.Remove(dummyName) 'in case of use 2 unit of same box
+                    'Else
+                    '    lstEquipment.Add(dicEq.Keys.First())
+                    '    lstEquipment.Add(dummyName)
                 End If
 
             Next
 
             If matchCount <> expectedMatchCount Then
                 errorMessageList.Add("Test Equipment is not match with BOM")
+                'errorMessageList.Add(String.Format("Test Equipment is not match with BOM <br>{0}:={1}</br>", lstEquipment(0), lstEquipment(1)))
             End If
 
         End If
