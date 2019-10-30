@@ -91,77 +91,79 @@ Public Class SetupConfirm
 
             If Not String.IsNullOrEmpty(data.OptionType1) Then
                 If dic.ContainsKey(data.OptionType1) Then
-                    dummy = dic(data.OptionType1)
+                    dummy = dic(data.OptionType1.ToUpper())
                 Else
                     dummy = New OptionSummary()
-                    dummy.OptionType = data.OptionType1
-                    dic.Add(data.OptionType1, dummy)
+                    dummy.OptionType = data.OptionType1.ToUpper()
+                    dic.Add(data.OptionType1.ToUpper(), dummy)
                 End If
                 dummy.Quantity += 1
             End If
 
             If Not String.IsNullOrEmpty(data.OptionType2) Then
                 If dic.ContainsKey(data.OptionType2) Then
-                    dummy = dic(data.OptionType2)
+                    dummy = dic(data.OptionType2.ToUpper())
                 Else
                     dummy = New OptionSummary()
-                    dummy.OptionType = data.OptionType2
-                    dic.Add(data.OptionType2, dummy)
+                    dummy.OptionType = data.OptionType2.ToUpper()
+                    dic.Add(data.OptionType2.ToUpper(), dummy)
                 End If
                 dummy.Quantity += 1
             End If
 
             If Not String.IsNullOrEmpty(data.OptionType3) Then
                 If dic.ContainsKey(data.OptionType3) Then
-                    dummy = dic(data.OptionType3)
+                    dummy = dic(data.OptionType3.ToUpper())
                 Else
                     dummy = New OptionSummary()
-                    dummy.OptionType = data.OptionType3
-                    dic.Add(data.OptionType3, dummy)
+                    data.OptionType3.ToUpper()
+                    dummy.OptionType = data.OptionType3.ToUpper()
+                    dic.Add(data.OptionType3.ToUpper(), dummy)
                 End If
                 dummy.Quantity += 1
             End If
 
             If Not String.IsNullOrEmpty(data.OptionType4) Then
                 If dic.ContainsKey(data.OptionType4) Then
-                    dummy = dic(data.OptionType4)
+                    dummy = dic(data.OptionType4.ToUpper())
                 Else
                     dummy = New OptionSummary()
-                    dummy.OptionType = data.OptionType4
-                    dic.Add(data.OptionType4, dummy)
+                    data.OptionType4.ToUpper()
+                    dummy.OptionType = data.OptionType4.ToUpper()
+                    dic.Add(data.OptionType4.ToUpper(), dummy)
                 End If
                 dummy.Quantity += 1
             End If
 
             If Not String.IsNullOrEmpty(data.OptionType5) Then
                 If dic.ContainsKey(data.OptionType5) Then
-                    dummy = dic(data.OptionType5)
+                    dummy = dic(data.OptionType5.ToUpper())
                 Else
                     dummy = New OptionSummary()
-                    dummy.OptionType = data.OptionType5
-                    dic.Add(data.OptionType5, dummy)
+                    dummy.OptionType = data.OptionType5.ToUpper()
+                    dic.Add(data.OptionType5.ToUpper(), dummy)
                 End If
                 dummy.Quantity += 1
             End If
 
             If Not String.IsNullOrEmpty(data.OptionType6) Then
                 If dic.ContainsKey(data.OptionType6) Then
-                    dummy = dic(data.OptionType6)
+                    dummy = dic(data.OptionType6.ToUpper())
                 Else
                     dummy = New OptionSummary()
-                    dummy.OptionType = data.OptionType6
-                    dic.Add(data.OptionType6, dummy)
+                    dummy.OptionType = data.OptionType6.ToUpper()
+                    dic.Add(data.OptionType6.ToUpper(), dummy)
                 End If
                 dummy.Quantity += 1
             End If
 
             If Not String.IsNullOrEmpty(data.OptionType7) Then
                 If dic.ContainsKey(data.OptionType7) Then
-                    dummy = dic(data.OptionType7)
+                    dummy = dic(data.OptionType7.ToUpper())
                 Else
                     dummy = New OptionSummary()
-                    dummy.OptionType = data.OptionType7
-                    dic.Add(data.OptionType7, dummy)
+                    dummy.OptionType = data.OptionType7.ToUpper()
+                    dic.Add(data.OptionType7.ToUpper(), dummy)
                 End If
                 dummy.Quantity += 1
             End If
@@ -193,64 +195,101 @@ Public Class SetupConfirm
             End Set
         End Property
 
-        Public Shared Function GetEquipmentSummaryDictionary(data As FTSetupReport) As Dictionary(Of String, EquipmentSummary)
-            Dim dic As Dictionary(Of String, EquipmentSummary) = New Dictionary(Of String, EquipmentSummary)
-            Dim dummy As EquipmentSummary
+        Public Shared Function GetEquipmentSummaryDictionary(data As FTSetupReport) As Dictionary(Of String, List(Of String))
+            Dim dic As Dictionary(Of String, List(Of String)) = New Dictionary(Of String, List(Of String))
+            Dim lstdummy As New List(Of String)
+            'Dim dummy As EquipmentSummary
 
             If Not String.IsNullOrEmpty(data.AdaptorA) Then
-                dummy = New EquipmentSummary()
-                dummy.Name = data.AdaptorA
-                dummy.TypeID = EQUIPMENT_TYPE_ID_ADAPTOR
-                dic.Add(data.AdaptorA, dummy)
+                lstdummy.Add(trim(data.AdaptorA))
+
+                'dummy = New EquipmentSummary()
+                'dummy.Name = data.AdaptorA
+                'dummy.TypeID = EQUIPMENT_TYPE_ID_ADAPTOR
+                'dic.Add("ADAPTOR", trim(data.AdaptorA))
             End If
 
             If Not String.IsNullOrEmpty(data.AdaptorB) And (data.AdaptorA <> data.AdaptorB) Then    'If (AdapterA Name == AdaptorB Name) Then Error cause SAME Key
-                dummy = New EquipmentSummary()
-                dummy.Name = data.AdaptorB
-                dummy.TypeID = EQUIPMENT_TYPE_ID_ADAPTOR
-                dic.Add(data.AdaptorB, dummy)
+                lstdummy.Add(trim(data.AdaptorB))
+
+                'dummy = New EquipmentSummary()
+                'dummy.Name = data.AdaptorB
+                'dummy.TypeID = EQUIPMENT_TYPE_ID_ADAPTOR
+                'dic.Add("ADAPTOR", trim(data.AdaptorB))
+            End If
+
+            If lstdummy.Count > 0 Then
+                dic.Add("ADAPTOR", lstdummy)
+                lstdummy = New List(Of String)
             End If
 
             If Not String.IsNullOrEmpty(data.BridgecableA) Then
-                dummy = New EquipmentSummary()
-                dummy.Name = data.BridgecableA
-                dummy.TypeID = EQUIPMENT_TYPE_ID_BRIDGE_CABLE
-                dic.Add(data.BridgecableA, dummy)
+                lstdummy.Add(trim(data.BridgecableA))
+
+                'dummy = New EquipmentSummary()
+                'dummy.Name = data.BridgecableA
+                'dummy.TypeID = EQUIPMENT_TYPE_ID_BRIDGE_CABLE
+                'dic.Add("BRIDGE CABLE", trim(data.BridgecableA))
             End If
 
             If Not String.IsNullOrEmpty(data.BridgecableB) And (data.BridgecableA <> data.BridgecableB) Then
-                dummy = New EquipmentSummary()
-                dummy.Name = data.BridgecableB
-                dummy.TypeID = EQUIPMENT_TYPE_ID_BRIDGE_CABLE
-                dic.Add(data.BridgecableB, dummy)
+                lstdummy.Add(trim(data.BridgecableB))
+
+                'dummy = New EquipmentSummary()
+                'dummy.Name = data.BridgecableB
+                'dummy.TypeID = EQUIPMENT_TYPE_ID_BRIDGE_CABLE
+                'dic.Add("BRIDGE CABLE", trim(data.BridgecableB))
+            End If
+
+            If lstdummy.Count > 0 Then
+                dic.Add("BRIDGE CABLE", lstdummy)
+                lstdummy = New List(Of String)
             End If
 
             If Not String.IsNullOrEmpty(data.DutcardA) Then
-                dummy = New EquipmentSummary()
-                dummy.Name = data.DutcardA
-                dummy.TypeID = EQUIPMENT_TYPE_ID_DUTCARD
-                dic.Add(data.DutcardA, dummy)
+                lstdummy.Add(trim(data.DutcardA))
+
+                'dummy = New EquipmentSummary()
+                'dummy.Name = data.DutcardA
+                'dummy.TypeID = EQUIPMENT_TYPE_ID_DUTCARD
+                'dic.Add("DUTCARD", trim(data.DutcardA))
             End If
 
             If Not String.IsNullOrEmpty(data.DutcardB) And (data.DutcardA <> data.DutcardB) Then
-                dummy = New EquipmentSummary()
-                dummy.Name = data.DutcardB
-                dummy.TypeID = EQUIPMENT_TYPE_ID_DUTCARD
-                dic.Add(data.DutcardB, dummy)
+                lstdummy.Add(trim(data.DutcardB))
+
+                'dummy = New EquipmentSummary()
+                'dummy.Name = data.DutcardB
+                'dummy.TypeID = EQUIPMENT_TYPE_ID_DUTCARD
+                'dic.Add("DUTCARD", trim(data.DutcardB))
+            End If
+
+            If lstdummy.Count > 0 Then
+                dic.Add("DUTCARD", lstdummy)
+                lstdummy = New List(Of String)
             End If
 
             If Not String.IsNullOrEmpty(data.TestBoxA) Then
-                dummy = New EquipmentSummary()
-                dummy.Name = data.TestBoxA
-                dummy.TypeID = EQUIPMENT_TYPE_ID_BOX
-                dic.Add(data.TestBoxA, dummy)
+                lstdummy.Add(trim(data.TestBoxA))
+
+                'dummy = New EquipmentSummary()
+                'dummy.Name = data.TestBoxA
+                'dummy.TypeID = EQUIPMENT_TYPE_ID_BOX
+                'dic.Add("BOARD", trim(data.TestBoxA))
             End If
 
             If Not String.IsNullOrEmpty(data.TestBoxB) And (data.TestBoxA <> data.TestBoxB) Then
-                dummy = New EquipmentSummary()
-                dummy.Name = data.TestBoxB
-                dummy.TypeID = EQUIPMENT_TYPE_ID_BOX
-                dic.Add(data.TestBoxB, dummy)
+                lstdummy.Add(trim(data.TestBoxB))
+
+                'dummy = New EquipmentSummary()
+                'dummy.Name = data.TestBoxB
+                'dummy.TypeID = EQUIPMENT_TYPE_ID_BOX
+                'dic.Add("BOARD", trim(data.TestBoxB))
+            End If
+
+            If lstdummy.Count > 0 Then
+                dic.Add("BOARD", lstdummy)
+                lstdummy = New List(Of String)
             End If
 
             Return dic
@@ -320,7 +359,7 @@ Public Class SetupConfirm
 
             For Each row As DataRow In bomOptionTbl.Rows
 
-                dummyOptionName = row("Name").ToString()
+                dummyOptionName = row("Name").ToString().ToUpper()
                 dummyOptionQty = CType(row("Quantity"), Integer)
 
                 If sumDic.ContainsKey(dummyOptionName) Then
@@ -328,16 +367,20 @@ Public Class SetupConfirm
                     If dummyOtionSum.Quantity = dummyOptionQty Then
                         matchCount += 1
                     End If
-                    'Else
-                    '    lstOption.Add(sumDic.Keys.First())
-                    '    lstOption.Add(dummyOptionName)
+                Else
+                    lstOption.Add(" - " & dummyOptionName & " NOT FOUND ")
                 End If
 
             Next
 
             If matchCount <> expectedMatchCount Then
+                Dim a As String = "Option is Not match with BOM <br/>"
+
+                For Each str As String In lstOption
+                    a = a & str & "<br/>"
+                Next
                 'errorMessageList.Add(String.Format("Option is Not match with BOM <br/> {0}:={1}<br/>", lstOption(0), lstOption(1)))
-                errorMessageList.Add("Option is Not match with BOM")
+                errorMessageList.Add(a)
             End If
 
         End If
@@ -348,7 +391,7 @@ Public Class SetupConfirm
         bomTestEqiupmentTbl = DBAccess.GetBOMTestEquipment(bomId)
         If bomTestEqiupmentTbl.Rows.Count > 0 Then
 
-            Dim dicEq As Dictionary(Of String, EquipmentSummary) = EquipmentSummary.GetEquipmentSummaryDictionary(m_Data)
+            Dim dicEq As Dictionary(Of String, List(Of String)) = EquipmentSummary.GetEquipmentSummaryDictionary(m_Data)
 
             Dim dummyName As String
             Dim dummyTypeName As String
@@ -367,19 +410,28 @@ Public Class SetupConfirm
                 dummyIsAdaptor = CBool(row("IsAdaptor"))
                 dummyIsLoadBoard = CBool(row("IsLoadboard"))
 
-                If dicEq.ContainsKey(dummyName) Then
-                    matchCount += 1
-                    dicEq.Remove(dummyName) 'in case of use 2 unit of same box
-                    'Else
-                    '    lstEquipment.Add(dicEq.Keys.First())
-                    '    lstEquipment.Add(dummyName)
+                If dicEq.ContainsKey(dummyTypeName) Then
+                    For Each item In dicEq.item(dummyTypeName)
+                        If dummyName = item Then
+                            matchCount += 1
+                            'dicEq.Remove(dummyTypeName) 'in case of use 2 unit of same box
+                        Else 'same Type NOT same Name
+                            lstEquipment.Add(" - " & dummyTypeName & " " & dummyName & " NOT MATCH " & item)
+                        End If
+                    Next
+                Else 'NOT same both of type and name
+                    lstEquipment.Add(" - " & dummyTypeName & " NOT FOUND ")
                 End If
-
             Next
 
             If matchCount <> expectedMatchCount Then
-                errorMessageList.Add("Test Equipment is not match with BOM")
-                'errorMessageList.Add(String.Format("Test Equipment is not match with BOM <br>{0}:={1}</br>", lstEquipment(0), lstEquipment(1)))
+                Dim a As String = "Test Equipment is not match with BOM <br/>"
+
+                For Each str As String In lstEquipment
+                    a = a & str & "<br/>"
+                Next
+                'errorMessageList.Add("Test Equipment is not match with BOM")
+                errorMessageList.Add(a)
             End If
 
         End If
