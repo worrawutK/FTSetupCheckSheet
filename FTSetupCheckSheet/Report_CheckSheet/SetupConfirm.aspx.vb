@@ -90,7 +90,7 @@ Public Class SetupConfirm
             Dim dummy As OptionSummary
 
             If Not String.IsNullOrEmpty(data.OptionType1) Then
-                If dic.ContainsKey(data.OptionType1) Then
+                If dic.ContainsKey(data.OptionType1.ToUpper()) Then
                     dummy = dic(data.OptionType1.ToUpper())
                 Else
                     dummy = New OptionSummary()
@@ -101,7 +101,7 @@ Public Class SetupConfirm
             End If
 
             If Not String.IsNullOrEmpty(data.OptionType2) Then
-                If dic.ContainsKey(data.OptionType2) Then
+                If dic.ContainsKey(data.OptionType2.ToUpper()) Then
                     dummy = dic(data.OptionType2.ToUpper())
                 Else
                     dummy = New OptionSummary()
@@ -112,7 +112,7 @@ Public Class SetupConfirm
             End If
 
             If Not String.IsNullOrEmpty(data.OptionType3) Then
-                If dic.ContainsKey(data.OptionType3) Then
+                If dic.ContainsKey(data.OptionType3.ToUpper()) Then
                     dummy = dic(data.OptionType3.ToUpper())
                 Else
                     dummy = New OptionSummary()
@@ -124,7 +124,7 @@ Public Class SetupConfirm
             End If
 
             If Not String.IsNullOrEmpty(data.OptionType4) Then
-                If dic.ContainsKey(data.OptionType4) Then
+                If dic.ContainsKey(data.OptionType4.ToUpper()) Then
                     dummy = dic(data.OptionType4.ToUpper())
                 Else
                     dummy = New OptionSummary()
@@ -136,7 +136,7 @@ Public Class SetupConfirm
             End If
 
             If Not String.IsNullOrEmpty(data.OptionType5) Then
-                If dic.ContainsKey(data.OptionType5) Then
+                If dic.ContainsKey(data.OptionType5.ToUpper()) Then
                     dummy = dic(data.OptionType5.ToUpper())
                 Else
                     dummy = New OptionSummary()
@@ -147,7 +147,7 @@ Public Class SetupConfirm
             End If
 
             If Not String.IsNullOrEmpty(data.OptionType6) Then
-                If dic.ContainsKey(data.OptionType6) Then
+                If dic.ContainsKey(data.OptionType6.ToUpper()) Then
                     dummy = dic(data.OptionType6.ToUpper())
                 Else
                     dummy = New OptionSummary()
@@ -158,7 +158,7 @@ Public Class SetupConfirm
             End If
 
             If Not String.IsNullOrEmpty(data.OptionType7) Then
-                If dic.ContainsKey(data.OptionType7) Then
+                If dic.ContainsKey(data.OptionType7.ToUpper()) Then
                     dummy = dic(data.OptionType7.ToUpper())
                 Else
                     dummy = New OptionSummary()
@@ -288,6 +288,7 @@ Public Class SetupConfirm
             End If
 
             If lstdummy.Count > 0 Then
+                dic.Add("BOX", lstdummy)
                 dic.Add("BOARD", lstdummy)
                 lstdummy = New List(Of String)
             End If
@@ -366,9 +367,11 @@ Public Class SetupConfirm
                     dummyOtionSum = sumDic(dummyOptionName)
                     If dummyOtionSum.Quantity = dummyOptionQty Then
                         matchCount += 1
+                    Else
+                        lstOption.Add(" - " & dummyOptionName & " " & dummyOptionQty & " QUANTITY NOT MATCH " & dummyOtionSum.Quantity)
                     End If
                 Else
-                    lstOption.Add(" - " & dummyOptionName & " NOT FOUND ")
+                    lstOption.Add(" - " & dummyOptionName & " NOT FOUND")
                 End If
 
             Next

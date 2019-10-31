@@ -30,7 +30,7 @@
     <div class="jumbotron">
         <h1 class="text-center login-title" style="font-family: 'Waffle Regular'; font-weight: bold;">SET-UP  CHECK  SHEET</h1>
         <h2 class="text-center login-title" style="font-family : 'Waffle Regular'; font-weight: bold;" >ｾｯﾄｱｯﾌﾟﾁｪｯｸｼｰﾄ</h2>
-         <h2 class="text-center login-title" style="font-family : 'Waffle Regular'; font-weight: bold;" >Release Date: 2019-10-28</h2>
+         <h2 class="text-center login-title" style="font-family : 'Waffle Regular'; font-weight: bold;" >Release Date: 2019-10-31</h2>
     </div>
 
     <div class="row">
