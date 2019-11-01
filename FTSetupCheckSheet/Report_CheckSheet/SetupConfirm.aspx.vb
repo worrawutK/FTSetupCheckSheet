@@ -365,13 +365,13 @@ Public Class SetupConfirm
 
                 If sumDic.ContainsKey(dummyOptionName) Then
                     dummyOtionSum = sumDic(dummyOptionName)
-                    If dummyOtionSum.Quantity = dummyOptionQty Then
+                    If dummyOtionSum.Quantity >= dummyOptionQty Then
                         matchCount += 1
                     Else
-                        lstOption.Add(" - " & dummyOptionName & " " & dummyOptionQty & " QUANTITY NOT MATCH " & dummyOtionSum.Quantity)
+                        lstOption.Add(" - " & dummyOptionName & " จาก BOM มี " & dummyOptionQty & " ตัว ไม่เท่ากับ ที่ Input มา " & dummyOtionSum.Quantity & " ตัว")
                     End If
                 Else
-                    lstOption.Add(" - " & dummyOptionName & " NOT FOUND")
+                    lstOption.Add(" - " & dummyOptionName & " ยังไม่ถูกสแกน")
                 End If
 
             Next
@@ -402,6 +402,7 @@ Public Class SetupConfirm
             Dim dummyIsLoadBoard As Boolean
 
             Dim matchCount As Integer = 0
+            Dim leftCount As Integer = 0
             Dim expectedMatchCount As Integer = bomTestEqiupmentTbl.Rows.Count 'dicEq.Count
 
             Dim lstEquipment As New List(Of String)
@@ -417,17 +418,43 @@ Public Class SetupConfirm
                     For Each item In dicEq.item(dummyTypeName)
                         If dummyName = item Then
                             matchCount += 1
-                            'dicEq.Remove(dummyTypeName) 'in case of use 2 unit of same box
+
+                            'Remove Key for check LEFT Key
+                            If dummyTypeName = "BOX" Or dummyTypeName = "BOARD" Then
+                                dicEq.Remove("BOX")
+                                dicEq.Remove("BOARD")
+                            Else
+                                dicEq.Remove(dummyTypeName)
+                            End If
                         Else 'same Type NOT same Name
-                            lstEquipment.Add(" - " & dummyTypeName & " " & dummyName & " NOT MATCH " & item)
+                            matchCount += 1
+
+                            lstEquipment.Add(" - " & dummyTypeName & " จาก BOM ชื่อ " & dummyName & " ไม่ตรงกับ ที่ Input มา ชื่อ " & item)
+                            dicEq.Remove(dummyTypeName)
                         End If
                     Next
+
                 Else 'NOT same both of type and name
-                    lstEquipment.Add(" - " & dummyTypeName & " NOT FOUND ")
+                    matchCount += 1
+
+                    lstEquipment.Add(" - " & dummyTypeName & " ยังไม่ถูกแสกน")
+                    dicEq.Remove(dummyTypeName)
                 End If
             Next
 
-            If matchCount <> expectedMatchCount Then
+            If dicEq.Count > 0 Then
+                For Each item In dicEq.Keys
+                    leftCount += 1
+
+                    lstEquipment.Add(" - Device นี้ไม่ใช้ " & item & " โปรตรวจสอบใน BOM")
+                    dicEq.Remove(item)
+                    If dicEq.Count = 0 Then
+                        Exit For
+                    End If
+                Next
+            End If
+
+            If matchCount <> expectedMatchCount Or leftCount > 0 Then
                 Dim a As String = "Test Equipment is not match with BOM <br/>"
 
                 For Each str As String In lstEquipment
