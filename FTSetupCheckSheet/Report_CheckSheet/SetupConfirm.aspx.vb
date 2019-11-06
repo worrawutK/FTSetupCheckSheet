@@ -352,10 +352,12 @@ Public Class SetupConfirm
 
             Dim matchCount As Integer = 0
             Dim setCount As Integer = 1
+            Dim specialCount As Integer = 0
             Dim leftCount As Integer = 0
             Dim expectedMatchCount As Integer = bomOptionTbl.Rows.Count
             Dim dummyOptionName As String
             Dim dummyOptionQty As Integer
+            Dim dummyOptionCategory As String
 
             Dim dummyOtionSum As OptionSummary
             Dim lstOption As New List(Of String)
@@ -364,50 +366,37 @@ Public Class SetupConfirm
 
                 dummyOptionName = row("Name").ToString().ToUpper()
                 dummyOptionQty = CType(row("Quantity"), Integer)
+                dummyOptionCategory = row("OptionCategory").ToString()
 
-                If sumDic.ContainsKey(dummyOptionName) Then
-                    dummyOtionSum = sumDic(dummyOptionName)
+                If String.IsNullOrEmpty(dummyOptionCategory) Then 'NOT SPECIAL CATEGORY
+                    If sumDic.ContainsKey(dummyOptionName) Then
+                        dummyOtionSum = sumDic(dummyOptionName)
 
-                    'If dummyOtionSum.Quantity = dummyOptionQty Then 'Input = BOM
-                    '    If dummyOtionSum.Quantity = setCount Then
-                    '        matchCount += 1
-                    '        sumDic.Remove(dummyOptionName) 'Remove Key for check LEFT Key
-                    '    End If
-                    '    If dummyOtionSum.Quantity <> setCount Then
-                    '        lstOption.Add(" - " & dummyOptionName & " จาก BOM มี " & dummyOptionQty & " ตัว " & setCount & " เซต ไม่เท่ากับ ที่ Input มา " & dummyOtionSum.Quantity & " ตัว")
-                    '    End If
-                    'End If
-
-                    'If dummyOtionSum.Quantity > dummyOptionQty Then 'Input > BOM
-                    '    If setCount = 1 Then 'Only first time
-                    '        setCount = dummyOtionSum.Quantity
-                    '    End If
-                    '    If dummyOtionSum.Quantity = setCount Then
-                    '        matchCount += 1
-                    '        sumDic.Remove(dummyOptionName)
-                    '    End If
-                    '    If dummyOtionSum.Quantity <> setCount Then
-                    '        lstOption.Add(" - " & dummyOptionName & " จาก BOM มี " & dummyOptionQty & " ตัว " & setCount & " เซต ไม่เท่ากับ ที่ Input มา " & dummyOtionSum.Quantity & " ตัว")
-                    '    End If
-                    'End If
-
-                    'If dummyOtionSum.Quantity < dummyOptionQty Then 'Input < BOM
-                    '    lstOption.Add(" - " & dummyOptionName & " จาก BOM มี " & dummyOptionQty & " ตัว ไม่เท่ากับ ที่ Input มา " & dummyOtionSum.Quantity & " ตัว")
-                    'End If
-
-                    If dummyOtionSum.Quantity >= dummyOptionQty Then
-                        matchCount += 1
-                        sumDic.Remove(dummyOptionName) 'Remove Key for check LEFT Key
-                        'If dummyOtionSum.Quantity > dummyOptionQty Then
-                        '    setCount += 1
-                        'End If
+                        If dummyOtionSum.Quantity >= dummyOptionQty Then
+                            matchCount += 1
+                            sumDic.Remove(dummyOptionName) 'Remove Key for check LEFT Key
+                        Else
+                            lstOption.Add(" - " & dummyOptionName & " จาก BOM มี " & dummyOptionQty & " ตัว ไม่เท่ากับ ที่ Input มา " & dummyOtionSum.Quantity & " ตัว")
+                        End If
                     Else
-                        lstOption.Add(" - " & dummyOptionName & " จาก BOM มี " & dummyOptionQty & " ตัว ไม่เท่ากับ ที่ Input มา " & dummyOtionSum.Quantity & " ตัว")
+                        lstOption.Add(" - " & dummyOptionName & " ยังไม่ถูกสแกน")
                     End If
-                Else
-                    lstOption.Add(" - " & dummyOptionName & " ยังไม่ถูกสแกน")
-                End If
+                ElseIf dummyOptionCategory = "SIGNAL_G" Then 'SPECIAL CASE
+                    If sumDic.ContainsKey(dummyOptionName) And specialCount = 0 Then
+                        dummyOtionSum = sumDic(dummyOptionName)
 
+                        If dummyOtionSum.Quantity >= dummyOptionQty Then
+                            matchCount += 1
+                            specialCount += 1
+                            sumDic.Remove(dummyOptionName) 'Remove Key for check LEFT Key
+                        Else 'Found Match Option but NOT Equal of Quantity
+                            specialCount += 1
+                            lstOption.Add(" - " & dummyOptionName & " จาก BOM มี " & dummyOptionQty & " ตัว ไม่เท่ากับ ที่ Input มา " & dummyOtionSum.Quantity & " ตัว")
+                        End If
+                    Else
+                        expectedMatchCount -= 1
+                    End If
+                End If
             Next
 
             'If sumDic.Count > 0 Then
@@ -436,7 +425,7 @@ Public Class SetupConfirm
 #End Region
 
 #Region "Check BOMTestEquipment"
-        'must have atlease 1
+        'must have atleast 1
         bomTestEqiupmentTbl = DBAccess.GetBOMTestEquipment(bomId)
         If bomTestEqiupmentTbl.Rows.Count > 0 Then
 
