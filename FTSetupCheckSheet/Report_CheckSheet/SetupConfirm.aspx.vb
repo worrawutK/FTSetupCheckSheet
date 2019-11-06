@@ -411,6 +411,10 @@ Public Class SetupConfirm
             '    Next
             'End If
 
+            If specialCount = 0 Then
+                lstOption.Add(" - Signal Generator ยังไม่ถูกแสกน")
+            End If
+
             If matchCount <> expectedMatchCount Or leftCount > 0 Then
                 Dim a As String = "Option is Not match with BOM <br/>"
 
