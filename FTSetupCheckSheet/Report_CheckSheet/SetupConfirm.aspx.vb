@@ -351,10 +351,10 @@ Public Class SetupConfirm
             Dim sumDic As Dictionary(Of String, OptionSummary) = OptionSummary.GetOptionSummaryList(m_Data) 'From Input
 
             Dim matchCount As Integer = 0
-            Dim setCount As Integer = 1
             Dim specialCount As Integer = 0
             Dim leftCount As Integer = 0
             Dim expectedMatchCount As Integer = bomOptionTbl.Rows.Count
+            Dim expectedSpecialCount As Integer = 0
             Dim dummyOptionName As String
             Dim dummyOptionQty As Integer
             Dim dummyOptionCategory As String
@@ -367,6 +367,10 @@ Public Class SetupConfirm
                 dummyOptionName = row("Name").ToString().ToUpper()
                 dummyOptionQty = CType(row("Quantity"), Integer)
                 dummyOptionCategory = row("OptionCategory").ToString()
+
+                If dummyOptionCategory = "SIGNAL_G" Then 'Count Signal_G that com from BOM
+                    expectedSpecialCount += 1
+                End If
 
                 If String.IsNullOrEmpty(dummyOptionCategory) Then 'NOT SPECIAL CATEGORY
                     If sumDic.ContainsKey(dummyOptionName) Then
@@ -381,8 +385,9 @@ Public Class SetupConfirm
                     Else
                         lstOption.Add(" - " & dummyOptionName & " ยังไม่ถูกสแกน")
                     End If
+
                 ElseIf dummyOptionCategory = "SIGNAL_G" Then 'SPECIAL CASE
-                    If sumDic.ContainsKey(dummyOptionName) And specialCount = 0 Then
+                    If sumDic.ContainsKey(dummyOptionName) And specialCount = 0 Then 'First Signal_G only
                         dummyOtionSum = sumDic(dummyOptionName)
 
                         If dummyOtionSum.Quantity >= dummyOptionQty Then
@@ -395,6 +400,7 @@ Public Class SetupConfirm
                         End If
                     Else
                         expectedMatchCount -= 1
+                        expectedSpecialCount -= 1
                     End If
                 End If
             Next
@@ -411,7 +417,7 @@ Public Class SetupConfirm
             '    Next
             'End If
 
-            If specialCount = 0 Then
+            If specialCount <> expectedSpecialCount Then
                 lstOption.Add(" - Signal Generator ยังไม่ถูกแสกน")
             End If
 
