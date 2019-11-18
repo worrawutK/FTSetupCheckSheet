@@ -209,7 +209,7 @@ Public Class SetupConfirm
                 'dic.Add("ADAPTOR", trim(data.AdaptorA))
             End If
 
-            If Not String.IsNullOrEmpty(data.AdaptorB) And (data.AdaptorA <> data.AdaptorB) Then    'If (AdapterA Name == AdaptorB Name) Then Error cause SAME Key
+            If Not String.IsNullOrEmpty(data.AdaptorB) And (trim(data.AdaptorA) <> trim(data.AdaptorB)) Then    'If (AdapterA Name == AdaptorB Name) Then Error cause SAME Key
                 lstdummy.Add(trim(data.AdaptorB))
 
                 'dummy = New EquipmentSummary()
@@ -232,7 +232,7 @@ Public Class SetupConfirm
                 'dic.Add("BRIDGE CABLE", trim(data.BridgecableA))
             End If
 
-            If Not String.IsNullOrEmpty(data.BridgecableB) And (data.BridgecableA <> data.BridgecableB) Then
+            If Not String.IsNullOrEmpty(data.BridgecableB) And (trim(data.BridgecableA) <> trim(data.BridgecableB)) Then
                 lstdummy.Add(trim(data.BridgecableB))
 
                 'dummy = New EquipmentSummary()
@@ -255,7 +255,7 @@ Public Class SetupConfirm
                 'dic.Add("DUTCARD", trim(data.DutcardA))
             End If
 
-            If Not String.IsNullOrEmpty(data.DutcardB) And (data.DutcardA <> data.DutcardB) Then
+            If Not String.IsNullOrEmpty(data.DutcardB) And (trim(data.DutcardA) <> trim(data.DutcardB)) Then
                 lstdummy.Add(trim(data.DutcardB))
 
                 'dummy = New EquipmentSummary()
@@ -278,7 +278,7 @@ Public Class SetupConfirm
                 'dic.Add("BOARD", trim(data.TestBoxA))
             End If
 
-            If Not String.IsNullOrEmpty(data.TestBoxB) And (data.TestBoxA <> data.TestBoxB) Then
+            If Not String.IsNullOrEmpty(data.TestBoxB) And (trim(data.TestBoxA) <> trim(data.TestBoxB)) Then
                 lstdummy.Add(trim(data.TestBoxB))
 
                 'dummy = New EquipmentSummary()
@@ -310,10 +310,6 @@ Public Class SetupConfirm
         If String.IsNullOrEmpty(pcMain) Then
             ShowErrorMessage("Could not find PCMain of MCNo:" & m_Data.MCNo)
             Exit Sub
-        End If
-
-        If pcMain.Contains("MDH") Then
-            'CHECK MDH
         End If
 
         'get BOM's main record without machine
