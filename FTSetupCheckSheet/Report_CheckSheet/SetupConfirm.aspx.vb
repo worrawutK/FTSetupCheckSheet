@@ -312,6 +312,10 @@ Public Class SetupConfirm
             Exit Sub
         End If
 
+        If pcMain.Contains("MDH") Then
+            'CHECK MDH
+        End If
+
         'get BOM's main record without machine
         Dim bomTbl As DataTable
         Try
@@ -472,7 +476,7 @@ Public Class SetupConfirm
                                 dicEq.Remove(dummyTypeName)
                             End If
                         Else 'same Type NOT same Name
-                            matchCount += 1
+                            'matchCount += 1
 
                             lstEquipment.Add(" - " & dummyTypeName & " จาก BOM ชื่อ " & dummyName & " ไม่ตรงกับ ที่ Input มา ชื่อ " & item)
                             dicEq.Remove(dummyTypeName)
@@ -480,7 +484,7 @@ Public Class SetupConfirm
                     Next
 
                 Else 'NOT same both of type and name
-                    matchCount += 1
+                    'matchCount += 1
 
                     lstEquipment.Add(" - " & dummyTypeName & " ยังไม่ถูกแสกน")
                     dicEq.Remove(dummyTypeName)
