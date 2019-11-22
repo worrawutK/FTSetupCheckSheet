@@ -422,7 +422,7 @@ Public Class SetupConfirm
             End If
 
             If matchCount <> expectedMatchCount Or leftCount > 0 Then
-                Dim a As String = "Option is Not match with BOM <br/>"
+                Dim a As String = ">>> Option is Not match with BOM <<< <br/>"
 
                 For Each str As String In lstOption
                     a = a & str & "<br/>"
@@ -446,9 +446,9 @@ Public Class SetupConfirm
             Dim dummyIsAdaptor As Boolean
             Dim dummyIsLoadBoard As Boolean
 
-            Dim matchCount As Integer = 0
-            Dim leftCount As Integer = 0
-            Dim expectedMatchCount As Integer = bomTestEqiupmentTbl.Rows.Count 'dicEq.Count
+            Dim getDic As List(Of String) = New List(Of String)
+            Dim removeINList As List(Of String) = New List(Of String)
+            Dim removeBOMList As List(Of DataRow) = New List(Of DataRow)
 
             Dim lstEquipment As New List(Of String)
 
@@ -459,53 +459,60 @@ Public Class SetupConfirm
                 dummyIsAdaptor = CBool(row("IsAdaptor"))
                 dummyIsLoadBoard = CBool(row("IsLoadboard"))
 
-                If dicEq.ContainsKey(dummyTypeName) Then
-                    For Each item In dicEq.item(dummyTypeName)
-                        If dummyName = item Then
-                            matchCount += 1
+                If dicEq.ContainsKey(dummyTypeName) Then 'SAME TYPE
 
-                            'Remove Key for check LEFT Key
-                            If dummyTypeName = "BOX" Or dummyTypeName = "BOARD" Then
-                                dicEq.Remove("BOX")
-                                dicEq.Remove("BOARD")
-                            Else
-                                dicEq.Remove(dummyTypeName)
-                            End If
-                        Else 'same Type NOT same Name
+                    For Each item In dicEq.Item(dummyTypeName)
+
+                        If Not getDic.Contains(item) Then
+                            getDic.Add(item)
+                        End If
+
+                        If dummyName = item Then 'SAME TYPE, SAME NAME
                             'matchCount += 1
 
-                            lstEquipment.Add(" - " & dummyTypeName & " จาก BOM ชื่อ " & dummyName & " ไม่ตรงกับ ที่ Input มา ชื่อ " & item)
-                            dicEq.Remove(dummyTypeName)
+                            'Add WANTED Input to Remove List
+                            removeINList.Add(item)
+
+                            'Add WANTED BOM to Remove List
+                            removeBOMList.Add(row)
                         End If
                     Next
-
-                Else 'NOT same both of type and name
-                    'matchCount += 1
-
-                    lstEquipment.Add(" - " & dummyTypeName & " ยังไม่ถูกแสกน")
-                    dicEq.Remove(dummyTypeName)
                 End If
             Next
 
-            If dicEq.Count > 0 Then
-                For Each item In dicEq.Keys
-                    leftCount += 1
+            For Each removeData In removeINList
+                getDic.Remove(removeData)
+            Next
 
-                    lstEquipment.Add(" - Device นี้ไม่ใช้ " & item & " โปรตรวจสอบใน BOM")
-                    dicEq.Remove(item)
-                    If dicEq.Count = 0 Then
-                        Exit For
-                    End If
+            For Each removeData In removeBOMList
+                bomTestEqiupmentTbl.Rows.Remove(removeData)
+            Next
+
+            If bomTestEqiupmentTbl.Rows.Count > 0 Then
+                lstEquipment.Add("อุปกรณ์ที่ยังไม่ได้แสกน")
+
+                For Each row As DataRow In bomTestEqiupmentTbl.Rows
+                    Dim errorBOM As String = row("Name").ToString()
+
+                    lstEquipment.Add(" - " & errorBOM)
                 Next
             End If
 
-            If matchCount <> expectedMatchCount Or leftCount > 0 Then
-                Dim a As String = "Test Equipment is not match with BOM <br/>"
+            If getDic.Count > 0 Then
+                lstEquipment.Add("อุปกรณ์ที่ไม่จำเป็นต้องแสกน")
+
+                For Each errorIN In getDic
+                    lstEquipment.Add(" - " & errorIN)
+                Next
+            End If
+
+            If lstEquipment.Count > 0 Then
+                Dim a As String = ">>> Test Equipment is not match with BOM <<< <br/>"
 
                 For Each str As String In lstEquipment
                     a = a & str & "<br/>"
                 Next
-                'errorMessageList.Add("Test Equipment is not match with BOM")
+
                 errorMessageList.Add(a)
             End If
 
