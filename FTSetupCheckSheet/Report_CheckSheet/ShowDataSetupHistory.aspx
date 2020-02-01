@@ -92,7 +92,7 @@
 
      <div class ="row">
           <td colspan="2" align="center" class="auto-style33">
-              <h2 class="text-center login-title" style="font-family: 'Waffle Regular'; font-weight: bold;">DATA FT PROCESS</h2>
+              <h2 class="text-center login-title" style="font-family: 'Waffle Regular'; font-weight: bold;">DATA HISTORY</h2>
 
 
           </td><br />
