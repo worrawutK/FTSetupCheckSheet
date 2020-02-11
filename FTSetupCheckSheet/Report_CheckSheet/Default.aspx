@@ -30,7 +30,7 @@
     <div class="jumbotron">
         <h1 class="text-center login-title" style="font-family: 'Waffle Regular'; font-weight: bold;">SET-UP  CHECK  SHEET</h1>
         <h2 class="text-center login-title" style="font-family : 'Waffle Regular'; font-weight: bold;" >ｾｯﾄｱｯﾌﾟﾁｪｯｸｼｰﾄ</h2>
-         <h2 class="text-center login-title" style="font-family : 'Waffle Regular'; font-weight: bold;" >Release Date: 2020/02/01</h2>
+         <h2 class="text-center login-title" style="font-family : 'Waffle Regular'; font-weight: bold;" >Release Date: 2020/02/05</h2>
     </div>
 
     <div class="row">
@@ -42,19 +42,19 @@
    </div><br />
 
    <div class="row">
-        <div class="col-md-4 text-center">
+        <div class="col-md-4 col-md-offset-1 text-center">
           <div class="container1">
              <asp:HyperLink NavigateUrl="~/SetupMain.aspx" runat="server" style="width: 350px; height: 100px; font-family: 'Waffle Regular';font-weight: bold;" Font-Size="15pt" ForeColor="#999999">SCAN QRCODE</asp:HyperLink>
           </div>
         </div>
 
-       <div class="col-md-4 text-center">
+       <%--<div class="col-md-4 text-center">
           <div class="container1">
              <asp:HyperLink NavigateUrl="~/SetupStep7CheckSheet1.aspx" runat="server" style="width: 350px; height: 100px; font-family: 'Waffle Regular';font-weight: bold;" Font-Size="15pt" ForeColor="#999999">CHECK SHEET</asp:HyperLink>
           </div>
-        </div>
+        </div>--%>
 
-       <div class="col-md-4 text-center">
+       <div class="col-md-4 col-md-offset-2 text-center">
           <div class="container1">
              <asp:HyperLink NavigateUrl="~/ShowDataSetup.aspx" runat="server" style="width: 350px; height: 100px; font-family: 'Waffle Regular';font-weight: bold;" Font-Size="15pt" ForeColor="#999999">DATA SET-UP</asp:HyperLink>
           </div>

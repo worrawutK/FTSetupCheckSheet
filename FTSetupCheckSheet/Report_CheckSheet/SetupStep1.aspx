@@ -29,7 +29,8 @@
         </div><br />
 
           <asp:Button ID="ButtonPrevious" CssClass="btn btn-default pull-left" runat="server" Text="Previous" BorderColor="Black" BorderStyle="Groove" BorderWidth="2px" />
-          <asp:Button ID="ButtonNext" CssClass="btn btn-default pull-right" runat="server" Text="Next" BorderColor="Black" BorderStyle="Groove" BorderWidth="2px" /><br />
+          <asp:Button ID="ButtonNext" CssClass="btn btn-default pull-right" runat="server" Text="Next" BorderColor="Black" BorderStyle="Groove" BorderWidth="2px" />
+		  <asp:Button ID="ButtonSkip" CssClass="btn btn-default pull-right" runat="server" Text="Old Equipment" BorderColor="Black" BorderStyle="Groove" BorderWidth="2px" /><br />
 
          </div>
      </div><br />

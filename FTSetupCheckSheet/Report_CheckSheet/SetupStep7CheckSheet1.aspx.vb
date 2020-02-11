@@ -5,6 +5,7 @@
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Dim tmp As Object = Session(SESSION_KEY_NEW_DATA_SETUP)
+
         If tmp Is Nothing Then
             Response.Redirect("~/SetupMain.aspx")
         Else
