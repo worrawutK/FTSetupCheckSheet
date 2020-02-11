@@ -10,6 +10,7 @@ Public Class SetupStep1
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         OISTextBox.Focus()
+        ButtonSkip.Enabled = False
 
         Dim tmp As Object = Session(SESSION_KEY_NEW_DATA_SETUP)
         If tmp Is Nothing Then
@@ -163,6 +164,8 @@ Public Class SetupStep1
 
             TestflowTextBox.Text = m_Data.TestFlow
             TesterTypetext.Text = m_Data.TesterType
+
+            ButtonSkip.Enabled = True
 
             Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
 
