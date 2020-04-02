@@ -527,9 +527,19 @@ Public Class SetupConfirm
 #End Region
 
         Try
-            DBAccess.ConfirmFTReport(m_Data.MCNo, m_Data.LotNo, m_Data.PackageName, m_Data.DeviceName)
+            Dim fileReader As String
+            Dim SetupStatus As String
+            fileReader = My.Computer.FileSystem.ReadAllText("\\10.28.33.113\www\FTSetupCheckSheet\_backup\MCNo.txt")
 
-            m_Data.SetupStatus = SETUP_STATUS_CONFIRMED
+            If fileReader.Contains(m_Data.MCNo) Then
+                SetupStatus = SETUP_STATUS_GOODNGTEST
+            Else
+                SetupStatus = SETUP_STATUS_CONFIRMED
+            End If
+
+            DBAccess.ConfirmFTReport(m_Data.MCNo, m_Data.LotNo, m_Data.PackageName, m_Data.DeviceName, SetupStatus)
+
+            m_Data.SetupStatus = SetupStatus
 
             HideErrorMessage()
 

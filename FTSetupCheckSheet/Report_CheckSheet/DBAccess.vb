@@ -39,7 +39,7 @@ Public Class DBAccess
         Return ret
     End Function
 
-    Public Shared Function ConfirmFTReport(mcNo As String, lotNo As String, PackageName As String, deviceName As String) As Integer
+    Public Shared Function ConfirmFTReport(mcNo As String, lotNo As String, PackageName As String, deviceName As String, SetupStatus As String) As Integer
         'ConfirmedReport Working Slip 5
         Dim ret As Integer
 
@@ -54,7 +54,7 @@ Public Class DBAccess
                 cmd.Parameters.Add("@LotNo", SqlDbType.VarChar, 10).Value = lotNo
                 cmd.Parameters.Add("@PackageName", SqlDbType.VarChar, 10).Value = PackageName
                 cmd.Parameters.Add("@DeviceName", SqlDbType.VarChar, 20).Value = deviceName
-                cmd.Parameters.Add("@SetupStatus", SqlDbType.VarChar, 10).Value = SETUP_STATUS_CONFIRMED
+                cmd.Parameters.Add("@SetupStatus", SqlDbType.VarChar, 10).Value = SetupStatus
                 cmd.Parameters.Add("@SetupConfirmDate", SqlDbType.DateTime).Value = Now
 
                 ret = cmd.ExecuteNonQuery()

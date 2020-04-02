@@ -293,6 +293,10 @@ Public Class SetupMain
                 TextBoxSetupStatus.ForeColor = Drawing.Color.Orange
                 ButtonConfirm.Visible = True
                 ButtonSetup.Text = BUTTON_TEXT_CANCEL
+            Case SETUP_STATUS_GOODNGTEST
+                TextBoxSetupStatus.ForeColor = Drawing.Color.Green
+                ButtonConfirm.Visible = False
+                ButtonSetup.Text = BUTTON_TEXT_SETUP
             Case SETUP_STATUS_CONFIRMED
                 TextBoxSetupStatus.ForeColor = Drawing.Color.Green
                 ButtonConfirm.Visible = False

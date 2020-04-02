@@ -1,6 +1,7 @@
 ﻿Module ModuleGlobal
 
     Public Const SETUP_STATUS_WAITING As String = "WAITING"
+    Public Const SETUP_STATUS_GOODNGTEST As String = "GOODNGTEST"
     Public Const SETUP_STATUS_CONFIRMED As String = "CONFIRMED"
     Public Const SETUP_STATUS_CANCELED As String = "CANCELED"
 
