@@ -8,7 +8,6 @@ Imports System.Web.UI
 Imports System.Data.OleDb
 Imports System.Configuration
 Imports System.Data.SqlClient
-
 Public Class SetupConfirm
     Inherits System.Web.UI.Page
 
@@ -201,7 +200,7 @@ Public Class SetupConfirm
             'Dim dummy As EquipmentSummary
 
             If Not String.IsNullOrEmpty(data.AdaptorA) Then
-                lstdummy.Add(trim(data.AdaptorA))
+                lstdummy.Add(Trim(data.AdaptorA))
 
                 'dummy = New EquipmentSummary()
                 'dummy.Name = data.AdaptorA
@@ -209,8 +208,8 @@ Public Class SetupConfirm
                 'dic.Add("ADAPTOR", trim(data.AdaptorA))
             End If
 
-            If Not String.IsNullOrEmpty(data.AdaptorB) And (trim(data.AdaptorA) <> trim(data.AdaptorB)) Then    'If (AdapterA Name == AdaptorB Name) Then Error cause SAME Key
-                lstdummy.Add(trim(data.AdaptorB))
+            If Not String.IsNullOrEmpty(data.AdaptorB) And (Trim(data.AdaptorA) <> Trim(data.AdaptorB)) Then    'If (AdapterA Name == AdaptorB Name) Then Error cause SAME Key
+                lstdummy.Add(Trim(data.AdaptorB))
 
                 'dummy = New EquipmentSummary()
                 'dummy.Name = data.AdaptorB
@@ -224,7 +223,7 @@ Public Class SetupConfirm
             End If
 
             If Not String.IsNullOrEmpty(data.BridgecableA) Then
-                lstdummy.Add(trim(data.BridgecableA))
+                lstdummy.Add(Trim(data.BridgecableA))
 
                 'dummy = New EquipmentSummary()
                 'dummy.Name = data.BridgecableA
@@ -232,8 +231,8 @@ Public Class SetupConfirm
                 'dic.Add("BRIDGE CABLE", trim(data.BridgecableA))
             End If
 
-            If Not String.IsNullOrEmpty(data.BridgecableB) And (trim(data.BridgecableA) <> trim(data.BridgecableB)) Then
-                lstdummy.Add(trim(data.BridgecableB))
+            If Not String.IsNullOrEmpty(data.BridgecableB) And (Trim(data.BridgecableA) <> Trim(data.BridgecableB)) Then
+                lstdummy.Add(Trim(data.BridgecableB))
 
                 'dummy = New EquipmentSummary()
                 'dummy.Name = data.BridgecableB
@@ -247,7 +246,7 @@ Public Class SetupConfirm
             End If
 
             If Not String.IsNullOrEmpty(data.DutcardA) Then
-                lstdummy.Add(trim(data.DutcardA))
+                lstdummy.Add(Trim(data.DutcardA))
 
                 'dummy = New EquipmentSummary()
                 'dummy.Name = data.DutcardA
@@ -255,8 +254,8 @@ Public Class SetupConfirm
                 'dic.Add("DUTCARD", trim(data.DutcardA))
             End If
 
-            If Not String.IsNullOrEmpty(data.DutcardB) And (trim(data.DutcardA) <> trim(data.DutcardB)) Then
-                lstdummy.Add(trim(data.DutcardB))
+            If Not String.IsNullOrEmpty(data.DutcardB) And (Trim(data.DutcardA) <> Trim(data.DutcardB)) Then
+                lstdummy.Add(Trim(data.DutcardB))
 
                 'dummy = New EquipmentSummary()
                 'dummy.Name = data.DutcardB
@@ -270,7 +269,7 @@ Public Class SetupConfirm
             End If
 
             If Not String.IsNullOrEmpty(data.TestBoxA) Then
-                lstdummy.Add(trim(data.TestBoxA))
+                lstdummy.Add(Trim(data.TestBoxA))
 
                 'dummy = New EquipmentSummary()
                 'dummy.Name = data.TestBoxA
@@ -278,8 +277,8 @@ Public Class SetupConfirm
                 'dic.Add("BOARD", trim(data.TestBoxA))
             End If
 
-            If Not String.IsNullOrEmpty(data.TestBoxB) And (trim(data.TestBoxA) <> trim(data.TestBoxB)) Then
-                lstdummy.Add(trim(data.TestBoxB))
+            If Not String.IsNullOrEmpty(data.TestBoxB) And (Trim(data.TestBoxA) <> Trim(data.TestBoxB)) Then
+                lstdummy.Add(Trim(data.TestBoxB))
 
                 'dummy = New EquipmentSummary()
                 'dummy.Name = data.TestBoxB
@@ -519,13 +518,7 @@ Public Class SetupConfirm
         End If
 #End Region
 
-        If errorMessageList.Count > 0 Then
-            ShowErrorMessage(String.Join("<br/>", errorMessageList.ToArray()))
-            Exit Sub
-        End If
-
-#End Region
-
+#Region "Read Text File"
         Try
             Dim fileReader As String
             Dim SetupStatus As String
@@ -535,6 +528,139 @@ Public Class SetupConfirm
                 SetupStatus = SETUP_STATUS_GOODNGTEST
             Else
                 SetupStatus = SETUP_STATUS_CONFIRMED
+            End If
+
+#End Region
+
+#Region "ADD SPECIALFLOW"
+
+            'Add Special Flow at GO/NGSampleJudge only
+            If SetupStatus = SETUP_STATUS_GOODNGTEST Then
+
+                Dim flowPatternId As Int32 = 1689
+                Dim userId As Int32 = 1289
+                Dim currentTransLotsTbl As DataTable
+                Dim transLotsFlowsTbl As DataTable
+
+                Try
+                    currentTransLotsTbl = DBAccess.GetCurrentTransLots(m_Data.LotNo)
+                Catch ex As Exception
+                    ShowErrorMessage("Failed to get CurrentTransLots :" & ex.Message)
+                    Exit Sub
+                End Try
+
+                If currentTransLotsTbl.Rows.Count = 1 Then
+                    Dim lotId As Int32
+                    Dim backStepNo As Int32
+                    Dim flowName As String
+                    Dim wipState As String
+                    Dim processState As String
+                    Dim qualityState As String
+                    Dim isSpecialFlow As Int32
+
+                    Dim currentTransLotsRow As DataRow = currentTransLotsTbl.Rows(0)
+
+                    lotId = Int32.Parse(currentTransLotsRow("LotId").ToString())
+                    backStepNo = Int32.Parse(currentTransLotsRow("StepNo").ToString())
+                    flowName = currentTransLotsRow("FlowName").ToString()
+                    wipState = currentTransLotsRow("WipState").ToString()
+                    processState = currentTransLotsRow("ProcessState").ToString()
+                    qualityState = currentTransLotsRow("QualityState").ToString()
+                    isSpecialFlow = Int32.Parse(currentTransLotsRow("IsSpecialFlow").ToString())
+                    Dim splitFlowName() As String
+                    splitFlowName = flowName.Split(CType("(", Char()))
+
+                    Dim comparableFlowName As String
+                    comparableFlowName = splitFlowName(0)
+                    splitFlowName = splitFlowName(1).Split(CType(")", Char()))
+                    comparableFlowName += splitFlowName(0)
+
+                    'Check is Now Flow is matching with OIS
+                    If (comparableFlowName = m_Data.TestFlow) Then
+                        If (isSpecialFlow = 0) Then
+                            If (qualityState = "Normal") Then
+                                'Check is wipState = 20
+                                If (wipState = "Already Input") Then
+                                    If (processState = "Wait" Or processState = "Abnormal WIP") Then
+
+                                        Try
+                                            transLotsFlowsTbl = DBAccess.GetTransLotsFlows(lotId)
+                                        Catch ex As Exception
+                                            ShowErrorMessage("Failed to get TransLotsFlows :" & ex.Message)
+                                            Exit Sub
+                                        End Try
+
+                                        If transLotsFlowsTbl.Rows.Count > 0 Then
+
+                                            Dim stepNo As Integer = 0 'stepNo = 100, backStepNo = 200 In Stored will add 101 then flow end gonna go to 200
+
+                                            For index = transLotsFlowsTbl.Rows.Count - 1 To 0 Step -1
+                                                If transLotsFlowsTbl.Rows(index)("job_name").ToString() = flowName Then
+                                                    If index = 0 Then
+                                                        ShowErrorMessage(">>> No Flow Before '" + flowName.Trim() + " Please contact SYSTEM <<< <br/>")
+                                                        Exit Sub
+                                                    End If
+
+                                                    For index2 = index - 1 To 0 Step -1
+                                                        If Int32.Parse(transLotsFlowsTbl.Rows(index2)("is_skipped").ToString()) = 0 Then
+                                                            stepNo = Int32.Parse(transLotsFlowsTbl.Rows(index2)("step_no").ToString())
+                                                            Exit For
+                                                        End If
+                                                    Next
+
+                                                    If stepNo <> 0 Then
+                                                        Exit For
+                                                    End If
+                                                End If
+                                            Next
+
+                                            'Set Special Flow here
+                                            Try
+                                                DBAccess.SetSpecialFlow(lotId, stepNo, backStepNo, userId, flowPatternId, 1)
+                                            Catch ex As Exception
+                                                ShowErrorMessage("Failed to Add Special Flows :" & ex.Message)
+                                                Exit Sub
+                                            End Try
+                                        Else
+                                            ShowErrorMessage("Lot Flow not found <br/>")
+                                            Exit Sub
+                                        End If
+
+                                    Else
+                                        ShowErrorMessage(">>> processState is '" + processState.Trim() + " Please contact SYSTEM <<< <br/>")
+                                        Exit Sub
+                                    End If
+                                Else
+                                    ShowErrorMessage(">>> wipState is '" + wipState.Trim() + " Please contact SYSTEM <<< <br/>")
+                                    Exit Sub
+                                End If
+                            Else
+                                ShowErrorMessage(">>> qualityState is '" + qualityState.Trim() + "Please contact SYSTEM <<< <br/>")
+                                Exit Sub
+                            End If
+                        Else
+                            ShowErrorMessage(">>> isSpecialFlow is '" + isSpecialFlow.ToString() + "Please contact SYSTEM <<< <br/>")
+                            Exit Sub
+                        End If
+                    Else
+                        ShowErrorMessage(">>> ATOM Flow is '" + flowName.Trim() + "' not match with SETUP Flow is '" + m_Data.TestFlow.Trim() + "' <<< <br/>")
+                        Exit Sub
+                    End If
+
+                ElseIf currentTransLotsTbl.Rows.Count = 0 Then
+                    ShowErrorMessage(String.Format("LotNo not found <br/>"))
+                    Exit Sub
+                Else
+                    ShowErrorMessage(String.Format("LotNo found : " + currentTransLotsTbl.Rows.Count.ToString() + " rows <br/>"))
+                    Exit Sub
+                End If
+            End If
+
+#End Region
+
+            If errorMessageList.Count > 0 Then
+                ShowErrorMessage(String.Join("<br/>", errorMessageList.ToArray()))
+                Exit Sub
             End If
 
             DBAccess.ConfirmFTReport(m_Data.MCNo, m_Data.LotNo, m_Data.PackageName, m_Data.DeviceName, SetupStatus)
@@ -548,6 +674,7 @@ Public Class SetupConfirm
         Catch ex As Exception
             ShowErrorMessage("Confirmation is failed : " & ex.Message)
         End Try
+#End Region
 
     End Sub
 

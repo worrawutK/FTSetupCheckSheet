@@ -939,4 +939,77 @@ Public Class DBAccess
 
     End Function
 
+    Friend Shared Function GetCurrentTransLots(lotNo As String) As DataTable
+
+        Dim tbl = New DataTable()
+
+        Using connection As New SqlConnection(My.Settings.SPConnectionString)
+            connection.Open()
+
+            Using cmd As New SqlCommand
+                cmd.Connection = connection
+                cmd.CommandType = CommandType.StoredProcedure
+                cmd.CommandText = "[cellcon].[sp_get_current_trans_lots]"
+                cmd.Parameters.Add("@lot_no", SqlDbType.VarChar, 10).Value = lotNo
+
+                tbl.Load(cmd.ExecuteReader())
+
+                connection.Close()
+            End Using
+        End Using
+
+        Return tbl
+
+    End Function
+
+    Friend Shared Function GetTransLotsFlows(lotId As Int32) As DataTable
+
+        Dim tbl = New DataTable()
+
+        Using connection As New SqlConnection(My.Settings.SPConnectionString)
+            connection.Open()
+
+            Using cmd As New SqlCommand
+                cmd.Connection = connection
+                cmd.CommandType = CommandType.StoredProcedure
+                cmd.CommandText = "[atom].[sp_get_trans_lot_flows]"
+                cmd.Parameters.Add("@lot_id", SqlDbType.Int).Value = lotId
+
+                tbl.Load(cmd.ExecuteReader())
+
+                connection.Close()
+            End Using
+        End Using
+
+        Return tbl
+
+    End Function
+
+    Public Shared Function SetSpecialFlow(lotId As Int32, stepNo As Int32, backStepNo As Int32, userId As Int32, flowPatternId As Int32, isSpecialFlow As Int32) As Integer
+        'After SaveBtn is pressed (From SetupStep7CheckSheet9)
+        Dim row As Integer
+
+        Using connection As New SqlConnection(My.Settings.SPConnectionString)
+            connection.Open()
+
+            Using cmd As New SqlCommand
+                cmd.Connection = connection
+                cmd.CommandType = CommandType.StoredProcedure
+                cmd.CommandText = "[atom].[sp_set_trans_special_flow]"
+
+                cmd.Parameters.Add("@lot_id", SqlDbType.Int).Value = lotId
+                cmd.Parameters.Add("@step_no", SqlDbType.Int).Value = stepNo
+                cmd.Parameters.Add("@back_step_no", SqlDbType.Int).Value = backStepNo
+                cmd.Parameters.Add("@user_id", SqlDbType.Int).Value = userId
+                cmd.Parameters.Add("@flow_pattern_id", SqlDbType.Int).Value = flowPatternId
+                cmd.Parameters.Add("@is_special_flow", SqlDbType.Int).Value = isSpecialFlow
+
+                row = cmd.ExecuteNonQuery()
+
+                connection.Close()
+            End Using
+        End Using
+        Return row
+
+    End Function
 End Class
