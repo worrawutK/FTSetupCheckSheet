@@ -567,6 +567,33 @@ Public Class SetupConfirm
                     processState = currentTransLotsRow("ProcessState").ToString()
                     qualityState = currentTransLotsRow("QualityState").ToString()
                     isSpecialFlow = Int32.Parse(currentTransLotsRow("IsSpecialFlow").ToString())
+
+                    'Now is Special Flow then Is it GO/NG Sample Judge
+                    If (String.IsNullOrEmpty(flowName)) Then
+                        Try
+                            transLotsFlowsTbl = DBAccess.GetTransLotsFlows(lotId)
+                        Catch ex As Exception
+                            ShowErrorMessage("Failed to get TransLotsFlows :" & ex.Message)
+                            Exit Sub
+                        End Try
+
+                        If transLotsFlowsTbl.Rows.Count > 0 Then
+
+                            For index = transLotsFlowsTbl.Rows.Count - 1 To 0 Step -1
+                                If transLotsFlowsTbl.Rows(index)("step_no").ToString().EndsWith("1") Then
+                                    If transLotsFlowsTbl.Rows(index)("job_name").ToString() = "GO/NGSampleJudge" Then
+                                        ConfirmReport(SetupStatus)
+                                        Exit For
+                                    End If
+                                End If
+                            Next
+
+                        Else
+                            ShowErrorMessage("Now Flow is "" (Special Flow) and Lot Flow not found <br/>")
+                            Exit Sub
+                        End If
+                    End If
+
                     Dim splitFlowName() As String
                     splitFlowName = flowName.Split(CType("(", Char()))
 
@@ -663,18 +690,24 @@ Public Class SetupConfirm
                 Exit Sub
             End If
 
-            DBAccess.ConfirmFTReport(m_Data.MCNo, m_Data.LotNo, m_Data.PackageName, m_Data.DeviceName, SetupStatus)
-
-            m_Data.SetupStatus = SetupStatus
-
-            HideErrorMessage()
-
-            Response.Redirect("~/Default.aspx")
+            ConfirmReport(SetupStatus)
 
         Catch ex As Exception
             ShowErrorMessage("Confirmation is failed : " & ex.Message)
         End Try
 #End Region
+
+    End Sub
+
+    Private Sub ConfirmReport(setupStatus As String)
+
+        DBAccess.ConfirmFTReport(m_Data.MCNo, m_Data.LotNo, m_Data.PackageName, m_Data.DeviceName, setupStatus)
+
+        m_Data.SetupStatus = setupStatus
+
+        HideErrorMessage()
+
+        Response.Redirect("~/Default.aspx", False)
 
     End Sub
 
