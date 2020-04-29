@@ -629,9 +629,11 @@ Public Class SetupConfirm
                                                     End If
 
                                                     For index2 = index - 1 To 0 Step -1
-                                                        If Int32.Parse(transLotsFlowsTbl.Rows(index2)("is_skipped").ToString()) = 0 Then
-                                                            stepNo = Int32.Parse(transLotsFlowsTbl.Rows(index2)("step_no").ToString())
-                                                            Exit For
+                                                        If Int32.Parse(transLotsFlowsTbl.Rows(index2)("is_skipped").ToString()) = 0 And transLotsFlowsTbl.Rows(index2)("job_name").ToString() <> transLotsFlowsTbl.Rows(index)("job_name").ToString() Then
+                                                            If transLotsFlowsTbl.Rows(index2)("step_no").ToString().EndsWith("0") Then
+                                                                stepNo = Int32.Parse(transLotsFlowsTbl.Rows(index2)("step_no").ToString())
+                                                                Exit For
+                                                            End If
                                                         End If
                                                     Next
 
