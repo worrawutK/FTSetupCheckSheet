@@ -195,7 +195,7 @@
 
               <asp:SqlDataSource ID="SearchDataSqlDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:DBxConnectionString %>" 
                   SelectCommand="SELECT MCNo, LotNo, PackageName, DeviceName, TesterType, SetupStartDate, SetupEndDate, DATEDIFF(MINUTE, SetupStartDate, SetupEndDate) AS MTTR,SetupStatus, ProgramName, TestFlow 
-FROM FTSetupReport WHERE (LotNo LIKE '%' + @LotNo + '%') AND (PackageName LIKE '%' + @PackageName + '%') AND (MCNo LIKE '%' + @MCNo + '%') AND 
+FROM FTSetupReportHistory WHERE (LotNo LIKE '%' + @LotNo + '%') AND (PackageName LIKE '%' + @PackageName + '%') AND (MCNo LIKE '%' + @MCNo + '%') AND 
 (SetupStartDate BETWEEN @Date1 AND @Date2) ORDER BY SetupStartDate">
                   <SelectParameters>
                       <asp:ControlParameter ControlID="datetimeStartTextBox" DefaultValue="" Name="Date1" PropertyName="Text" />
