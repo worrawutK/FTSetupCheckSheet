@@ -520,11 +520,13 @@ Public Class SetupConfirm
 
 #Region "Read Text File"
         Try
-            Dim fileReader As String
+            Dim fileReaderMC As String
+            Dim fileReaderFlow As String
             Dim SetupStatus As String
-            fileReader = My.Computer.FileSystem.ReadAllText("\\10.28.33.113\www\FTSetupCheckSheet\_backup\MCNo.txt")
+            fileReaderMC = My.Computer.FileSystem.ReadAllText("\\10.28.33.113\www\FTSetupCheckSheet\_backup\MCNo.txt")
+            fileReaderFlow = My.Computer.FileSystem.ReadAllText("\\10.28.33.113\www\FTSetupCheckSheet\_backup\Flow.txt") 'm_Data.TestFlow = AUTO2ASISAMPLE
 
-            If fileReader.Contains(m_Data.MCNo) Then
+            If fileReaderMC.Contains(m_Data.MCNo) And Not fileReaderFlow.Contains(m_Data.TestFlow) Then
                 SetupStatus = SETUP_STATUS_GOODNGTEST
             Else
                 SetupStatus = SETUP_STATUS_CONFIRMED
@@ -601,6 +603,11 @@ Public Class SetupConfirm
                     comparableFlowName = splitFlowName(0)
                     splitFlowName = splitFlowName(1).Split(CType(")", Char()))
                     comparableFlowName += splitFlowName(0)
+                    If splitFlowName.Count > 1 Then
+                        For index = 1 To splitFlowName.Count - 1
+                            comparableFlowName += splitFlowName(index)
+                        Next
+                    End If
 
                     'Check is Now Flow is matching with OIS
                     If (comparableFlowName = m_Data.TestFlow) Then
