@@ -524,7 +524,7 @@ Public Class SetupConfirm
             Dim fileReaderFlow As String
             Dim SetupStatus As String
             fileReaderMC = My.Computer.FileSystem.ReadAllText("\\10.28.33.113\www\FTSetupCheckSheet\_backup\MCNo.txt")
-            fileReaderFlow = My.Computer.FileSystem.ReadAllText("\\10.28.33.113\www\FTSetupCheckSheet\_backup\Flow.txt") 'm_Data.TestFlow = AUTO2ASISAMPLE
+            fileReaderFlow = My.Computer.FileSystem.ReadAllText("\\10.28.33.113\www\FTSetupCheckSheet\_backup\Flow.txt") 'm_Data.TestFlow = AUTO2ASISAMPLE | flowName = AUTO(2)ASISAMPLE
 
             If fileReaderMC.Contains(m_Data.MCNo) And Not fileReaderFlow.Contains(m_Data.TestFlow) Then
                 SetupStatus = SETUP_STATUS_GOODNGTEST
@@ -572,28 +572,11 @@ Public Class SetupConfirm
 
                     'Now is Special Flow then Is it GO/NG Sample Judge
                     If (String.IsNullOrEmpty(flowName)) Then
-                        Try
-                            transLotsFlowsTbl = DBAccess.GetTransLotsFlows(lotId)
-                        Catch ex As Exception
-                            ShowErrorMessage("Failed to get TransLotsFlows :" & ex.Message)
-                            Exit Sub
-                        End Try
-
-                        If transLotsFlowsTbl.Rows.Count > 0 Then
-
-                            For index = transLotsFlowsTbl.Rows.Count - 1 To 0 Step -1
-                                If transLotsFlowsTbl.Rows(index)("step_no").ToString().EndsWith("1") Then
-                                    If transLotsFlowsTbl.Rows(index)("job_name").ToString() = "GO/NGSampleJudge" Then
-                                        ConfirmReport(SetupStatus)
-                                        Exit For
-                                    End If
-                                End If
-                            Next
-
-                        Else
-                            ShowErrorMessage("Now Flow is "" (Special Flow) and Lot Flow not found <br/>")
-                            Exit Sub
-                        End If
+                        ShowErrorMessage("Now Flow is NULL : cellcon.GetCurrentTransLots<br/>")
+                        Exit Sub
+                    ElseIf flowName = "GO/NGSampleJudge" Then
+                        ConfirmReport(SetupStatus)
+                        Exit Sub
                     End If
 
                     Dim splitFlowName() As String
@@ -611,71 +594,73 @@ Public Class SetupConfirm
 
                     'Check is Now Flow is matching with OIS
                     If (comparableFlowName = m_Data.TestFlow) Then
-                        If (isSpecialFlow = 0) Then
-                            If (qualityState = "Normal") Then
-                                'Check is wipState = 20
-                                If (wipState = "Already Input") Then
-                                    If (processState = "Wait" Or processState = "Abnormal WIP") Then
 
+                        If (isSpecialFlow = 1 And qualityState = "Special Flow") Then 'Skip for now wait multi add specialFlow
+
+                            ConfirmReport("LotSpecialSkip")
+                            Exit Sub
+
+                        ElseIf (isSpecialFlow = 0 And qualityState = "Normal") Then
+
+                            If (wipState = "Already Input") Then
+
+                                If (processState = "Wait" Or processState = "Abnormal WIP") Then
+
+                                    Try
+                                        transLotsFlowsTbl = DBAccess.GetTransLotsFlows(lotId)
+                                    Catch ex As Exception
+                                        ShowErrorMessage("Failed to get TransLotsFlows :" & ex.Message)
+                                        Exit Sub
+                                    End Try
+
+                                    If transLotsFlowsTbl.Rows.Count > 0 Then
+
+                                        Dim stepNo As Integer = 0 'stepNo = 100, backStepNo = 200 In Stored will add 101 then flow end gonna go to 200
+
+                                        For index = transLotsFlowsTbl.Rows.Count - 1 To 0 Step -1
+                                            If transLotsFlowsTbl.Rows(index)("job_name").ToString() = flowName Then
+                                                If index = 0 Then
+                                                    ShowErrorMessage(">>> No Flow Before '" + flowName.Trim() + " Please contact SYSTEM <<< <br/>")
+                                                    Exit Sub
+                                                End If
+
+                                                For index2 = index - 1 To 0 Step -1
+                                                    If Int32.Parse(transLotsFlowsTbl.Rows(index2)("is_skipped").ToString()) = 0 And transLotsFlowsTbl.Rows(index2)("job_name").ToString() <> transLotsFlowsTbl.Rows(index)("job_name").ToString() Then
+                                                        If transLotsFlowsTbl.Rows(index2)("step_no").ToString().EndsWith("0") Then
+                                                            stepNo = Int32.Parse(transLotsFlowsTbl.Rows(index2)("step_no").ToString())
+                                                            Exit For
+                                                        End If
+                                                    End If
+                                                Next
+
+                                                If stepNo <> 0 Then
+                                                    Exit For
+                                                End If
+                                            End If
+                                        Next
+
+                                        'Set Special Flow here
                                         Try
-                                            transLotsFlowsTbl = DBAccess.GetTransLotsFlows(lotId)
+                                            DBAccess.SetSpecialFlow(lotId, stepNo, backStepNo, userId, flowPatternId, 1)
                                         Catch ex As Exception
-                                            ShowErrorMessage("Failed to get TransLotsFlows :" & ex.Message)
+                                            ShowErrorMessage("Failed to Add Special Flows :" & ex.Message)
                                             Exit Sub
                                         End Try
-
-                                        If transLotsFlowsTbl.Rows.Count > 0 Then
-
-                                            Dim stepNo As Integer = 0 'stepNo = 100, backStepNo = 200 In Stored will add 101 then flow end gonna go to 200
-
-                                            For index = transLotsFlowsTbl.Rows.Count - 1 To 0 Step -1
-                                                If transLotsFlowsTbl.Rows(index)("job_name").ToString() = flowName Then
-                                                    If index = 0 Then
-                                                        ShowErrorMessage(">>> No Flow Before '" + flowName.Trim() + " Please contact SYSTEM <<< <br/>")
-                                                        Exit Sub
-                                                    End If
-
-                                                    For index2 = index - 1 To 0 Step -1
-                                                        If Int32.Parse(transLotsFlowsTbl.Rows(index2)("is_skipped").ToString()) = 0 And transLotsFlowsTbl.Rows(index2)("job_name").ToString() <> transLotsFlowsTbl.Rows(index)("job_name").ToString() Then
-                                                            If transLotsFlowsTbl.Rows(index2)("step_no").ToString().EndsWith("0") Then
-                                                                stepNo = Int32.Parse(transLotsFlowsTbl.Rows(index2)("step_no").ToString())
-                                                                Exit For
-                                                            End If
-                                                        End If
-                                                    Next
-
-                                                    If stepNo <> 0 Then
-                                                        Exit For
-                                                    End If
-                                                End If
-                                            Next
-
-                                            'Set Special Flow here
-                                            Try
-                                                DBAccess.SetSpecialFlow(lotId, stepNo, backStepNo, userId, flowPatternId, 1)
-                                            Catch ex As Exception
-                                                ShowErrorMessage("Failed to Add Special Flows :" & ex.Message)
-                                                Exit Sub
-                                            End Try
-                                        Else
-                                            ShowErrorMessage("Lot Flow not found <br/>")
-                                            Exit Sub
-                                        End If
-
                                     Else
-                                        ShowErrorMessage(">>> processState is '" + processState.Trim() + " Please contact SYSTEM <<< <br/>")
+                                        ShowErrorMessage("Lot Flow not found <br/>")
                                         Exit Sub
                                     End If
+
                                 Else
-                                    ShowErrorMessage(">>> wipState is '" + wipState.Trim() + " Please contact SYSTEM <<< <br/>")
+                                    ShowErrorMessage(">>> processState is '" + processState.Trim() + " Please contact SYSTEM <<< <br/>")
                                     Exit Sub
                                 End If
                             Else
-                                ShowErrorMessage(">>> qualityState is '" + qualityState.Trim() + "Please contact SYSTEM <<< <br/>")
+                                ShowErrorMessage(">>> wipState is '" + wipState.Trim() + " Please contact SYSTEM <<< <br/>")
                                 Exit Sub
                             End If
                         Else
-                            ShowErrorMessage(">>> isSpecialFlow is '" + isSpecialFlow.ToString() + "Please contact SYSTEM <<< <br/>")
+                            ShowErrorMessage(">>> isSpecialFlow is '" + isSpecialFlow.ToString() + " And qualityState Is '" + qualityState.Trim() + "Please contact SYSTEM <<< <br/>")
                             Exit Sub
                         End If
                     Else
@@ -710,14 +695,27 @@ Public Class SetupConfirm
 
     Private Sub ConfirmReport(setupStatus As String)
 
-        DBAccess.ConfirmFTReport(m_Data.MCNo, m_Data.LotNo, m_Data.PackageName, m_Data.DeviceName, setupStatus)
+        If setupStatus = "LotSpecialSkip" Then
 
-        m_Data.SetupStatus = setupStatus
+            m_Data.SetupStatus = "LotSpecialSkip"
 
-        HideErrorMessage()
+            DBAccess.ConfirmFTReport(m_Data.MCNo, m_Data.LotNo, m_Data.PackageName, m_Data.DeviceName, SETUP_STATUS_CONFIRMED)
 
-        Response.Redirect("~/Default.aspx", False)
+            HideErrorMessage()
 
+            Response.Redirect("~/SetupMain.aspx", False)
+
+        Else
+
+            m_Data.SetupStatus = setupStatus
+
+            DBAccess.ConfirmFTReport(m_Data.MCNo, m_Data.LotNo, m_Data.PackageName, m_Data.DeviceName, m_Data.SetupStatus)
+
+            HideErrorMessage()
+
+            Response.Redirect("~/Default.aspx", False)
+
+        End If
     End Sub
 
     Private Sub ShowErrorMessage(errMessage As String)

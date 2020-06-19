@@ -18,6 +18,13 @@ Public Class SetupMain
         End If
 
         If Not IsPostBack Then
+
+            If m_Data.SetupStatus = "LotSpecialSkip" Then
+                panelError.Style.Item("display") = "block"
+                ErrorMessageLabel.Text = "ไม่สามารถ Add Flow GOODNGTEST ได้เนื่องจาก Lot เป็น Special Flow ตอนนี้ กรุณาติดต่อ System."
+                m_Data.SetupStatus = SETUP_STATUS_CONFIRMED
+            End If
+
             TextBoxMCNo.Text = m_Data.MCNo
             Devicetext.Text = m_Data.DeviceName
             TestflowTextBox.Text = m_Data.TestFlow

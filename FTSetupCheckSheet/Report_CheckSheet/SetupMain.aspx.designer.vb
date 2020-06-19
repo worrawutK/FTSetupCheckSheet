@@ -12,7 +12,7 @@ Option Explicit On
 
 
 Partial Public Class SetupMain
-    
+
     '''<summary>
     '''QRcodeTextBox control.
     '''</summary>
@@ -21,7 +21,7 @@ Partial Public Class SetupMain
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents QRcodeTextBox As Global.System.Web.UI.WebControls.TextBox
-    
+
     '''<summary>
     '''panelError control.
     '''</summary>
@@ -30,7 +30,7 @@ Partial Public Class SetupMain
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents panelError As Global.System.Web.UI.HtmlControls.HtmlGenericControl
-    
+
     '''<summary>
     '''ErrorMessageLabel control.
     '''</summary>
@@ -39,7 +39,7 @@ Partial Public Class SetupMain
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents ErrorMessageLabel As Global.System.Web.UI.WebControls.Label
-    
+
     '''<summary>
     '''TextBoxMCNo control.
     '''</summary>
@@ -48,7 +48,7 @@ Partial Public Class SetupMain
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents TextBoxMCNo As Global.System.Web.UI.WebControls.TextBox
-    
+
     '''<summary>
     '''Devicetext control.
     '''</summary>
@@ -57,7 +57,7 @@ Partial Public Class SetupMain
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents Devicetext As Global.System.Web.UI.WebControls.TextBox
-    
+
     '''<summary>
     '''TestflowTextBox control.
     '''</summary>
@@ -66,7 +66,7 @@ Partial Public Class SetupMain
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents TestflowTextBox As Global.System.Web.UI.WebControls.TextBox
-    
+
     '''<summary>
     '''TesterTypeTextBox control.
     '''</summary>
@@ -75,7 +75,7 @@ Partial Public Class SetupMain
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents TesterTypeTextBox As Global.System.Web.UI.WebControls.TextBox
-    
+
     '''<summary>
     '''TextBoxSetupStatus control.
     '''</summary>
@@ -84,7 +84,7 @@ Partial Public Class SetupMain
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents TextBoxSetupStatus As Global.System.Web.UI.WebControls.TextBox
-    
+
     '''<summary>
     '''ButtonSetup control.
     '''</summary>
@@ -93,7 +93,7 @@ Partial Public Class SetupMain
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents ButtonSetup As Global.System.Web.UI.WebControls.Button
-    
+
     '''<summary>
     '''ButtonConfirm control.
     '''</summary>
