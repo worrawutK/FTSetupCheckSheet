@@ -4,7 +4,9 @@
     Private m_Data As FTSetupReport
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+
         Dim tmp As Object = Session(SESSION_KEY_NEW_DATA_SETUP)
+
         If tmp Is Nothing Then
             Response.Redirect("~/SetupMain.aspx")
         Else
@@ -21,6 +23,7 @@
         m_Data.PkgGoodJudgement = selecPkgGoodjudgement.Value
         m_Data.PkgNGJudgement = selecPkgNGjudgement.Value
         m_Data.PkgNishikiCamaraJudgement = SelectPKgNishikijudgement.Value
+
         Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
     End Sub
 
@@ -33,6 +36,5 @@
         UpdateSessionData()
         Response.Redirect("~/SetupStep7CheckSheet5.aspx")
     End Sub
-
 
 End Class

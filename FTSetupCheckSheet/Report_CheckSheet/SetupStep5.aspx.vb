@@ -37,7 +37,6 @@ Public Class SetupStep5
         OptionType1TextBox.Focus()
     End Sub
 
-
     Private Sub UpdateSessionData()
         m_Data.OptionName1 = OptionType1TextBox.Text
         m_Data.OptionName2 = OptionType2TextBox.Text
@@ -61,6 +60,7 @@ Public Class SetupStep5
     End Sub
 
     Protected Sub Option1TextBox_TextChanged(sender As Object, e As EventArgs) Handles OptionType1TextBox.TextChanged
+
         OptionType2TextBox.Focus()
 
         If Not String.IsNullOrEmpty(OptionType1TextBox.Text) Then
@@ -87,6 +87,7 @@ Public Class SetupStep5
     End Sub
 
     Protected Sub Option2TextBox_TextChanged(sender As Object, e As EventArgs) Handles OptionType2TextBox.TextChanged
+
         OptionType3TextBox.Focus()
 
         If Not String.IsNullOrEmpty(OptionType2TextBox.Text) Then
@@ -245,9 +246,7 @@ Public Class SetupStep5
                 OptionType7TextBox.Text = m_Data.OptionType7
                 Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
             End Using
-
         End If
-
     End Sub
 
 End Class

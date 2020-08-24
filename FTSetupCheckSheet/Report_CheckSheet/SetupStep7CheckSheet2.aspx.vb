@@ -8,12 +8,15 @@ Partial Public Class SetupStep7CheckSheet2
     Private m_Data As FTSetupReport
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+
         Dim tmp As Object = Session(SESSION_KEY_NEW_DATA_SETUP)
+
         If tmp Is Nothing Then
             Response.Redirect("~/SetupMain.aspx")
         Else
             m_Data = CType(tmp, FTSetupReport)
         End If
+
         If Not IsPostBack Then
             selecQfpDecisionLeadPress.Value = m_Data.QfpDecisionLeadPress
             selecQfpSocketDecision.Value = m_Data.QfpSocketDecision
@@ -29,6 +32,7 @@ Partial Public Class SetupStep7CheckSheet2
         m_Data.QfpTray = selecQfpTray.Value
         m_Data.QfpVacuumPad = selecQfpVacuumPad.Value
         m_Data.QfpSocketSetup = selectQfpSetupSocket.Value
+
         Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
     End Sub
 

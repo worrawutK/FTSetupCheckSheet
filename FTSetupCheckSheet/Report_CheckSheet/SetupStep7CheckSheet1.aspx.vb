@@ -4,6 +4,7 @@
     Private m_Data As FTSetupReport
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+
         Dim tmp As Object = Session(SESSION_KEY_NEW_DATA_SETUP)
 
         If tmp Is Nothing Then
@@ -11,6 +12,7 @@
         Else
             m_Data = CType(tmp, FTSetupReport)
         End If
+
         If Not IsPostBack Then
             selectBoxTesterConnection.Value = m_Data.BoxTesterConnection
             selecOptionSetup.Value = m_Data.OptionSetup
@@ -22,6 +24,7 @@
         m_Data.BoxTesterConnection = selectBoxTesterConnection.Value
         m_Data.OptionSetup = selecOptionSetup.Value
         m_Data.OptionConnection = selecOptionConnection.Value
+
         Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
     End Sub
 

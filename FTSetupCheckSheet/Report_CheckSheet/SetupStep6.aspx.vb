@@ -38,7 +38,27 @@ Public Class SetupStep6
 
     End Sub
 
-    Protected Sub changepackageTextBox_TextChanged(sender As Object, e As EventArgs) Handles TypechangepackageTextBox.TextChanged
+    Private Sub UpdateSessionData()
+        m_Data.TypeChangePackage = TypechangepackageTextBox.Text
+        m_Data.QRCodesocket1 = QRcodeSocket1TextBox.Text
+        m_Data.QRCodesocket2 = QRcodeSocket2TextBox.Text
+        m_Data.QRCodesocket3 = QRcodeSocket3TextBox.Text
+        m_Data.QRCodesocket4 = QRcodeSocket4TextBox.Text
+        Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
+    End Sub
+
+    Private Sub ButtonNext_Click(sender As Object, e As EventArgs) Handles ButtonNext.Click
+        UpdateSessionData()
+        Response.Redirect("~/SetupStep7CheckSheet1.aspx")
+    End Sub
+
+    Private Sub ButtonPrevious_Click(sender As Object, e As EventArgs) Handles ButtonPrevious.Click
+        UpdateSessionData()
+        Response.Redirect("~/SetupStep5.aspx")
+    End Sub
+
+    Protected Sub ChangepackageTextBox_TextChanged(sender As Object, e As EventArgs) Handles TypechangepackageTextBox.TextChanged
+
         QRcodeSocket1TextBox.Focus()
 
         If TypechangepackageTextBox.Text.Length = 252 Then
@@ -51,6 +71,7 @@ Public Class SetupStep6
     End Sub
 
     Protected Sub QRSocketTextBox_TextChanged(sender As Object, e As EventArgs) Handles QRcodeSocket1TextBox.TextChanged
+
         QRcodeSocket2TextBox.Focus()
 
         If Not String.IsNullOrEmpty(QRcodeSocket1TextBox.Text) Then
@@ -74,28 +95,10 @@ Public Class SetupStep6
         End If
     End Sub
 
-    Private Sub UpdateSessionData()
-        m_Data.TypeChangePackage = TypechangepackageTextBox.Text
-        m_Data.QRCodesocket1 = QRcodeSocket1TextBox.Text
-        m_Data.QRCodesocket2 = QRcodeSocket2TextBox.Text
-        m_Data.QRCodesocket3 = QRcodeSocket3TextBox.Text
-        m_Data.QRCodesocket4 = QRcodeSocket4TextBox.Text
-        Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
-    End Sub
-
-    Private Sub ButtonNext_Click(sender As Object, e As EventArgs) Handles ButtonNext.Click
-        UpdateSessionData()
-        Response.Redirect("~/SetupStep7CheckSheet1.aspx")
-    End Sub
-
-    Private Sub ButtonPrevious_Click(sender As Object, e As EventArgs) Handles ButtonPrevious.Click
-        UpdateSessionData()
-        Response.Redirect("~/SetupStep5.aspx")
-    End Sub
-
     Protected Sub QRcodeSocket2TextBox_TextChanged(sender As Object, e As EventArgs) Handles QRcodeSocket2TextBox.TextChanged
+
         QRcodeSocket3TextBox.Focus()
-        'SocketChannel2
+
         If Not String.IsNullOrEmpty(QRcodeSocket2TextBox.Text) Then
             Dim qrCodeSocket2 As String = QRcodeSocket2TextBox.Text.ToUpper
             m_Data.QRCodesocketChannel2 = QRcodeSocket2TextBox.Text
@@ -116,8 +119,9 @@ Public Class SetupStep6
     End Sub
 
     Protected Sub QRcodeSocket3TextBox_TextChanged(sender As Object, e As EventArgs) Handles QRcodeSocket3TextBox.TextChanged
+
         QRcodeSocket4TextBox.Focus()
-        'SocketChannel3
+
         If Not String.IsNullOrEmpty(QRcodeSocket3TextBox.Text) Then
             Dim qrCodeSocket3 As String = QRcodeSocket3TextBox.Text.ToUpper
             m_Data.QRCodesocketChannel3 = QRcodeSocket3TextBox.Text
@@ -138,7 +142,7 @@ Public Class SetupStep6
     End Sub
 
     Protected Sub QRcodeSocket4TextBox_TextChanged(sender As Object, e As EventArgs) Handles QRcodeSocket4TextBox.TextChanged
-        'SocketChannel4
+
         If Not String.IsNullOrEmpty(QRcodeSocket4TextBox.Text) Then
             Dim qrCodeSocket4 As String = QRcodeSocket4TextBox.Text.ToUpper
             m_Data.QRCodesocketChannel4 = QRcodeSocket4TextBox.Text

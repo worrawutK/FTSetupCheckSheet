@@ -12,7 +12,25 @@ Option Explicit On
 
 
 Partial Public Class SetupStep4
-    
+
+    '''<summary>
+    '''AdaptorATextBox control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents AdaptorATextBox As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''AdaptorBTextBox control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents AdaptorBTextBox As Global.System.Web.UI.WebControls.TextBox
+
     '''<summary>
     '''DutcardATextBox control.
     '''</summary>
@@ -21,7 +39,7 @@ Partial Public Class SetupStep4
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents DutcardATextBox As Global.System.Web.UI.WebControls.TextBox
-    
+
     '''<summary>
     '''DutcardBTextBox control.
     '''</summary>
@@ -30,7 +48,7 @@ Partial Public Class SetupStep4
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents DutcardBTextBox As Global.System.Web.UI.WebControls.TextBox
-    
+
     '''<summary>
     '''BridgecableATextBox control.
     '''</summary>
@@ -39,7 +57,7 @@ Partial Public Class SetupStep4
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents BridgecableATextBox As Global.System.Web.UI.WebControls.TextBox
-    
+
     '''<summary>
     '''BridgecableBTextBox control.
     '''</summary>
@@ -48,7 +66,7 @@ Partial Public Class SetupStep4
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents BridgecableBTextBox As Global.System.Web.UI.WebControls.TextBox
-    
+
     '''<summary>
     '''ButtonPrevious control.
     '''</summary>
@@ -57,7 +75,7 @@ Partial Public Class SetupStep4
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents ButtonPrevious As Global.System.Web.UI.WebControls.Button
-    
+
     '''<summary>
     '''ButtonNext control.
     '''</summary>

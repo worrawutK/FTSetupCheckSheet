@@ -8,7 +8,6 @@ Imports iTextSharp.text
 Imports iTextSharp.text.pdf
 Imports System.Data.SqlClient
 
-
 Public Class LoginShonoSection
     Inherits System.Web.UI.Page
 
@@ -22,6 +21,7 @@ Public Class LoginShonoSection
 
     Protected Sub Submit_Click(sender As Object, e As EventArgs) Handles Submit.Click
         If usernameTextBox.Text.Length = 6 Then
+
             usernameTextBox.Text.Trim().ToUpper()
 
             Dim constr As SqlConnection = New SqlConnection(My.Settings.DBxConnectionString)
@@ -110,10 +110,8 @@ Public Class LoginShonoSection
         testWriter.ShowText(dateLabel.Text)
         testWriter.EndText()
 
-
         pdffile1.Close()
         pdfReader.Close()
-
 
         Response.Redirect(String.Format("~/ConfirmedReport.aspx?LotNo={0}&MCNo={1}",
                                         Request.QueryString("LotNo"), Request.QueryString("MCNo")))

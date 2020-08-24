@@ -11,7 +11,7 @@ Imports System.Data.SqlClient
 Public Class ShowDataSetup
     Inherits System.Web.UI.Page
 
-    Private Sub dataCheckSheetGridView_RowDataBound(sender As Object, e As GridViewRowEventArgs) Handles dataCheckSheetGridView.RowDataBound
+    Private Sub dataCheckSheetGridView_RowDataBound(sender As Object, e As GridViewRowEventArgs) Handles dataCheckSheetGridView.RowDataBound 
         If e.Row.RowIndex >= 0 Then
             Dim rv As DataRowView = CType(e.Row.DataItem, DataRowView)
             Dim row As DataRow = rv.Row
@@ -20,14 +20,11 @@ Public Class ShowDataSetup
             Dim img4 As WebControls.Image = DirectCast(e.Row.FindControl("Image4"), WebControls.Image)
             Dim img5 As WebControls.Image = DirectCast(e.Row.FindControl("Image5"), WebControls.Image)
 
-
             Dim link1 As HyperLink = DirectCast(e.Row.FindControl("linkReport"), HyperLink)
 
             Dim lbSetupStartDate As Label = DirectCast(e.Row.FindControl("lbSetupStartDate"), Label)
             Dim lbSetupEndDate As Label = DirectCast(e.Row.FindControl("lbSetupEndDate"), Label)
             Dim lbMTTR As Label = DirectCast(e.Row.FindControl("lbMTTR"), Label)
-
-
 
             Dim linkConfirmed As HyperLink = DirectCast(e.Row.FindControl("linkConfirmed"), HyperLink)
             'linkConfirmed.NavigateUrl = "ConfirmedReport.aspx"
@@ -45,8 +42,6 @@ Public Class ShowDataSetup
                 img4.CssClass = "animationStatus"
             End If
 
-
-
             Dim link As HyperLink = DirectCast(e.Row.FindControl("link"), HyperLink)
 
             If row("SetupStatus").ToString = "CANCELED" Then
@@ -58,12 +53,10 @@ Public Class ShowDataSetup
                 img2.CssClass = "animationStatus"
                 link.NavigateUrl = "SetupConfirm.aspx"
 
-            ElseIf row("SetupStatus").ToString = "CONFIRMED"
+            ElseIf row("SetupStatus").ToString = "CONFIRMED" Then
                 img2.ImageUrl = "~/images/icon_.png"
                 link.NavigateUrl = "OpenCheckSheet.aspx?LotNo=" + row("LotNo").ToString + "&MCNo=" + row("MCNo").ToString
             End If
-
-
 
             Dim linkReport As HyperLink = DirectCast(e.Row.FindControl("linkReport"), HyperLink)
 
@@ -104,14 +97,6 @@ Public Class ShowDataSetup
 
     Protected Sub ButtonPrevious_Click(sender As Object, e As EventArgs) Handles ButtonPrevious.Click
         Response.Redirect("~/ShowDataSetup3.aspx")
-    End Sub
-
-    Protected Sub dataCheckSheetGridView_SelectedIndexChanged(sender As Object, e As EventArgs) Handles dataCheckSheetGridView.SelectedIndexChanged
-
-    End Sub
-
-    Protected Sub dataFtsetupchecksheetSqlDataSource_Selecting(sender As Object, e As SqlDataSourceSelectingEventArgs) Handles dataFtsetupchecksheetSqlDataSource.Selecting
-
     End Sub
 
     'If My.Computer.FileSystem.FileExists(My.Settings.ShonokokoshiPDFPath & row("LotNo").ToString & "_" & row("MCNo").ToString & ".pdf") = True Then

@@ -86,24 +86,6 @@ Partial Public Class SetupStep3
     Protected WithEvents TestBoxHTextBox As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''AdaptorATextBox control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents AdaptorATextBox As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''AdaptorBTextBox control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents AdaptorBTextBox As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
     '''ButtonPrevious control.
     '''</summary>
     '''<remarks>

@@ -45,17 +45,7 @@
     <div class="panel panel-danger">
        <div class="panel-heading">(3.8) BOX OR BOARD :  H channel </div>
        <asp:TextBox ID="TestBoxHTextBox" runat="server" CssClass="form-control" Height="30px" AutoPostBack="True"></asp:TextBox>
-    </div>
-
-     <div class="panel panel-danger">
-       <div class="panel-heading">(6) Adaptor (アダプタ) :  A channel </div>
-       <asp:TextBox ID="AdaptorATextBox" runat="server" CssClass="form-control" Height="30px" AutoPostBack="True"></asp:TextBox>
-     </div>
-
-     <div class="panel panel-danger">
-       <div class="panel-heading">(7) Adaptor (アダプタ) :  B channel </div>
-       <asp:TextBox ID="AdaptorBTextBox" runat="server" CssClass="form-control" Height="30px" AutoPostBack="True"></asp:TextBox>
-     </div>
+    </div>     
 
     <div class="panel">
         <asp:Button ID="ButtonPrevious" CssClass="btn btn-default pull-left " runat="server" Text="Previous" />

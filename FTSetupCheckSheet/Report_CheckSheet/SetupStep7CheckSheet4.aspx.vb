@@ -5,12 +5,15 @@
     Public Property TEselectManualCheckRequestTE As Object
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+
         Dim tmp As Object = Session(SESSION_KEY_NEW_DATA_SETUP)
+
         If tmp Is Nothing Then
             Response.Redirect("~/SetupMain.aspx")
         Else
             m_Data = CType(tmp, FTSetupReport)
         End If
+
         If Not IsPostBack Then
             selecManualCheckTE.Value = m_Data.ManualCheckTE
             selectManualCheckRequestTEConfirm.Value = m_Data.ManualCheckRequestTEConfirm
@@ -35,6 +38,7 @@
         m_Data.ManualCheckRequestTEConfirm = selectManualCheckRequestTEConfirm.Value
 
         Dim tmpTE As Integer = 0
+
         If Integer.TryParse(selectManualCheckRequestTE.Value, tmpTE) Then
             m_Data.ManualCheckRequestTE = tmpTE
         Else
@@ -47,13 +51,6 @@
         Else
             m_Data.ManualCheckTest = Nothing
         End If
-
-        'Dim tmp As Integer = 0
-        'If m_Data.ManualCheckTest.HasValue AndAlso Integer.TryParse(selecManualCheckTest.Value, tmp) Then
-        '    m_Data.ManualCheckTest = tmp
-        'Else
-        '    m_Data.ManualCheckTest = Nothing
-        'End If
 
         Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
     End Sub

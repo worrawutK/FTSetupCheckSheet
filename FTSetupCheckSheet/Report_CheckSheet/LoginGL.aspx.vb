@@ -23,6 +23,7 @@ Public Class LoginGL
     Protected Sub Submit_Click(sender As Object, e As EventArgs) Handles Submit.Click
 
         If usernameTextBox.Text.Length = 6 Then
+
             usernameTextBox.Text.Trim().ToUpper()
 
             Dim constr As SqlConnection = New SqlConnection(My.Settings.DBxConnectionString)

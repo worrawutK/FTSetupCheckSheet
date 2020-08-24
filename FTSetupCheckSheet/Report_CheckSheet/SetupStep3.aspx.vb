@@ -3,6 +3,51 @@
 Public Class SetupStep3
     Inherits System.Web.UI.Page
 
+    Private m_Data As FTSetupReport
+
+    Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+
+        Dim tmp As Object = Session(SESSION_KEY_NEW_DATA_SETUP)
+        If tmp Is Nothing Then
+            Response.Redirect("~/SetupMain.aspx")
+        Else
+            m_Data = CType(tmp, FTSetupReport)
+        End If
+        If Not IsPostBack Then
+            TestBoxATextBox.Text = m_Data.TestBoxA
+            TestBoxBTextBox.Text = m_Data.TestBoxB
+            TestBoxCTextBox.Text = m_Data.TestBoxC
+            TestBoxDTextBox.Text = m_Data.TestBoxD
+            TestBoxETextBox.Text = m_Data.TestBoxE
+            TestBoxFTextBox.Text = m_Data.TestBoxF
+            TestBoxGTextBox.Text = m_Data.TestBoxG
+            TestBoxHTextBox.Text = m_Data.TestBoxH
+        End If
+        TestBoxATextBox.Focus()
+    End Sub
+
+    Private Sub UpdateSessionData()
+        m_Data.TestBoxA = TestBoxATextBox.Text
+        m_Data.TestBoxB = TestBoxBTextBox.Text
+        m_Data.TestBoxC = TestBoxCTextBox.Text
+        m_Data.TestBoxD = TestBoxDTextBox.Text
+        m_Data.TestBoxE = TestBoxETextBox.Text
+        m_Data.TestBoxF = TestBoxFTextBox.Text
+        m_Data.TestBoxG = TestBoxGTextBox.Text
+        m_Data.TestBoxH = TestBoxHTextBox.Text
+        Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
+    End Sub
+
+    Private Sub ButtonNext_Click(sender As Object, e As EventArgs) Handles ButtonNext.Click
+        UpdateSessionData()
+        Response.Redirect("~/SetupStep4.aspx")
+    End Sub
+
+    Private Sub ButtonPrevious_Click(sender As Object, e As EventArgs) Handles ButtonPrevious.Click
+        UpdateSessionData()
+        Response.Redirect("~/SetupStep2.aspx")
+    End Sub
+
     Protected Sub AboxTextBox_TextChanged(sender As Object, e As EventArgs) Handles TestBoxATextBox.TextChanged
 
         TestBoxBTextBox.Focus()
@@ -85,8 +130,6 @@ Public Class SetupStep3
 
     Protected Sub DboxTextBox_TextChanged(sender As Object, e As EventArgs) Handles TestBoxDTextBox.TextChanged
 
-        AdaptorATextBox.Focus()
-
         If Not String.IsNullOrEmpty(TestBoxDTextBox.Text) Then
 
             Dim qrName As String = TestBoxDTextBox.Text.ToUpper
@@ -109,87 +152,6 @@ Public Class SetupStep3
             End Using
         End If
 
-    End Sub
-
-    Protected Sub Adaptor1TextBox_TextChanged(sender As Object, e As EventArgs) Handles AdaptorATextBox.TextChanged
-        AdaptorBTextBox.Focus()
-
-        If Not String.IsNullOrEmpty(AdaptorATextBox.Text) Then
-
-            Dim qrName As String = AdaptorATextBox.Text.ToUpper
-            m_Data.AdaptorAQRcode = AdaptorATextBox.Text
-
-            Using dt As DataTable = DBAccess.GetEquipmentByQRName(qrName, EQUIPMENT_TYPE_ID_ADAPTOR)
-                If dt.Rows.Count = 1 Then
-                    Dim row As DataRow = dt.Rows(0)
-                    m_Data.AdaptorA = row("SubType").ToString().ToUpper
-                Else
-                    m_Data.AdaptorA = ""
-                End If
-                AdaptorATextBox.Text = m_Data.AdaptorA
-                Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
-
-            End Using
-        End If
-
-    End Sub
-
-    Protected Sub Adaptor2TextBox_TextChanged(sender As Object, e As EventArgs) Handles AdaptorBTextBox.TextChanged
-
-        If Not String.IsNullOrEmpty(AdaptorBTextBox.Text) Then
-
-            Dim qrName As String = AdaptorBTextBox.Text.ToUpper
-            m_Data.AdaptorBQRcode = AdaptorBTextBox.Text
-
-            Using dt As DataTable = DBAccess.GetEquipmentByQRName(qrName, EQUIPMENT_TYPE_ID_ADAPTOR)
-                If dt.Rows.Count = 1 Then
-                    Dim row As DataRow = dt.Rows(0)
-                    m_Data.AdaptorB = row("SubType").ToString().ToUpper
-                Else
-                    m_Data.AdaptorB = ""
-                End If
-                AdaptorBTextBox.Text = m_Data.AdaptorB
-                Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
-            End Using
-        End If
-
-    End Sub
-
-    Private m_Data As FTSetupReport
-
-    Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-
-        Dim tmp As Object = Session(SESSION_KEY_NEW_DATA_SETUP)
-        If tmp Is Nothing Then
-            Response.Redirect("~/SetupMain.aspx")
-        Else
-            m_Data = CType(tmp, FTSetupReport)
-        End If
-        If Not IsPostBack Then
-            TestBoxATextBox.Text = m_Data.TestBoxA
-            TestBoxBTextBox.Text = m_Data.TestBoxB
-            AdaptorATextBox.Text = m_Data.AdaptorA
-            AdaptorBTextBox.Text = m_Data.AdaptorB
-        End If
-        TestBoxATextBox.Focus()
-    End Sub
-
-    Private Sub UpdateSessionData()
-        m_Data.TestBoxA = TestBoxATextBox.Text
-        m_Data.TestBoxB = TestBoxBTextBox.Text
-        m_Data.AdaptorA = AdaptorATextBox.Text
-        m_Data.AdaptorB = AdaptorBTextBox.Text
-        Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
-    End Sub
-
-    Private Sub ButtonNext_Click(sender As Object, e As EventArgs) Handles ButtonNext.Click
-        UpdateSessionData()
-        Response.Redirect("~/SetupStep4.aspx")
-    End Sub
-
-    Private Sub ButtonPrevious_Click(sender As Object, e As EventArgs) Handles ButtonPrevious.Click
-        UpdateSessionData()
-        Response.Redirect("~/SetupStep2.aspx")
     End Sub
 
 End Class

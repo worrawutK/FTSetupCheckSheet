@@ -21,6 +21,7 @@ Public Class LoginShono
 
     Protected Sub Submit_Click(sender As Object, e As EventArgs) Handles Submit.Click
         If usernameTextBox.Text.Length = 6 Then
+
             usernameTextBox.Text.Trim().ToUpper()
 
             Dim constr As SqlConnection = New SqlConnection(My.Settings.DBxConnectionString)
@@ -112,7 +113,6 @@ Public Class LoginShono
 
         pdffile1.Close()
         pdfReader.Close()
-
 
         Response.Redirect(String.Format("~/ConfirmedReport.aspx?LotNo={0}&MCNo={1}",
                                         Request.QueryString("LotNo"), Request.QueryString("MCNo")))

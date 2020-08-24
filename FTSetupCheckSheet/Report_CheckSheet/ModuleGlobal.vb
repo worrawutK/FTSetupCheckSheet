@@ -26,8 +26,6 @@
     Public Const EQUIPMENT_TYPE_ID_DUTCARD As Integer = 13
     Public Const EQUIPMENT_TYPE_ID_OTHER As Integer = 14
 
-
-
     Public Sub MyAlert(ByVal xControl As System.Web.UI.Control, ByVal alertMessage As String)
         Dim scriptString As String
 

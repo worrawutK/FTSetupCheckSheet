@@ -33,6 +33,29 @@ Public Class SetupStep2
         ATesternoTextBox.Focus()
     End Sub
 
+    Private Sub UpdateSessionData()
+        m_Data.TesterNoA = ATesternoTextBox.Text
+        m_Data.TesterNoB = BTesternoTextBox.Text
+        m_Data.TesterNoC = CTesternoTextBox.Text
+        m_Data.TesterNoD = DTesternoTextBox.Text
+        Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
+    End Sub
+
+    Private Sub ButtonNext_Click(sender As Object, e As EventArgs) Handles ButtonNext.Click
+        If Not TesterNoIsDuplicated() Then
+            UpdateSessionData()
+            Response.Redirect("~/SetupStep3.aspx")
+        End If
+    End Sub
+
+    Private Sub ButtonPrevious_Click(sender As Object, e As EventArgs) Handles ButtonPrevious.Click
+        If Not TesterNoIsDuplicated() Then
+            UpdateSessionData()
+            Response.Redirect("~/SetupStep1.aspx")
+        End If
+
+    End Sub
+
     Protected Sub ATesternoTextBox_TextChanged(sender As Object, e As EventArgs) Handles ATesternoTextBox.TextChanged
         BTesternoTextBox.Focus()
 
@@ -112,7 +135,6 @@ Public Class SetupStep2
     End Sub
 
     Protected Sub DTestnoTextBox_TextChanged(sender As Object, e As EventArgs) Handles DTesternoTextBox.TextChanged
-        'DTesternoTextBox.Focus()
 
         If Not String.IsNullOrEmpty(DTesternoTextBox.Text) Then
 
@@ -135,29 +157,6 @@ Public Class SetupStep2
             End Using
 
         End If
-    End Sub
-
-    Private Sub UpdateSessionData()
-        m_Data.TesterNoA = ATesternoTextBox.Text
-        m_Data.TesterNoB = BTesternoTextBox.Text
-        m_Data.TesterNoC = CTesternoTextBox.Text
-        m_Data.TesterNoD = DTesternoTextBox.Text
-        Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
-    End Sub
-
-    Private Sub ButtonNext_Click(sender As Object, e As EventArgs) Handles ButtonNext.Click
-        If Not TesterNoIsDuplicated() Then
-            UpdateSessionData()
-            Response.Redirect("~/SetupStep3.aspx")
-        End If
-    End Sub
-
-    Private Sub ButtonPrevious_Click(sender As Object, e As EventArgs) Handles ButtonPrevious.Click
-        If Not TesterNoIsDuplicated() Then
-            UpdateSessionData()
-            Response.Redirect("~/SetupStep1.aspx")
-        End If
-
     End Sub
 
     Private Function TesterNoIsDuplicated() As Boolean
