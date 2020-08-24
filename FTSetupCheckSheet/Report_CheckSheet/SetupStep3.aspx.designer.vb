@@ -12,7 +12,7 @@ Option Explicit On
 
 
 Partial Public Class SetupStep3
-    
+
     '''<summary>
     '''TestBoxATextBox control.
     '''</summary>
@@ -21,7 +21,7 @@ Partial Public Class SetupStep3
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents TestBoxATextBox As Global.System.Web.UI.WebControls.TextBox
-    
+
     '''<summary>
     '''TestBoxBTextBox control.
     '''</summary>
@@ -30,7 +30,61 @@ Partial Public Class SetupStep3
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents TestBoxBTextBox As Global.System.Web.UI.WebControls.TextBox
-    
+
+    '''<summary>
+    '''TestBoxCTextBox control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents TestBoxCTextBox As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''TestBoxDTextBox control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents TestBoxDTextBox As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''TestBoxETextBox control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents TestBoxETextBox As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''TestBoxFTextBox control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents TestBoxFTextBox As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''TestBoxGTextBox control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents TestBoxGTextBox As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''TestBoxHTextBox control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents TestBoxHTextBox As Global.System.Web.UI.WebControls.TextBox
+
     '''<summary>
     '''AdaptorATextBox control.
     '''</summary>
@@ -39,7 +93,7 @@ Partial Public Class SetupStep3
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents AdaptorATextBox As Global.System.Web.UI.WebControls.TextBox
-    
+
     '''<summary>
     '''AdaptorBTextBox control.
     '''</summary>
@@ -48,7 +102,7 @@ Partial Public Class SetupStep3
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents AdaptorBTextBox As Global.System.Web.UI.WebControls.TextBox
-    
+
     '''<summary>
     '''ButtonPrevious control.
     '''</summary>
@@ -57,7 +111,7 @@ Partial Public Class SetupStep3
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents ButtonPrevious As Global.System.Web.UI.WebControls.Button
-    
+
     '''<summary>
     '''ButtonNext control.
     '''</summary>

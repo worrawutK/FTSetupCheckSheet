@@ -3,6 +3,7 @@ Public Class SetupMain
     Inherits System.Web.UI.Page
 
     Private m_Data As FTSetupReport
+    Private m_OldData As FTSetupReportHistory
 
     Private Const BUTTON_TEXT_SETUP As String = "SET-UP"
     Private Const BUTTON_TEXT_CANCEL As String = "CANCEL"
@@ -10,11 +11,17 @@ Public Class SetupMain
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
 
         Dim tmp As Object = Session(SESSION_KEY_DATA)
+        Dim tmp2 As Object = Session(SESSION_KEY_OLD_DATA)
+
         If tmp Is Nothing Then
             m_Data = New FTSetupReport()
             Session(SESSION_KEY_DATA) = m_Data
+
+            m_OldData = New FTSetupReportHistory()
+            Session(SESSION_KEY_OLD_DATA) = m_OldData
         Else
             m_Data = CType(tmp, FTSetupReport)
+            m_OldData = CType(tmp2, FTSetupReportHistory)
         End If
 
         If Not IsPostBack Then
@@ -32,26 +39,6 @@ Public Class SetupMain
             TextBoxSetupStatus.Text = m_Data.SetupStatus
             SetStatusColor(TextBoxSetupStatus.Text)
         End If
-
-        'If Not IsPostBack Then
-        '    m_Data = New FTSetupReport()
-        '    Session(SESSION_KEY_DATA) = m_Data
-
-        '    TextBoxMCNo.Text = m_Data.MCNo
-        '    Devicetext.Text = m_Data.DeviceName
-        '    TestflowTextBox.Text = m_Data.TestFlow
-        '    TesterTypeTextBox.Text = m_Data.TesterType
-        '    TextBoxSetupStatus.Text = m_Data.SetupStatus
-        '    SetStatusColor(TextBoxSetupStatus.Text)
-        'Else
-        '    Dim tmp As Object = Session(SESSION_KEY_DATA)
-        '    If tmp Is Nothing Then
-        '        m_Data = New FTSetupReport()
-        '        Session(SESSION_KEY_DATA) = m_Data
-        '    Else
-        '        m_Data = CType(tmp, FTSetupReport)
-        '    End If
-        'End If
 
         QRcodeTextBox.Focus()
     End Sub
@@ -111,7 +98,7 @@ Public Class SetupMain
                     Session(SESSION_KEY_DATA) = m_Data
 
                 Catch ex As Exception
-                    ShowErrorMessage("Update Filed : " & ex.Message)
+                    ShowErrorMessage("Update Failed : " & ex.Message)
                 End Try
 
             Case BUTTON_TEXT_SETUP
@@ -162,10 +149,8 @@ Public Class SetupMain
 
                             row = dt2.Rows(0)
 
-                            'm_Data.DeviceName = row("DeviceName").ToString().ToUpper
-                            'm_Data.TestFlow = row("TestFlow").ToString().ToUpper
-                            'm_Data.TesterType = row("TesterType").ToString().ToUpper
-                            'm_Data.SetupStatus = row("SetupStatus").ToString().ToUpper
+                            m_OldData.DeviceName = row("DeviceName").ToString().ToUpper
+                            m_OldData.ProgramName = row("ProgramName").ToString().ToUpper
 
                             m_Data.LotNo = row("LotNo").ToString().ToUpper
                             m_Data.PackageName = row("PackageName").ToString().ToUpper
@@ -270,6 +255,9 @@ Public Class SetupMain
                         Else
                             'first time of MC
 
+                            m_OldData.DeviceName = ""
+                            m_OldData.ProgramName = ""
+
                             m_Data.DeviceName = ""
                             m_Data.TestFlow = ""
                             m_Data.TesterType = ""
@@ -288,6 +276,7 @@ Public Class SetupMain
                     SetStatusColor(TextBoxSetupStatus.Text)
 
                     Session(SESSION_KEY_DATA) = m_Data
+                    Session(SESSION_KEY_OLD_DATA) = m_OldData
 
                 End If
             End Using

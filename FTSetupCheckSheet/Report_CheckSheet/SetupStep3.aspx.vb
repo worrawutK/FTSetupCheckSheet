@@ -3,7 +3,7 @@
 Public Class SetupStep3
     Inherits System.Web.UI.Page
 
-    Protected Sub Abox1TextBox_TextChanged(sender As Object, e As EventArgs) Handles TestBoxATextBox.TextChanged
+    Protected Sub AboxTextBox_TextChanged(sender As Object, e As EventArgs) Handles TestBoxATextBox.TextChanged
 
         TestBoxBTextBox.Focus()
 
@@ -29,8 +29,9 @@ Public Class SetupStep3
         End If
     End Sub
 
-    Protected Sub Bbox2TextBox_TextChanged(sender As Object, e As EventArgs) Handles TestBoxBTextBox.TextChanged
-        AdaptorATextBox.Focus()
+    Protected Sub BboxTextBox_TextChanged(sender As Object, e As EventArgs) Handles TestBoxBTextBox.TextChanged
+
+        TestBoxCTextBox.Focus()
 
         If Not String.IsNullOrEmpty(TestBoxBTextBox.Text) Then
 
@@ -48,6 +49,60 @@ Public Class SetupStep3
                 End If
 
                 TestBoxBTextBox.Text = m_Data.TestBoxB
+
+                Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
+
+            End Using
+        End If
+
+    End Sub
+
+    Protected Sub CboxTextBox_TextChanged(sender As Object, e As EventArgs) Handles TestBoxCTextBox.TextChanged
+
+        TestBoxDTextBox.Focus()
+
+        If Not String.IsNullOrEmpty(TestBoxCTextBox.Text) Then
+
+            Dim qrName As String = TestBoxCTextBox.Text.ToUpper
+            m_Data.TestBoxCQRcode = TestBoxCTextBox.Text
+
+            Using dt As DataTable = DBAccess.GetEquipmentByQRName(qrName, EQUIPMENT_TYPE_ID_BOX, EQUIPMENT_TYPE_ID_BOARD)
+                If dt.Rows.Count = 1 Then
+                    Dim row As DataRow = dt.Rows(0)
+                    m_Data.TestBoxC = row("SubType").ToString().ToUpper
+                    m_Data.ChannelCFTB = row("Name").ToString().ToUpper
+                Else
+                    m_Data.TestBoxC = ""
+                    m_Data.ChannelCFTB = ""
+                End If
+
+                TestBoxCTextBox.Text = m_Data.TestBoxC
+                Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
+
+            End Using
+        End If
+    End Sub
+
+    Protected Sub DboxTextBox_TextChanged(sender As Object, e As EventArgs) Handles TestBoxDTextBox.TextChanged
+
+        AdaptorATextBox.Focus()
+
+        If Not String.IsNullOrEmpty(TestBoxDTextBox.Text) Then
+
+            Dim qrName As String = TestBoxDTextBox.Text.ToUpper
+            m_Data.TestBoxDQRcode = TestBoxDTextBox.Text
+
+            Using dt As DataTable = DBAccess.GetEquipmentByQRName(qrName, EQUIPMENT_TYPE_ID_BOX, EQUIPMENT_TYPE_ID_BOARD)
+                If dt.Rows.Count = 1 Then
+                    Dim row As DataRow = dt.Rows(0)
+                    m_Data.TestBoxD = row("SubType").ToString().ToUpper
+                    m_Data.ChannelDFTB = row("Name").ToString().ToUpper
+                Else
+                    m_Data.TestBoxD = ""
+                    m_Data.ChannelDFTB = ""
+                End If
+
+                TestBoxDTextBox.Text = m_Data.TestBoxD
 
                 Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
 

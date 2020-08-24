@@ -7,24 +7,35 @@
     </div>
 <div class="container"> 
    <div class="panel-group"> 
-     <div class="panel panel-danger" id="panelError" runat="server" style="display:none">
-       <div class="panel-heading">ERROR !!</div>
-         <asp:Label ID="ErrorMessageLabel" runat="server" Text="THERE IS ERROR MESSAGE !!!!" CssClass="form-control" ForeColor="Red" Font-Size="Large"></asp:Label>
-     </div> 
-     <div class="panel panel-info">
-      <div class="panel-heading">(1) TESTER NO  (ﾃｽﾀｰ№) :  A channel </div>
-      <asp:TextBox ID="ATesternoTextBox" runat="server" CssClass="form-control" Height="30px" AutoPostBack="True"></asp:TextBox>
-     </div>
+        <div class="panel panel-danger" id="panelError" runat="server" style="display:none">
+            <div class="panel-heading">ERROR !!</div>
+            <asp:Label ID="ErrorMessageLabel" runat="server" Text="THERE IS ERROR MESSAGE !!!!" CssClass="form-control" ForeColor="Red" Font-Size="Large"></asp:Label>
+        </div> 
 
-     <div class="panel panel-info">
-       <div class="panel-heading">(2) TESTER NO  (ﾃｽﾀｰ№) : B channel </div>
-       <asp:TextBox ID="BTestnoTextBox" runat="server" CssClass="form-control" Height="30px" AutoPostBack="True"></asp:TextBox>
-     </div>
+        <div class="panel panel-info">
+            <div class="panel-heading">(2.1) TESTER NO  (ﾃｽﾀｰ№) : A channel </div>
+            <asp:TextBox ID="ATesternoTextBox" runat="server" CssClass="form-control" Height="30px" AutoPostBack="True"></asp:TextBox>
+        </div>
+
+        <div class="panel panel-info">
+            <div class="panel-heading">(2.2) TESTER NO  (ﾃｽﾀｰ№) : B channel </div>
+            <asp:TextBox ID="BTesternoTextBox" runat="server" CssClass="form-control" Height="30px" AutoPostBack="True"></asp:TextBox>
+        </div>
+
+        <div class="panel panel-info">
+            <div class="panel-heading">(2.3) TESTER NO  (ﾃｽﾀｰ№) : C channel </div>
+            <asp:TextBox ID="CTesternoTextBox" runat="server" CssClass="form-control" Height="30px" AutoPostBack="True"></asp:TextBox>
+        </div>
+
+        <div class="panel panel-info">
+            <div class="panel-heading">(2.4) TESTER NO  (ﾃｽﾀｰ№) : D channel </div>
+            <asp:TextBox ID="DTesternoTextBox" runat="server" CssClass="form-control" Height="30px" AutoPostBack="True"></asp:TextBox>
+        </div>
      
-    <div class="panel">
-        <asp:Button ID="ButtonPrevious" CssClass="btn btn-default pull-left " runat="server" Text="Previous" />
-        <asp:Button ID="ButtonNext" CssClass="btn btn-default pull-right" runat="server" Text="Next" />
-    </div><br />
+        <div class="panel">
+            <asp:Button ID="ButtonPrevious" CssClass="btn btn-default pull-left " runat="server" Text="Previous" />
+            <asp:Button ID="ButtonNext" CssClass="btn btn-default pull-right" runat="server" Text="Next" />
+        </div><br />
   </div>
  </div>
 </asp:Content>

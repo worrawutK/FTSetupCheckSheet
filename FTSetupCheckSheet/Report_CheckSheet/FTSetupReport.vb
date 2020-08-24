@@ -190,6 +190,46 @@ Public Class FTSetupReport
     End Property
     Private m_TesterNoBQRcode As String = ""
 
+    Public Property TesterNoC() As String
+        Get
+            Return m_TesterNoC
+        End Get
+        Set
+            m_TesterNoC = Value
+        End Set
+    End Property
+    Private m_TesterNoC As String = ""
+
+    Public Property TesterNoCQRcode() As String
+        Get
+            Return m_TesterNoCQRcode
+        End Get
+        Set
+            m_TesterNoCQRcode = Value
+        End Set
+    End Property
+    Private m_TesterNoCQRcode As String = ""
+
+    Public Property TesterNoD() As String
+        Get
+            Return m_TesterNoD
+        End Get
+        Set
+            m_TesterNoD = Value
+        End Set
+    End Property
+    Private m_TesterNoD As String = ""
+
+    Public Property TesterNoDQRcode() As String
+        Get
+            Return m_TesterNoDQRcode
+        End Get
+        Set
+            m_TesterNoDQRcode = Value
+        End Set
+    End Property
+    Private m_TesterNoDQRcode As String = ""
+
     Public Property ChannelAFTB() As String
         Get
             Return m_ChannelAFTB
@@ -230,6 +270,86 @@ Public Class FTSetupReport
     End Property
     Private m_ChannelBFTBQRcode As String = ""
 
+    Public Property ChannelCFTB() As String
+        Get
+            Return m_ChannelCFTB
+        End Get
+        Set
+            m_ChannelCFTB = Value
+        End Set
+    End Property
+    Private m_ChannelCFTB As String = ""
+
+    Public Property ChanneCFTBQRcode() As String
+        Get
+            Return m_ChannelCFTBQRcode
+        End Get
+        Set
+            m_ChannelCFTBQRcode = Value
+        End Set
+    End Property
+    Private m_ChannelCFTBQRcode As String = ""
+
+    Public Property ChannelDFTB() As String
+        Get
+            Return m_ChannelDFTB
+        End Get
+        Set
+            m_ChannelDFTB = Value
+        End Set
+    End Property
+    Private m_ChannelDFTB As String = ""
+
+    Public Property ChannelDFTBQRcode() As String
+        Get
+            Return m_ChannelDFTBQRcode
+        End Get
+        Set
+            m_ChannelDFTBQRcode = Value
+        End Set
+    End Property
+    Private m_ChannelDFTBQRcode As String = ""
+
+    Public Property ChannelEFTBQRcode() As String
+        Get
+            Return m_ChannelEFTBQRcode
+        End Get
+        Set
+            m_ChannelEFTBQRcode = Value
+        End Set
+    End Property
+    Private m_ChannelEFTBQRcode As String = ""
+
+    Public Property ChannelFFTBQRcode() As String
+        Get
+            Return m_ChannelFFTBQRcode
+        End Get
+        Set
+            m_ChannelFFTBQRcode = Value
+        End Set
+    End Property
+    Private m_ChannelFFTBQRcode As String = ""
+
+    Public Property ChannelGFTBQRcode() As String
+        Get
+            Return m_ChannelGFTBQRcode
+        End Get
+        Set
+            m_ChannelGFTBQRcode = Value
+        End Set
+    End Property
+    Private m_ChannelGFTBQRcode As String = ""
+
+    Public Property ChannelHFTBQRcode() As String
+        Get
+            Return m_ChannelHFTBQRcode
+        End Get
+        Set
+            m_ChannelHFTBQRcode = Value
+        End Set
+    End Property
+    Private m_ChannelHFTBQRcode As String = ""
+
     Public Property TestBoxA() As String
         Get
             Return m_TestBoxA
@@ -269,6 +389,126 @@ Public Class FTSetupReport
         End Set
     End Property
     Private m_TestBoxBQRcode As String = ""
+
+    Public Property TestBoxC() As String
+        Get
+            Return m_TestBoxC
+        End Get
+        Set
+            m_TestBoxC = Value
+        End Set
+    End Property
+    Private m_TestBoxC As String = ""
+
+    Public Property TestBoxCQRcode() As String
+        Get
+            Return m_TestBoxCQRcode
+        End Get
+        Set
+            m_TestBoxCQRcode = Value
+        End Set
+    End Property
+    Private m_TestBoxCQRcode As String = ""
+
+    Public Property TestBoxD() As String
+        Get
+            Return m_TestBoxD
+        End Get
+        Set
+            m_TestBoxD = Value
+        End Set
+    End Property
+    Private m_TestBoxD As String = ""
+
+    Public Property TestBoxDQRcode() As String
+        Get
+            Return m_TestBoxDQRcode
+        End Get
+        Set
+            m_TestBoxDQRcode = Value
+        End Set
+    End Property
+    Private m_TestBoxDQRcode As String = ""
+
+    Public Property TestBoxE() As String
+        Get
+            Return m_TestBoxE
+        End Get
+        Set
+            m_TestBoxE = Value
+        End Set
+    End Property
+    Private m_TestBoxE As String = ""
+
+    Public Property TestBoxEQRcode() As String
+        Get
+            Return m_TestBoxEQRcode
+        End Get
+        Set
+            m_TestBoxEQRcode = Value
+        End Set
+    End Property
+    Private m_TestBoxEQRcode As String = ""
+
+    Public Property TestBoxF() As String
+        Get
+            Return m_TestBoxF
+        End Get
+        Set
+            m_TestBoxF = Value
+        End Set
+    End Property
+    Private m_TestBoxF As String = ""
+
+    Public Property TestBoxFQRcode() As String
+        Get
+            Return m_TestBoxFQRcode
+        End Get
+        Set
+            m_TestBoxFQRcode = Value
+        End Set
+    End Property
+    Private m_TestBoxFQRcode As String = ""
+
+    Public Property TestBoxG() As String
+        Get
+            Return m_TestBoxG
+        End Get
+        Set
+            m_TestBoxG = Value
+        End Set
+    End Property
+    Private m_TestBoxG As String = ""
+
+    Public Property TestBoxGQRcode() As String
+        Get
+            Return m_TestBoxGQRcode
+        End Get
+        Set
+            m_TestBoxGQRcode = Value
+        End Set
+    End Property
+    Private m_TestBoxGQRcode As String = ""
+
+    Public Property TestBoxH() As String
+        Get
+            Return m_TestBoxH
+        End Get
+        Set
+            m_TestBoxH = Value
+        End Set
+    End Property
+    Private m_TestBoxH As String = ""
+
+    Public Property TestBoxHQRcode() As String
+        Get
+            Return m_TestBoxHQRcode
+        End Get
+        Set
+            m_TestBoxHQRcode = Value
+        End Set
+    End Property
+    Private m_TestBoxHQRcode As String = ""
 
     Public Property AdaptorA() As String
         Get
@@ -1061,6 +1301,29 @@ Public Class FTSetupReport
         End Set
     End Property
     Private m_StatusShonoOP As String = ""
+
+End Class
+
+Public Class FTSetupReportHistory
+    Public Property DeviceName() As String
+        Get
+            Return m_DeviceName
+        End Get
+        Set
+            m_DeviceName = Value
+        End Set
+    End Property
+    Private m_DeviceName As String = ""
+
+    Public Property ProgramName() As String
+        Get
+            Return m_ProgramName
+        End Get
+        Set
+            m_ProgramName = Value
+        End Set
+    End Property
+    Private m_ProgramName As String = ""
 
 End Class
 

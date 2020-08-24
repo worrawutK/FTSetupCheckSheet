@@ -12,7 +12,7 @@ Option Explicit On
 
 
 Partial Public Class SetupStep2
-    
+
     '''<summary>
     '''panelError control.
     '''</summary>
@@ -21,7 +21,7 @@ Partial Public Class SetupStep2
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents panelError As Global.System.Web.UI.HtmlControls.HtmlGenericControl
-    
+
     '''<summary>
     '''ErrorMessageLabel control.
     '''</summary>
@@ -30,7 +30,7 @@ Partial Public Class SetupStep2
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents ErrorMessageLabel As Global.System.Web.UI.WebControls.Label
-    
+
     '''<summary>
     '''ATesternoTextBox control.
     '''</summary>
@@ -39,16 +39,34 @@ Partial Public Class SetupStep2
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents ATesternoTextBox As Global.System.Web.UI.WebControls.TextBox
-    
+
     '''<summary>
-    '''BTestnoTextBox control.
+    '''BTesternoTextBox control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents BTestnoTextBox As Global.System.Web.UI.WebControls.TextBox
-    
+    Protected WithEvents BTesternoTextBox As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''CTesternoTextBox control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents CTesternoTextBox As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''DTesternoTextBox control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents DTesternoTextBox As Global.System.Web.UI.WebControls.TextBox
+
     '''<summary>
     '''ButtonPrevious control.
     '''</summary>
@@ -57,7 +75,7 @@ Partial Public Class SetupStep2
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents ButtonPrevious As Global.System.Web.UI.WebControls.Button
-    
+
     '''<summary>
     '''ButtonNext control.
     '''</summary>

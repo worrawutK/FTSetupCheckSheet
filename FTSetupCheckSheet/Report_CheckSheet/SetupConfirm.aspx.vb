@@ -12,15 +12,19 @@ Public Class SetupConfirm
     Inherits System.Web.UI.Page
 
     Private m_Data As FTSetupReport
+    Private m_OldData As FTSetupReportHistory
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
 
         Dim tmp As Object = Session(SESSION_KEY_DATA)
+        Dim tmp2 As Object = Session(SESSION_KEY_OLD_DATA)
+
         If tmp Is Nothing Then
             Response.Redirect("~/SetupMain.aspx")
             Exit Sub
         Else
             m_Data = CType(tmp, FTSetupReport)
+            m_OldData = CType(tmp2, FTSetupReportHistory)
         End If
 
         If IsPostBack AndAlso m_Data.SetupStatus = "CONFIRMED" Then
@@ -526,8 +530,22 @@ Public Class SetupConfirm
             fileReaderMC = My.Computer.FileSystem.ReadAllText("\\10.28.33.113\www\FTSetupCheckSheet\_backup\MCNo.txt")
             fileReaderFlow = My.Computer.FileSystem.ReadAllText("\\10.28.33.113\www\FTSetupCheckSheet\_backup\Flow.txt") 'm_Data.TestFlow = AUTO2ASISAMPLE | flowName = AUTO(2)ASISAMPLE
 
-            If fileReaderMC.Contains(m_Data.MCNo) And Not fileReaderFlow.Contains(m_Data.TestFlow) Then
-                SetupStatus = SETUP_STATUS_GOODNGTEST
+            'M/C No in control, Not E Lot, Not AUTO2ASISAMPLE Flow
+            If fileReaderMC.Contains(m_Data.MCNo) And Not m_Data.LotNo.Contains("E") And Not fileReaderFlow.Contains(m_Data.TestFlow) Then
+
+                'Split Device from Rank ex. BD450M2FP3-CE2 to (0) = BD450M2FP3, (1) = CE2
+                Dim splitNewDeviceName() As String
+                splitNewDeviceName = m_Data.DeviceName.Split(CType("-", Char()))
+
+                Dim splitOldDeviceName() As String
+                splitOldDeviceName = m_OldData.DeviceName.Split(CType("-", Char()))
+
+                'ProgramName CHANGED or (ProgramName NOT CHANGED but DeviceName CHANGED)
+                If (m_Data.ProgramName <> m_OldData.ProgramName) Or (m_Data.ProgramName = m_OldData.ProgramName And splitNewDeviceName(0) <> splitOldDeviceName(0)) Then
+                    SetupStatus = SETUP_STATUS_GOODNGTEST
+                Else
+                    SetupStatus = SETUP_STATUS_CONFIRMED
+                End If
             Else
                 SetupStatus = SETUP_STATUS_CONFIRMED
             End If
@@ -602,7 +620,7 @@ Public Class SetupConfirm
 
                         ElseIf (isSpecialFlow = 0 And qualityState = "Normal") Then
 
-                            If (wipState = "Already Input") Then
+                            If (wipState = "WIP" Or wipState = "Already Input") Then
 
                                 If (processState = "Wait" Or processState = "Abnormal WIP") Then
 
@@ -620,6 +638,8 @@ Public Class SetupConfirm
                                         For index = transLotsFlowsTbl.Rows.Count - 1 To 0 Step -1
                                             If transLotsFlowsTbl.Rows(index)("job_name").ToString() = flowName Then
                                                 If index = 0 Then
+                                                    'stepNo = 1
+                                                    'Exit For
                                                     ShowErrorMessage(">>> No Flow Before '" + flowName.Trim() + " Please contact SYSTEM <<< <br/>")
                                                     Exit Sub
                                                 End If
@@ -652,15 +672,15 @@ Public Class SetupConfirm
                                     End If
 
                                 Else
-                                    ShowErrorMessage(">>> processState is '" + processState.Trim() + " Please contact SYSTEM <<< <br/>")
+                                    ShowErrorMessage(">>> processState is '" + processState.Trim() + "' Please contact SYSTEM <<< <br/>")
                                     Exit Sub
                                 End If
                             Else
-                                ShowErrorMessage(">>> wipState is '" + wipState.Trim() + " Please contact SYSTEM <<< <br/>")
+                                ShowErrorMessage(">>> wipState is '" + wipState.Trim() + "' Please contact SYSTEM <<< <br/>")
                                 Exit Sub
                             End If
                         Else
-                            ShowErrorMessage(">>> isSpecialFlow is '" + isSpecialFlow.ToString() + " And qualityState Is '" + qualityState.Trim() + "Please contact SYSTEM <<< <br/>")
+                            ShowErrorMessage(">>> isSpecialFlow is '" + isSpecialFlow.ToString() + "' And qualityState Is '" + qualityState.Trim() + "' Please contact SYSTEM <<< <br/>")
                             Exit Sub
                         End If
                     Else

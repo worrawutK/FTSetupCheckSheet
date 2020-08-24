@@ -8,13 +8,43 @@
 <div class="container"> 
   <div class="panel-group"> 
     <div class="panel panel-danger">
-       <div class="panel-heading">(4) BOX OR BOARD :  A channel </div>
+       <div class="panel-heading">(3.1) BOX OR BOARD :  A channel </div>
        <asp:TextBox ID="TestBoxATextBox" runat="server" CssClass="form-control" Height="30px" AutoPostBack="True"></asp:TextBox>
     </div>
 
     <div class="panel panel-danger">
-       <div class="panel-heading">(5) BOX OR BOARD :  B channel </div>
+       <div class="panel-heading">(3.2) BOX OR BOARD :  B channel </div>
        <asp:TextBox ID="TestBoxBTextBox" runat="server" CssClass="form-control" Height="30px" AutoPostBack="True"></asp:TextBox>
+    </div>
+
+    <div class="panel panel-danger">
+       <div class="panel-heading">(3.3) BOX OR BOARD :  C channel </div>
+       <asp:TextBox ID="TestBoxCTextBox" runat="server" CssClass="form-control" Height="30px" AutoPostBack="True"></asp:TextBox>
+    </div>
+
+    <div class="panel panel-danger">
+       <div class="panel-heading">(3.4) BOX OR BOARD :  D channel </div>
+       <asp:TextBox ID="TestBoxDTextBox" runat="server" CssClass="form-control" Height="30px" AutoPostBack="True"></asp:TextBox>
+    </div>
+
+    <div class="panel panel-danger">
+       <div class="panel-heading">(3.5) BOX OR BOARD :  E channel </div>
+       <asp:TextBox ID="TestBoxETextBox" runat="server" CssClass="form-control" Height="30px" AutoPostBack="True"></asp:TextBox>
+    </div>
+
+    <div class="panel panel-danger">
+       <div class="panel-heading">(3.6) BOX OR BOARD :  F channel </div>
+       <asp:TextBox ID="TestBoxFTextBox" runat="server" CssClass="form-control" Height="30px" AutoPostBack="True"></asp:TextBox>
+    </div>
+
+    <div class="panel panel-danger">
+       <div class="panel-heading">(3.7) BOX OR BOARD :  G channel </div>
+       <asp:TextBox ID="TestBoxGTextBox" runat="server" CssClass="form-control" Height="30px" AutoPostBack="True"></asp:TextBox>
+    </div>
+
+    <div class="panel panel-danger">
+       <div class="panel-heading">(3.8) BOX OR BOARD :  H channel </div>
+       <asp:TextBox ID="TestBoxHTextBox" runat="server" CssClass="form-control" Height="30px" AutoPostBack="True"></asp:TextBox>
     </div>
 
      <div class="panel panel-danger">

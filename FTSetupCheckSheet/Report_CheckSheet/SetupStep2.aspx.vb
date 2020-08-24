@@ -25,14 +25,16 @@ Public Class SetupStep2
 
         If Not IsPostBack Then
             ATesternoTextBox.Text = m_Data.TesterNoA
-            BTestnoTextBox.Text = m_Data.TesterNoB
+            BTesternoTextBox.Text = m_Data.TesterNoB
+            CTesternoTextBox.Text = m_Data.TesterNoC
+            DTesternoTextBox.Text = m_Data.TesterNoD
         End If
 
         ATesternoTextBox.Focus()
     End Sub
 
     Protected Sub ATesternoTextBox_TextChanged(sender As Object, e As EventArgs) Handles ATesternoTextBox.TextChanged
-        BTestnoTextBox.Focus()
+        BTesternoTextBox.Focus()
 
         If Not String.IsNullOrEmpty(ATesternoTextBox.Text) Then
 
@@ -57,13 +59,13 @@ Public Class SetupStep2
 
     End Sub
 
-    Protected Sub BTestnoTextBox_TextChanged(sender As Object, e As EventArgs) Handles BTestnoTextBox.TextChanged
-        'HandlerNoTextBox.Focus()
+    Protected Sub BTestnoTextBox_TextChanged(sender As Object, e As EventArgs) Handles BTesternoTextBox.TextChanged
+        CTesternoTextBox.Focus()
 
-        If Not String.IsNullOrEmpty(BTestnoTextBox.Text) Then
+        If Not String.IsNullOrEmpty(BTesternoTextBox.Text) Then
 
-            Dim qrName As String = BTestnoTextBox.Text.ToUpper
-            m_Data.TesterNoBQRcode = BTestnoTextBox.Text
+            Dim qrName As String = BTesternoTextBox.Text.ToUpper
+            m_Data.TesterNoBQRcode = BTesternoTextBox.Text
 
             Using dt As DataTable = DBAccess.GetEquipmentByQRName(qrName, EQUIPMENT_TYPE_ID_TESTER)
 
@@ -74,7 +76,59 @@ Public Class SetupStep2
                     m_Data.TesterNoB = ""
                 End If
 
-                BTestnoTextBox.Text = m_Data.TesterNoB
+                BTesternoTextBox.Text = m_Data.TesterNoB
+
+                Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
+
+            End Using
+
+        End If
+    End Sub
+
+    Protected Sub CTestnoTextBox_TextChanged(sender As Object, e As EventArgs) Handles CTesternoTextBox.TextChanged
+        DTesternoTextBox.Focus()
+
+        If Not String.IsNullOrEmpty(CTesternoTextBox.Text) Then
+
+            Dim qrName As String = CTesternoTextBox.Text.ToUpper
+            m_Data.TesterNoCQRcode = CTesternoTextBox.Text
+
+            Using dt As DataTable = DBAccess.GetEquipmentByQRName(qrName, EQUIPMENT_TYPE_ID_TESTER)
+
+                If dt.Rows.Count = 1 Then
+                    Dim row As DataRow = dt.Rows(0)
+                    m_Data.TesterNoC = row("Name").ToString()
+                Else
+                    m_Data.TesterNoC = ""
+                End If
+
+                CTesternoTextBox.Text = m_Data.TesterNoC
+
+                Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
+
+            End Using
+
+        End If
+    End Sub
+
+    Protected Sub DTestnoTextBox_TextChanged(sender As Object, e As EventArgs) Handles DTesternoTextBox.TextChanged
+        'DTesternoTextBox.Focus()
+
+        If Not String.IsNullOrEmpty(DTesternoTextBox.Text) Then
+
+            Dim qrName As String = DTesternoTextBox.Text.ToUpper
+            m_Data.TesterNoDQRcode = DTesternoTextBox.Text
+
+            Using dt As DataTable = DBAccess.GetEquipmentByQRName(qrName, EQUIPMENT_TYPE_ID_TESTER)
+
+                If dt.Rows.Count = 1 Then
+                    Dim row As DataRow = dt.Rows(0)
+                    m_Data.TesterNoD = row("Name").ToString()
+                Else
+                    m_Data.TesterNoD = ""
+                End If
+
+                DTesternoTextBox.Text = m_Data.TesterNoD
 
                 Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
 
@@ -85,7 +139,9 @@ Public Class SetupStep2
 
     Private Sub UpdateSessionData()
         m_Data.TesterNoA = ATesternoTextBox.Text
-        m_Data.TesterNoB = BTestnoTextBox.Text
+        m_Data.TesterNoB = BTesternoTextBox.Text
+        m_Data.TesterNoC = CTesternoTextBox.Text
+        m_Data.TesterNoD = DTesternoTextBox.Text
         Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
     End Sub
 
