@@ -151,6 +151,7 @@ Public Class SetupMain
 
                             m_OldData.DeviceName = row("DeviceName").ToString().ToUpper
                             m_OldData.ProgramName = row("ProgramName").ToString().ToUpper
+                            m_OldData.SetupStatus = row("SetupStatus").ToString().ToUpper
 
                             m_Data.LotNo = row("LotNo").ToString().ToUpper
                             m_Data.PackageName = row("PackageName").ToString().ToUpper

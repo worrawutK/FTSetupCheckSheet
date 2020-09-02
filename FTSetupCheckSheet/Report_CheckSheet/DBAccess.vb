@@ -510,4 +510,29 @@ Public Class DBAccess
         Return row
 
     End Function
+
+    Public Shared Function SetNextLot(mcNo As String, lotNo As String) As Integer
+        'After SaveBtn is pressed (From SetupStep7CheckSheet9)
+        Dim row As Integer
+
+        Using connection As New SqlConnection(My.Settings.APCsUserSPConnectionString)
+            connection.Open()
+
+            Using cmd As New SqlCommand
+                cmd.Connection = connection
+                cmd.CommandType = CommandType.StoredProcedure
+                cmd.CommandText = "[cellcon].[sp_set_nextlot]"
+
+                cmd.Parameters.Add("@mc_name", SqlDbType.VarChar, 30).Value = mcNo
+                cmd.Parameters.Add("@lot_no", SqlDbType.VarChar, 10).Value = lotNo
+
+                row = cmd.ExecuteNonQuery()
+
+                connection.Close()
+            End Using
+        End Using
+
+        Return row
+
+    End Function
 End Class

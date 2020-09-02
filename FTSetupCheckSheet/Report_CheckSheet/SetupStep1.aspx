@@ -5,11 +5,6 @@
         <h1 class="text-center login-title" style="font-family: 'Waffle Regular'; font-weight: bold;">SET-UP  CHECK  SHEET</h1>
         <h2 class="text-center login-title" style="font-family : 'Waffle Regular'; font-weight: bold;" >ｾｯﾄｱｯﾌﾟﾁｪｯｸｼｰﾄ</h2>
      </div>
-
- <%--    <div class="panel panel-success text-center">
-        <div class="panel-heading" style="font-style: inherit; font-weight: bold; color:#ffffff; background-color:lightseagreen"> (2)&nbsp;&nbsp; INPUT QRCODE OIS</div>
-        <asp:TextBox ID="QRcodeTextBox" runat="server" CssClass="form-control" AutoPostBack="True"></asp:TextBox>
-     </div><br />--%>
     
 <div class="container">  
      <div class="panel-group">

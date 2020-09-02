@@ -1325,6 +1325,16 @@ Public Class FTSetupReportHistory
     End Property
     Private m_ProgramName As String = ""
 
+    Public Property SetupStatus() As String
+        Get
+            Return m_SetupStatus
+        End Get
+        Set
+            m_SetupStatus = Value
+        End Set
+    End Property
+    Private m_SetupStatus As String = ""
+
 End Class
 
 '=======================================================
