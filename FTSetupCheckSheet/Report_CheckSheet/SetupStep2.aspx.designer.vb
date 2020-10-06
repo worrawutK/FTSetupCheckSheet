@@ -32,40 +32,40 @@ Partial Public Class SetupStep2
     Protected WithEvents ErrorMessageLabel As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''ATesternoTextBox control.
+    '''TesternoATextBox control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents ATesternoTextBox As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents TesternoATextBox As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''BTesternoTextBox control.
+    '''TesternoBTextBox control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents BTesternoTextBox As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents TesternoBTextBox As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''CTesternoTextBox control.
+    '''TesternoCTextBox control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents CTesternoTextBox As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents TesternoCTextBox As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''DTesternoTextBox control.
+    '''TesternoDTextBox control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents DTesternoTextBox As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents TesternoDTextBox As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''ButtonPrevious control.

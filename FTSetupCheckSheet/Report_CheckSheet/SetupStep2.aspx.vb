@@ -24,45 +24,117 @@ Public Class SetupStep2
         End If
 
         If Not IsPostBack Then
-            ATesternoTextBox.Text = m_Data.TesterNoA
-            BTesternoTextBox.Text = m_Data.TesterNoB
-            CTesternoTextBox.Text = m_Data.TesterNoC
-            DTesternoTextBox.Text = m_Data.TesterNoD
+            TesternoATextBox.Text = m_Data.TesterNoA
+            TesternoBTextBox.Text = m_Data.TesterNoB
+            TesternoCTextBox.Text = m_Data.TesterNoC
+            TesternoDTextBox.Text = m_Data.TesterNoD
         End If
 
-        ATesternoTextBox.Focus()
+        TesternoATextBox.Focus()
     End Sub
 
-    Private Sub UpdateSessionData()
-        m_Data.TesterNoA = ATesternoTextBox.Text
-        m_Data.TesterNoB = BTesternoTextBox.Text
-        m_Data.TesterNoC = CTesternoTextBox.Text
-        m_Data.TesterNoD = DTesternoTextBox.Text
-        Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
-    End Sub
+    Private Function UpdateSessionData() As Boolean
+
+        Dim ret As Boolean = True
+        Dim lstTester As New List(Of String)
+
+        If TesternoATextBox.Text = "" Then 'Data = "" -> Clear Data
+
+            m_Data.TesterNoA = ""
+            m_Data.TesterNoAQRcode = ""
+
+        ElseIf m_Data.TesterNoA <> TesternoATextBox.Text Then 'Not Same Data
+
+            TesternoATextBox.BackColor = Drawing.ColorTranslator.FromHtml("#FF9999")
+            lstTester.Add(" - Tester No : A")
+            ret = False
+
+        End If 'Same Data
+
+        If TesternoBTextBox.Text = "" Then 'Data = "" -> Clear Data
+
+            m_Data.TesterNoB = ""
+            m_Data.TesterNoBQRcode = ""
+
+        ElseIf m_Data.TesterNoB <> TesternoBTextBox.Text Then 'Not Same Data
+
+            TesternoBTextBox.BackColor = Drawing.ColorTranslator.FromHtml("#FF9999")
+            lstTester.Add(" - Tester No : B")
+            ret = False
+
+        End If 'Same Data
+
+        If TesternoCTextBox.Text = "" Then 'Data = "" -> Clear Data
+
+            m_Data.TesterNoC = ""
+            m_Data.TesterNoCQRcode = ""
+
+        ElseIf m_Data.TesterNoC <> TesternoCTextBox.Text Then 'Not Same Data
+
+            TesternoCTextBox.BackColor = Drawing.ColorTranslator.FromHtml("#FF9999")
+            lstTester.Add(" - Tester No : C")
+            ret = False
+
+        End If 'Same Data
+
+        If TesternoDTextBox.Text = "" Then 'Data = "" -> Clear Data
+
+            m_Data.TesterNoD = ""
+            m_Data.TesterNoDQRcode = ""
+
+        ElseIf m_Data.TesterNoD <> TesternoDTextBox.Text Then 'Not Same Data
+
+            TesternoDTextBox.BackColor = Drawing.ColorTranslator.FromHtml("#FF9999")
+            lstTester.Add(" - Tester No : D")
+            ret = False
+
+        End If 'Same Data
+
+        If ret = True Then
+            Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
+        Else
+            Dim a As String = ">>> ค่าไม่ถูกต้อง กรุณาแสกนใหม่ <<< <br/>"
+
+            For Each str As String In lstTester
+                a = a & str & "<br/>"
+            Next
+
+            ShowErrorMessage(a)
+        End If
+
+        Return ret
+    End Function
 
     Private Sub ButtonNext_Click(sender As Object, e As EventArgs) Handles ButtonNext.Click
-        If Not TesterNoIsDuplicated() Then
-            UpdateSessionData()
+        If UpdateSessionData() Then
             Response.Redirect("~/SetupStep3.aspx")
         End If
+
+        'If Not TesterNoIsDuplicated() Then
+        '    UpdateSessionData()
+        '    Response.Redirect("~/SetupStep3.aspx")
+        'End If
     End Sub
 
     Private Sub ButtonPrevious_Click(sender As Object, e As EventArgs) Handles ButtonPrevious.Click
-        If Not TesterNoIsDuplicated() Then
-            UpdateSessionData()
+        If UpdateSessionData() Then
             Response.Redirect("~/SetupStep1.aspx")
         End If
 
+        'If Not TesterNoIsDuplicated() Then
+        '    UpdateSessionData()
+        '    Response.Redirect("~/SetupStep1.aspx")
+        'End If
     End Sub
 
-    Protected Sub ATesternoTextBox_TextChanged(sender As Object, e As EventArgs) Handles ATesternoTextBox.TextChanged
-        BTesternoTextBox.Focus()
+    Protected Sub ATesternoTextBox_TextChanged(sender As Object, e As EventArgs) Handles TesternoATextBox.TextChanged
 
-        If Not String.IsNullOrEmpty(ATesternoTextBox.Text) Then
+        TesternoBTextBox.Focus()
 
-            Dim qrName As String = ATesternoTextBox.Text.ToUpper
-            m_Data.TesterNoAQRcode = ATesternoTextBox.Text
+        If Not String.IsNullOrEmpty(TesternoATextBox.Text) Then
+
+            Dim qrName As String = TesternoATextBox.Text.ToUpper
+            m_Data.TesterNoAQRcode = TesternoATextBox.Text
 
             Using dt As DataTable = DBAccess.GetEquipmentByQRName(qrName, EQUIPMENT_TYPE_ID_TESTER)
 
@@ -71,9 +143,10 @@ Public Class SetupStep2
                     m_Data.TesterNoA = row("Name").ToString()
                 Else
                     m_Data.TesterNoA = ""
+                    m_Data.TesterNoAQRcode = ""
                 End If
 
-                ATesternoTextBox.Text = m_Data.TesterNoA
+                TesternoATextBox.Text = m_Data.TesterNoA
 
                 Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
 
@@ -82,13 +155,14 @@ Public Class SetupStep2
 
     End Sub
 
-    Protected Sub BTestnoTextBox_TextChanged(sender As Object, e As EventArgs) Handles BTesternoTextBox.TextChanged
-        CTesternoTextBox.Focus()
+    Protected Sub BTestnoTextBox_TextChanged(sender As Object, e As EventArgs) Handles TesternoBTextBox.TextChanged
 
-        If Not String.IsNullOrEmpty(BTesternoTextBox.Text) Then
+        TesternoCTextBox.Focus()
 
-            Dim qrName As String = BTesternoTextBox.Text.ToUpper
-            m_Data.TesterNoBQRcode = BTesternoTextBox.Text
+        If Not String.IsNullOrEmpty(TesternoBTextBox.Text) Then
+
+            Dim qrName As String = TesternoBTextBox.Text.ToUpper
+            m_Data.TesterNoBQRcode = TesternoBTextBox.Text
 
             Using dt As DataTable = DBAccess.GetEquipmentByQRName(qrName, EQUIPMENT_TYPE_ID_TESTER)
 
@@ -97,9 +171,10 @@ Public Class SetupStep2
                     m_Data.TesterNoB = row("Name").ToString()
                 Else
                     m_Data.TesterNoB = ""
+                    m_Data.TesterNoBQRcode = ""
                 End If
 
-                BTesternoTextBox.Text = m_Data.TesterNoB
+                TesternoBTextBox.Text = m_Data.TesterNoB
 
                 Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
 
@@ -108,13 +183,14 @@ Public Class SetupStep2
         End If
     End Sub
 
-    Protected Sub CTestnoTextBox_TextChanged(sender As Object, e As EventArgs) Handles CTesternoTextBox.TextChanged
-        DTesternoTextBox.Focus()
+    Protected Sub CTestnoTextBox_TextChanged(sender As Object, e As EventArgs) Handles TesternoCTextBox.TextChanged
 
-        If Not String.IsNullOrEmpty(CTesternoTextBox.Text) Then
+        TesternoDTextBox.Focus()
 
-            Dim qrName As String = CTesternoTextBox.Text.ToUpper
-            m_Data.TesterNoCQRcode = CTesternoTextBox.Text
+        If Not String.IsNullOrEmpty(TesternoCTextBox.Text) Then
+
+            Dim qrName As String = TesternoCTextBox.Text.ToUpper
+            m_Data.TesterNoCQRcode = TesternoCTextBox.Text
 
             Using dt As DataTable = DBAccess.GetEquipmentByQRName(qrName, EQUIPMENT_TYPE_ID_TESTER)
 
@@ -123,9 +199,10 @@ Public Class SetupStep2
                     m_Data.TesterNoC = row("Name").ToString()
                 Else
                     m_Data.TesterNoC = ""
+                    m_Data.TesterNoCQRcode = ""
                 End If
 
-                CTesternoTextBox.Text = m_Data.TesterNoC
+                TesternoCTextBox.Text = m_Data.TesterNoC
 
                 Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
 
@@ -134,12 +211,12 @@ Public Class SetupStep2
         End If
     End Sub
 
-    Protected Sub DTestnoTextBox_TextChanged(sender As Object, e As EventArgs) Handles DTesternoTextBox.TextChanged
+    Protected Sub DTestnoTextBox_TextChanged(sender As Object, e As EventArgs) Handles TesternoDTextBox.TextChanged
 
-        If Not String.IsNullOrEmpty(DTesternoTextBox.Text) Then
+        If Not String.IsNullOrEmpty(TesternoDTextBox.Text) Then
 
-            Dim qrName As String = DTesternoTextBox.Text.ToUpper
-            m_Data.TesterNoDQRcode = DTesternoTextBox.Text
+            Dim qrName As String = TesternoDTextBox.Text.ToUpper
+            m_Data.TesterNoDQRcode = TesternoDTextBox.Text
 
             Using dt As DataTable = DBAccess.GetEquipmentByQRName(qrName, EQUIPMENT_TYPE_ID_TESTER)
 
@@ -148,9 +225,10 @@ Public Class SetupStep2
                     m_Data.TesterNoD = row("Name").ToString()
                 Else
                     m_Data.TesterNoD = ""
+                    m_Data.TesterNoDQRcode = ""
                 End If
 
-                DTesternoTextBox.Text = m_Data.TesterNoD
+                TesternoDTextBox.Text = m_Data.TesterNoD
 
                 Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
 
@@ -159,17 +237,26 @@ Public Class SetupStep2
         End If
     End Sub
 
-    Private Function TesterNoIsDuplicated() As Boolean
-        'Dim ret As Boolean = False
-        'If m_Data.TesterNoA = m_Data.TesterNoB Then
-        '    ErrorMessageLabel.Text = "Duplicated Tester No .."
-        '    panelError.Style.Item("display") = "block"
-        '    ret = True
-        'Else
-        '    ret = False
-        '    panelError.Style.Item("display") = "none"
-        'End If
-        'Return ret
-    End Function
+    'Private Function TesterNoIsDuplicated() As Boolean
+    '    'Dim ret As Boolean = False
+    '    'If m_Data.TesterNoA = m_Data.TesterNoB Then
+    '    '    ErrorMessageLabel.Text = "Duplicated Tester No .."
+    '    '    panelError.Style.Item("display") = "block"
+    '    '    ret = True
+    '    'Else
+    '    '    ret = False
+    '    '    panelError.Style.Item("display") = "none"
+    '    'End If
+    '    'Return ret
+    'End Function
+
+    Private Sub ShowErrorMessage(errMessage As String)
+        ErrorMessageLabel.Text = errMessage
+        panelError.Style.Item("display") = "block"
+    End Sub
+
+    Private Sub HideErrorMessage()
+        panelError.Style.Item("display") = "none"
+    End Sub
 
 End Class

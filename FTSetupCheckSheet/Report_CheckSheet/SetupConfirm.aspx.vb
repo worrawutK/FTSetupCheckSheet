@@ -524,7 +524,6 @@ Public Class SetupConfirm
 
 #Region "Read Text File & Add Spe GO/NG Sample"
         Try
-
             Dim currentTransLotsTbl As DataTable
 
             Try

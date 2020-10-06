@@ -258,6 +258,7 @@ Public Class SetupMain
 
                             m_OldData.DeviceName = ""
                             m_OldData.ProgramName = ""
+                            m_OldData.SetupStatus = ""
 
                             m_Data.DeviceName = ""
                             m_Data.TestFlow = ""

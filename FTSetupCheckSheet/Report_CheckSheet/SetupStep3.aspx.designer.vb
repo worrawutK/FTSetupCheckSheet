@@ -14,6 +14,24 @@ Option Explicit On
 Partial Public Class SetupStep3
 
     '''<summary>
+    '''panelError control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panelError As Global.System.Web.UI.HtmlControls.HtmlGenericControl
+
+    '''<summary>
+    '''ErrorMessageLabel control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents ErrorMessageLabel As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''TestBoxATextBox control.
     '''</summary>
     '''<remarks>
