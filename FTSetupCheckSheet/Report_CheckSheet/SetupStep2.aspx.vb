@@ -28,9 +28,153 @@ Public Class SetupStep2
             TesternoBTextBox.Text = m_Data.TesterNoB
             TesternoCTextBox.Text = m_Data.TesterNoC
             TesternoDTextBox.Text = m_Data.TesterNoD
+
+            If m_Data.MCNo.StartsWith("FT") Then
+                panelTesternoC.Style.Item("display") = "none"
+                panelTesternoD.Style.Item("display") = "none"
+            End If
+
+            If m_Data.StatusOldEQP Then
+                TesternoATextBox.ReadOnly = True
+                TesternoBTextBox.ReadOnly = True
+                TesternoCTextBox.ReadOnly = True
+                TesternoDTextBox.ReadOnly = True
+            End If
         End If
 
         TesternoATextBox.Focus()
+    End Sub
+
+    Protected Sub ATesternoTextBox_TextChanged(sender As Object, e As EventArgs) Handles TesternoATextBox.TextChanged
+
+        TesternoBTextBox.Focus()
+
+        If Not String.IsNullOrEmpty(TesternoATextBox.Text) Then
+
+            Dim qrName As String = TesternoATextBox.Text.ToUpper
+            m_Data.TesterNoAQRcode = qrName
+
+            Using dt As DataTable = DBAccess.GetEquipmentByQRName(qrName, EQUIPMENT_TYPE_ID_TESTER)
+
+                If dt.Rows.Count = 1 Then
+                    Dim row As DataRow = dt.Rows(0)
+                    m_Data.TesterNoA = row("Name").ToString()
+                Else
+                    m_Data.TesterNoA = ""
+                    m_Data.TesterNoAQRcode = ""
+                End If
+
+                TesternoATextBox.Text = m_Data.TesterNoA
+
+                Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
+
+            End Using
+        End If
+
+    End Sub
+
+    Protected Sub BTestnoTextBox_TextChanged(sender As Object, e As EventArgs) Handles TesternoBTextBox.TextChanged
+
+        TesternoCTextBox.Focus()
+
+        If Not String.IsNullOrEmpty(TesternoBTextBox.Text) Then
+
+            Dim qrName As String = TesternoBTextBox.Text.ToUpper
+            m_Data.TesterNoBQRcode = qrName
+
+            Using dt As DataTable = DBAccess.GetEquipmentByQRName(qrName, EQUIPMENT_TYPE_ID_TESTER)
+
+                If dt.Rows.Count = 1 Then
+                    Dim row As DataRow = dt.Rows(0)
+                    m_Data.TesterNoB = row("Name").ToString()
+                Else
+                    m_Data.TesterNoB = ""
+                    m_Data.TesterNoBQRcode = ""
+                End If
+
+                TesternoBTextBox.Text = m_Data.TesterNoB
+
+                Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
+
+            End Using
+
+        End If
+    End Sub
+
+    Protected Sub CTestnoTextBox_TextChanged(sender As Object, e As EventArgs) Handles TesternoCTextBox.TextChanged
+
+        TesternoDTextBox.Focus()
+
+        If Not String.IsNullOrEmpty(TesternoCTextBox.Text) Then
+
+            Dim qrName As String = TesternoCTextBox.Text.ToUpper
+            m_Data.TesterNoCQRcode = qrName
+
+            Using dt As DataTable = DBAccess.GetEquipmentByQRName(qrName, EQUIPMENT_TYPE_ID_TESTER)
+
+                If dt.Rows.Count = 1 Then
+                    Dim row As DataRow = dt.Rows(0)
+                    m_Data.TesterNoC = row("Name").ToString()
+                Else
+                    m_Data.TesterNoC = ""
+                    m_Data.TesterNoCQRcode = ""
+                End If
+
+                TesternoCTextBox.Text = m_Data.TesterNoC
+
+                Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
+
+            End Using
+
+        End If
+    End Sub
+
+    Protected Sub DTestnoTextBox_TextChanged(sender As Object, e As EventArgs) Handles TesternoDTextBox.TextChanged
+
+        If Not String.IsNullOrEmpty(TesternoDTextBox.Text) Then
+
+            Dim qrName As String = TesternoDTextBox.Text.ToUpper
+            m_Data.TesterNoDQRcode = qrName
+
+            Using dt As DataTable = DBAccess.GetEquipmentByQRName(qrName, EQUIPMENT_TYPE_ID_TESTER)
+
+                If dt.Rows.Count = 1 Then
+                    Dim row As DataRow = dt.Rows(0)
+                    m_Data.TesterNoD = row("Name").ToString()
+                Else
+                    m_Data.TesterNoD = ""
+                    m_Data.TesterNoDQRcode = ""
+                End If
+
+                TesternoDTextBox.Text = m_Data.TesterNoD
+
+                Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
+
+            End Using
+
+        End If
+    End Sub
+
+    Private Sub ButtonNext_Click(sender As Object, e As EventArgs) Handles ButtonNext.Click
+        If UpdateSessionData() Then
+            Response.Redirect("~/SetupStep3.aspx")
+        End If
+
+        'If Not TesterNoIsDuplicated() Then
+        '    UpdateSessionData()
+        '    Response.Redirect("~/SetupStep3.aspx")
+        'End If
+    End Sub
+
+    Private Sub ButtonPrevious_Click(sender As Object, e As EventArgs) Handles ButtonPrevious.Click
+        If UpdateSessionData() Then
+            Response.Redirect("~/SetupStep1.aspx")
+        End If
+
+        'If Not TesterNoIsDuplicated() Then
+        '    UpdateSessionData()
+        '    Response.Redirect("~/SetupStep1.aspx")
+        'End If
     End Sub
 
     Private Function UpdateSessionData() As Boolean
@@ -104,138 +248,6 @@ Public Class SetupStep2
 
         Return ret
     End Function
-
-    Private Sub ButtonNext_Click(sender As Object, e As EventArgs) Handles ButtonNext.Click
-        If UpdateSessionData() Then
-            Response.Redirect("~/SetupStep3.aspx")
-        End If
-
-        'If Not TesterNoIsDuplicated() Then
-        '    UpdateSessionData()
-        '    Response.Redirect("~/SetupStep3.aspx")
-        'End If
-    End Sub
-
-    Private Sub ButtonPrevious_Click(sender As Object, e As EventArgs) Handles ButtonPrevious.Click
-        If UpdateSessionData() Then
-            Response.Redirect("~/SetupStep1.aspx")
-        End If
-
-        'If Not TesterNoIsDuplicated() Then
-        '    UpdateSessionData()
-        '    Response.Redirect("~/SetupStep1.aspx")
-        'End If
-    End Sub
-
-    Protected Sub ATesternoTextBox_TextChanged(sender As Object, e As EventArgs) Handles TesternoATextBox.TextChanged
-
-        TesternoBTextBox.Focus()
-
-        If Not String.IsNullOrEmpty(TesternoATextBox.Text) Then
-
-            Dim qrName As String = TesternoATextBox.Text.ToUpper
-            m_Data.TesterNoAQRcode = TesternoATextBox.Text
-
-            Using dt As DataTable = DBAccess.GetEquipmentByQRName(qrName, EQUIPMENT_TYPE_ID_TESTER)
-
-                If dt.Rows.Count = 1 Then
-                    Dim row As DataRow = dt.Rows(0)
-                    m_Data.TesterNoA = row("Name").ToString()
-                Else
-                    m_Data.TesterNoA = ""
-                    m_Data.TesterNoAQRcode = ""
-                End If
-
-                TesternoATextBox.Text = m_Data.TesterNoA
-
-                Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
-
-            End Using
-        End If
-
-    End Sub
-
-    Protected Sub BTestnoTextBox_TextChanged(sender As Object, e As EventArgs) Handles TesternoBTextBox.TextChanged
-
-        TesternoCTextBox.Focus()
-
-        If Not String.IsNullOrEmpty(TesternoBTextBox.Text) Then
-
-            Dim qrName As String = TesternoBTextBox.Text.ToUpper
-            m_Data.TesterNoBQRcode = TesternoBTextBox.Text
-
-            Using dt As DataTable = DBAccess.GetEquipmentByQRName(qrName, EQUIPMENT_TYPE_ID_TESTER)
-
-                If dt.Rows.Count = 1 Then
-                    Dim row As DataRow = dt.Rows(0)
-                    m_Data.TesterNoB = row("Name").ToString()
-                Else
-                    m_Data.TesterNoB = ""
-                    m_Data.TesterNoBQRcode = ""
-                End If
-
-                TesternoBTextBox.Text = m_Data.TesterNoB
-
-                Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
-
-            End Using
-
-        End If
-    End Sub
-
-    Protected Sub CTestnoTextBox_TextChanged(sender As Object, e As EventArgs) Handles TesternoCTextBox.TextChanged
-
-        TesternoDTextBox.Focus()
-
-        If Not String.IsNullOrEmpty(TesternoCTextBox.Text) Then
-
-            Dim qrName As String = TesternoCTextBox.Text.ToUpper
-            m_Data.TesterNoCQRcode = TesternoCTextBox.Text
-
-            Using dt As DataTable = DBAccess.GetEquipmentByQRName(qrName, EQUIPMENT_TYPE_ID_TESTER)
-
-                If dt.Rows.Count = 1 Then
-                    Dim row As DataRow = dt.Rows(0)
-                    m_Data.TesterNoC = row("Name").ToString()
-                Else
-                    m_Data.TesterNoC = ""
-                    m_Data.TesterNoCQRcode = ""
-                End If
-
-                TesternoCTextBox.Text = m_Data.TesterNoC
-
-                Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
-
-            End Using
-
-        End If
-    End Sub
-
-    Protected Sub DTestnoTextBox_TextChanged(sender As Object, e As EventArgs) Handles TesternoDTextBox.TextChanged
-
-        If Not String.IsNullOrEmpty(TesternoDTextBox.Text) Then
-
-            Dim qrName As String = TesternoDTextBox.Text.ToUpper
-            m_Data.TesterNoDQRcode = TesternoDTextBox.Text
-
-            Using dt As DataTable = DBAccess.GetEquipmentByQRName(qrName, EQUIPMENT_TYPE_ID_TESTER)
-
-                If dt.Rows.Count = 1 Then
-                    Dim row As DataRow = dt.Rows(0)
-                    m_Data.TesterNoD = row("Name").ToString()
-                Else
-                    m_Data.TesterNoD = ""
-                    m_Data.TesterNoDQRcode = ""
-                End If
-
-                TesternoDTextBox.Text = m_Data.TesterNoD
-
-                Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
-
-            End Using
-
-        End If
-    End Sub
 
     'Private Function TesterNoIsDuplicated() As Boolean
     '    'Dim ret As Boolean = False

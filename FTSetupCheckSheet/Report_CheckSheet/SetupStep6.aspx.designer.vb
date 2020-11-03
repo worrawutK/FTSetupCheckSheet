@@ -12,7 +12,7 @@ Option Explicit On
 
 
 Partial Public Class SetupStep6
-    
+
     '''<summary>
     '''ProgramNameTextBox control.
     '''</summary>
@@ -21,7 +21,7 @@ Partial Public Class SetupStep6
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents ProgramNameTextBox As Global.System.Web.UI.WebControls.TextBox
-    
+
     '''<summary>
     '''TypechangepackageTextBox control.
     '''</summary>
@@ -30,7 +30,7 @@ Partial Public Class SetupStep6
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents TypechangepackageTextBox As Global.System.Web.UI.WebControls.TextBox
-    
+
     '''<summary>
     '''QRcodeSocket1TextBox control.
     '''</summary>
@@ -39,7 +39,7 @@ Partial Public Class SetupStep6
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents QRcodeSocket1TextBox As Global.System.Web.UI.WebControls.TextBox
-    
+
     '''<summary>
     '''QRcodeSocket2TextBox control.
     '''</summary>
@@ -48,7 +48,7 @@ Partial Public Class SetupStep6
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents QRcodeSocket2TextBox As Global.System.Web.UI.WebControls.TextBox
-    
+
     '''<summary>
     '''QRcodeSocket3TextBox control.
     '''</summary>
@@ -57,7 +57,7 @@ Partial Public Class SetupStep6
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents QRcodeSocket3TextBox As Global.System.Web.UI.WebControls.TextBox
-    
+
     '''<summary>
     '''QRcodeSocket4TextBox control.
     '''</summary>
@@ -66,7 +66,79 @@ Partial Public Class SetupStep6
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents QRcodeSocket4TextBox As Global.System.Web.UI.WebControls.TextBox
-    
+
+    '''<summary>
+    '''panelSocket5 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panelSocket5 As Global.System.Web.UI.HtmlControls.HtmlGenericControl
+
+    '''<summary>
+    '''QRcodeSocket5TextBox control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents QRcodeSocket5TextBox As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''panelSocket6 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panelSocket6 As Global.System.Web.UI.HtmlControls.HtmlGenericControl
+
+    '''<summary>
+    '''QRcodeSocket6TextBox control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents QRcodeSocket6TextBox As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''panelSocket7 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panelSocket7 As Global.System.Web.UI.HtmlControls.HtmlGenericControl
+
+    '''<summary>
+    '''QRcodeSocket7TextBox control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents QRcodeSocket7TextBox As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''panelSocket8 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panelSocket8 As Global.System.Web.UI.HtmlControls.HtmlGenericControl
+
+    '''<summary>
+    '''QRcodeSocket8TextBox control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents QRcodeSocket8TextBox As Global.System.Web.UI.WebControls.TextBox
+
     '''<summary>
     '''ButtonPrevious control.
     '''</summary>
@@ -75,7 +147,7 @@ Partial Public Class SetupStep6
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents ButtonPrevious As Global.System.Web.UI.WebControls.Button
-    
+
     '''<summary>
     '''ButtonNext control.
     '''</summary>

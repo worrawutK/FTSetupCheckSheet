@@ -12,7 +12,7 @@
        <asp:TextBox ID="AdaptorATextBox" runat="server" CssClass="form-control" Height="30px" AutoPostBack="True"></asp:TextBox>
      </div>
 
-     <div class="panel panel-success">
+     <div class="panel panel-success" runat="server" id="panelAdaptorB" style="display:none">
        <div class="panel-heading">(4.2) Adaptor (アダプタ) :  B channel </div>
        <asp:TextBox ID="AdaptorBTextBox" runat="server" CssClass="form-control" Height="30px" AutoPostBack="True"></asp:TextBox>
      </div>
@@ -22,7 +22,7 @@
        <asp:TextBox ID="DutcardATextBox" runat="server" CssClass="form-control" Height="30px" AutoPostBack="True"></asp:TextBox>
      </div>
 
-    <div class="panel panel-success">
+    <div class="panel panel-success" runat="server" id="panelDutcardB" style="display:none">
        <div class="panel-heading">(4.4) Dutcard (ダットｶｰﾄﾞ) :  B channel </div>
        <asp:TextBox ID="DutcardBTextBox" runat="server" CssClass="form-control" Height="30px" AutoPostBack="True"></asp:TextBox>
     </div>
@@ -32,7 +32,7 @@
        <asp:TextBox ID="BridgecableATextBox" runat="server" CssClass="form-control" Height="30px" AutoPostBack="True"></asp:TextBox>
     </div>
 
-    <div class="panel panel-success">
+    <div class="panel panel-success" runat="server" id="panelBridgecableB" style="display:none">
        <div class="panel-heading">(4.6) Bridge cable (ブリッジケーブル) :  B channel </div>
        <asp:TextBox ID="BridgecableBTextBox" runat="server" CssClass="form-control" Height="30px" AutoPostBack="True"></asp:TextBox>
     </div>

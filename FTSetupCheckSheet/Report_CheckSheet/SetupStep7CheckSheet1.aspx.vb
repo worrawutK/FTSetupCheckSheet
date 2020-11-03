@@ -20,14 +20,6 @@
         End If
     End Sub
 
-    Public Sub UpdateSessionData()
-        m_Data.BoxTesterConnection = selectBoxTesterConnection.Value
-        m_Data.OptionSetup = selecOptionSetup.Value
-        m_Data.OptionConnection = selecOptionConnection.Value
-
-        Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
-    End Sub
-
     Private Sub ButtonNext_Click(sender As Object, e As EventArgs) Handles ButtonNext.Click
         UpdateSessionData()
         Response.Redirect("~/SetupStep7CheckSheet2.aspx")
@@ -38,4 +30,11 @@
         Response.Redirect("~/SetupStep6.aspx")
     End Sub
 
+    Public Sub UpdateSessionData()
+        m_Data.BoxTesterConnection = selectBoxTesterConnection.Value
+        m_Data.OptionSetup = selecOptionSetup.Value
+        m_Data.OptionConnection = selecOptionConnection.Value
+
+        Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
+    End Sub
 End Class

@@ -23,6 +23,15 @@ Partial Public Class SetupStep4
     Protected WithEvents AdaptorATextBox As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''panelAdaptorB control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panelAdaptorB As Global.System.Web.UI.HtmlControls.HtmlGenericControl
+
+    '''<summary>
     '''AdaptorBTextBox control.
     '''</summary>
     '''<remarks>
@@ -41,6 +50,15 @@ Partial Public Class SetupStep4
     Protected WithEvents DutcardATextBox As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''panelDutcardB control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panelDutcardB As Global.System.Web.UI.HtmlControls.HtmlGenericControl
+
+    '''<summary>
     '''DutcardBTextBox control.
     '''</summary>
     '''<remarks>
@@ -57,6 +75,15 @@ Partial Public Class SetupStep4
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents BridgecableATextBox As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''panelBridgecableB control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panelBridgecableB As Global.System.Web.UI.HtmlControls.HtmlGenericControl
 
     '''<summary>
     '''BridgecableBTextBox control.

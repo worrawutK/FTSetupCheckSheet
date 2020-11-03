@@ -50,6 +50,15 @@ Partial Public Class SetupStep3
     Protected WithEvents TestBoxBTextBox As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''panelTestBoxC control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panelTestBoxC As Global.System.Web.UI.HtmlControls.HtmlGenericControl
+
+    '''<summary>
     '''TestBoxCTextBox control.
     '''</summary>
     '''<remarks>
@@ -57,6 +66,15 @@ Partial Public Class SetupStep3
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents TestBoxCTextBox As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''panelTestBoxD control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panelTestBoxD As Global.System.Web.UI.HtmlControls.HtmlGenericControl
 
     '''<summary>
     '''TestBoxDTextBox control.
@@ -68,6 +86,15 @@ Partial Public Class SetupStep3
     Protected WithEvents TestBoxDTextBox As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''panelTestBoxE control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panelTestBoxE As Global.System.Web.UI.HtmlControls.HtmlGenericControl
+
+    '''<summary>
     '''TestBoxETextBox control.
     '''</summary>
     '''<remarks>
@@ -75,6 +102,15 @@ Partial Public Class SetupStep3
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents TestBoxETextBox As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''panelTestBoxF control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panelTestBoxF As Global.System.Web.UI.HtmlControls.HtmlGenericControl
 
     '''<summary>
     '''TestBoxFTextBox control.
@@ -86,6 +122,15 @@ Partial Public Class SetupStep3
     Protected WithEvents TestBoxFTextBox As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''panelTestBoxG control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panelTestBoxG As Global.System.Web.UI.HtmlControls.HtmlGenericControl
+
+    '''<summary>
     '''TestBoxGTextBox control.
     '''</summary>
     '''<remarks>
@@ -93,6 +138,15 @@ Partial Public Class SetupStep3
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents TestBoxGTextBox As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''panelTestBoxH control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panelTestBoxH As Global.System.Web.UI.HtmlControls.HtmlGenericControl
 
     '''<summary>
     '''TestBoxHTextBox control.

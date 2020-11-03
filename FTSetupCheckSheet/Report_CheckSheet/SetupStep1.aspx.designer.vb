@@ -12,7 +12,7 @@ Option Explicit On
 
 
 Partial Public Class SetupStep1
-    
+
     '''<summary>
     '''OISTextBox control.
     '''</summary>
@@ -21,7 +21,7 @@ Partial Public Class SetupStep1
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents OISTextBox As Global.System.Web.UI.WebControls.TextBox
-    
+
     '''<summary>
     '''TestflowTextBox control.
     '''</summary>
@@ -30,7 +30,7 @@ Partial Public Class SetupStep1
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents TestflowTextBox As Global.System.Web.UI.WebControls.TextBox
-    
+
     '''<summary>
     '''TesterTypetext control.
     '''</summary>
@@ -39,7 +39,16 @@ Partial Public Class SetupStep1
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents TesterTypetext As Global.System.Web.UI.WebControls.TextBox
-    
+
+    '''<summary>
+    '''OISRankTextBox control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents OISRankTextBox As Global.System.Web.UI.WebControls.TextBox
+
     '''<summary>
     '''ButtonPrevious control.
     '''</summary>
@@ -48,7 +57,7 @@ Partial Public Class SetupStep1
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents ButtonPrevious As Global.System.Web.UI.WebControls.Button
-    
+
     '''<summary>
     '''ButtonNext control.
     '''</summary>
@@ -57,7 +66,7 @@ Partial Public Class SetupStep1
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents ButtonNext As Global.System.Web.UI.WebControls.Button
-    
+
     '''<summary>
     '''ButtonSkip control.
     '''</summary>

@@ -23,6 +23,11 @@
               <asp:TextBox ID="TesterTypetext" runat="server" CssClass="form-control" AutoPostBack="True" ReadOnly="True"></asp:TextBox>
         </div><br />
 
+         <div class="form-group form-group-lg">
+              <label class="col-sm-2 control-label" for="lg">OIS RANK</label>
+              <asp:TextBox ID="OISRankTextBox" runat="server" CssClass="form-control" AutoPostBack="True" ReadOnly="True"></asp:TextBox>
+        </div><br />
+
           <asp:Button ID="ButtonPrevious" CssClass="btn btn-default pull-left" runat="server" Text="Previous" BorderColor="Black" BorderStyle="Groove" BorderWidth="2px" />
           <asp:Button ID="ButtonNext" CssClass="btn btn-default pull-right" runat="server" Text="Next" BorderColor="Black" BorderStyle="Groove" BorderWidth="2px" />
 		  <asp:Button ID="ButtonSkip" CssClass="btn btn-default pull-right" runat="server" Text="Old Equipment" BorderColor="Black" BorderStyle="Groove" BorderWidth="2px" /><br />

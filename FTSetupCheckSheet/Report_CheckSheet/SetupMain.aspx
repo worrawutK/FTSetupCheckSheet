@@ -11,10 +11,12 @@
          <div class="panel panel-success">
             <div class="panel-heading" style="font-style: inherit; font-weight: bold; color: #FFFFFF; background-color:black;text-align:center"> (1)&nbsp;&nbsp;&nbsp; INPUT&nbsp; QRCODE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
             <asp:TextBox ID="QRcodeTextBox" runat="server" CssClass="form-control" AutoPostBack="True"></asp:TextBox><br />
-         <div class="panel panel-danger" id="panelError" runat="server" style="display:none">
-           <div class="panel-heading">ERROR !!</div>
-         <asp:Label ID="ErrorMessageLabel" runat="server" Text="THERE IS ERROR MESSAGE !!!!" CssClass="form-control" ForeColor="Red" Font-Size="Large"></asp:Label>
-         </div>
+
+            <div class="panel panel-danger" id="panelError" runat="server" style="display:none">
+                <div class="panel-heading">ERROR !!</div>
+                <asp:Label ID="ErrorMessageLabel" runat="server" Text="THERE IS ERROR MESSAGE !!!!" ForeColor="Red" Font-Size="Large"></asp:Label>
+            </div><br />
+
         <div class="form-group form-group-lg">
               <label class="col-sm-2 control-label" for="lg">MACHINE</label>
               <asp:TextBox ID="TextBoxMCNo" runat="server" CssClass="form-control" AutoPostBack="True" ReadOnly="True"></asp:TextBox>

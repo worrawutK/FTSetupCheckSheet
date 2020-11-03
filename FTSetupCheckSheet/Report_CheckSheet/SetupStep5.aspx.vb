@@ -32,31 +32,19 @@ Public Class SetupStep5
             OptionType5TextBox.Text = m_Data.OptionName5
             OptionType6TextBox.Text = m_Data.OptionName6
             OptionType7TextBox.Text = m_Data.OptionName7
+
+            If m_Data.StatusOldEQP Then
+                OptionType1TextBox.ReadOnly = True
+                OptionType2TextBox.ReadOnly = True
+                OptionType3TextBox.ReadOnly = True
+                OptionType4TextBox.ReadOnly = True
+                OptionType5TextBox.ReadOnly = True
+                OptionType6TextBox.ReadOnly = True
+                OptionType7TextBox.ReadOnly = True
+            End If
         End If
 
         OptionType1TextBox.Focus()
-    End Sub
-
-    Private Sub UpdateSessionData()
-        m_Data.OptionName1 = OptionType1TextBox.Text
-        m_Data.OptionName2 = OptionType2TextBox.Text
-        m_Data.OptionName3 = OptionType3TextBox.Text
-        m_Data.OptionName4 = OptionType4TextBox.Text
-        m_Data.OptionName5 = OptionType5TextBox.Text
-        m_Data.OptionName6 = OptionType6TextBox.Text
-        m_Data.OptionName7 = OptionType7TextBox.Text
-
-        Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
-    End Sub
-
-    Private Sub ButtonNext_Click(sender As Object, e As EventArgs) Handles ButtonNext.Click
-        UpdateSessionData()
-        Response.Redirect("~/SetupStep6.aspx")
-    End Sub
-
-    Private Sub ButtonPrevious_Click(sender As Object, e As EventArgs) Handles ButtonPrevious.Click
-        UpdateSessionData()
-        Response.Redirect("~/SetupStep4.aspx")
     End Sub
 
     Protected Sub Option1TextBox_TextChanged(sender As Object, e As EventArgs) Handles OptionType1TextBox.TextChanged
@@ -247,6 +235,28 @@ Public Class SetupStep5
                 Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
             End Using
         End If
+    End Sub
+
+    Private Sub ButtonNext_Click(sender As Object, e As EventArgs) Handles ButtonNext.Click
+        UpdateSessionData()
+        Response.Redirect("~/SetupStep6.aspx")
+    End Sub
+
+    Private Sub ButtonPrevious_Click(sender As Object, e As EventArgs) Handles ButtonPrevious.Click
+        UpdateSessionData()
+        Response.Redirect("~/SetupStep4.aspx")
+    End Sub
+
+    Private Sub UpdateSessionData()
+        m_Data.OptionName1 = OptionType1TextBox.Text
+        m_Data.OptionName2 = OptionType2TextBox.Text
+        m_Data.OptionName3 = OptionType3TextBox.Text
+        m_Data.OptionName4 = OptionType4TextBox.Text
+        m_Data.OptionName5 = OptionType5TextBox.Text
+        m_Data.OptionName6 = OptionType6TextBox.Text
+        m_Data.OptionName7 = OptionType7TextBox.Text
+
+        Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
     End Sub
 
 End Class

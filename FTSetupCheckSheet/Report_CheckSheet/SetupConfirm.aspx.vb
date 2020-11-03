@@ -27,7 +27,7 @@ Public Class SetupConfirm
             m_OldData = CType(tmp2, FTSetupReportHistory)
         End If
 
-        If IsPostBack AndAlso m_Data.SetupStatus = "CONFIRMED" Then
+        If IsPostBack AndAlso (m_Data.SetupStatus = "CONFIRMED" OrElse m_Data.SetupStatus = "GOODNGTEST") Then
             Response.Redirect("~/SetupMain.aspx")
             Exit Sub
         Else
@@ -46,24 +46,54 @@ Public Class SetupConfirm
     'Input Working Slip
     Protected Sub QRcodeTextBox_TextChanged(sender As Object, e As EventArgs) Handles QRcodeTextBox.TextChanged
 
-        If QRcodeTextBox.Text.Length = 252 Then
-            Dim qrTest As String = QRcodeTextBox.Text
+        Dim qrTest As String = QRcodeTextBox.Text
+
+        If qrTest.Length = 252 OrElse qrTest.Length = 332 OrElse qrTest.Length = 50 Then
             m_Data.LotNo = qrTest.Substring(30, 10).ToUpper().Trim()
-            m_Data.PackageName = QRcodeTextBox.Text.Substring(0, 10).ToUpper().Trim()
-            m_Data.DeviceName = QRcodeTextBox.Text.Substring(232, 20).ToUpper().Trim()
+            'm_Data.PackageName = QRcodeTextBox.Text.Substring(0, 10).ToUpper().Trim()
+            'm_Data.DeviceName = QRcodeTextBox.Text.Substring(232, 20).ToUpper().Trim()
 
-            DeviceNameTextBox.Text = m_Data.DeviceName
-            PackagenameTextBox.Text = m_Data.PackageName
-            lotnoTextbox.Text = m_Data.LotNo
-
-            Session(SESSION_KEY_DATA) = m_Data
-
+        ElseIf qrTest.Length = 10 Then
+            m_Data.LotNo = qrTest
+        Else
+            QRcodeTextBox.Text = ""
+            Exit Sub
         End If
-        QRcodeTextBox.Text = ""
 
+        Dim apcsdbDenpyoTbl As DataTable
+
+        Try
+            apcsdbDenpyoTbl = DBAccess.GetWorkingSlipQRCode(m_Data.LotNo)
+        Catch ex As Exception
+            QRcodeTextBox.Text = ""
+            ShowErrorMessage("Failed to get ApcsdbDenpyo :" & ex.Message)
+            Exit Sub
+        End Try
+
+        If apcsdbDenpyoTbl.Rows.Count = 0 Then
+            QRcodeTextBox.Text = ""
+            ShowErrorMessage(String.Format("ไม่พบ Lot No : " + m_Data.LotNo + " กรุณาลองอีกครั้ง : [cellcon].[sp_get_denpyo] <br/>"))
+            Exit Sub
+        ElseIf apcsdbDenpyoTbl.Rows.Count > 1 Then
+            QRcodeTextBox.Text = ""
+            ShowErrorMessage(String.Format("พบ Lot No : " + apcsdbDenpyoTbl.Rows.Count.ToString() + " rows โปรดแจ้ง SYSTEM : [cellcon].[sp_get_denpyo] <br/>"))
+            Exit Sub
+        End If
+
+        Dim apcsdbDenpyoRow As DataRow = apcsdbDenpyoTbl.Rows(0)
+
+        m_Data.PackageName = apcsdbDenpyoRow("PackageName").ToString()
+        m_Data.DeviceName = apcsdbDenpyoRow("DeviceName").ToString()
+
+        DeviceNameTextBox.Text = m_Data.DeviceName
+        PackagenameTextBox.Text = m_Data.PackageName
+        lotnoTextbox.Text = m_Data.LotNo
+
+        Session(SESSION_KEY_DATA) = m_Data
+        QRcodeTextBox.Text = ""
     End Sub
 
-#Region "Private class"
+#Region "Matching EQP and Option class"
 
     Private Class OptionSummary
 
@@ -345,7 +375,7 @@ Public Class SetupConfirm
         Dim bomOptionTbl As DataTable
         Dim bomTestEqiupmentTbl As DataTable
 
-#Region "Check BOMOption"
+#Region "Check Option"
 
         'in some case, there is no option
         bomOptionTbl = DBAccess.GetBOMOption(bomId) 'From DB
@@ -437,7 +467,7 @@ Public Class SetupConfirm
         End If
 #End Region
 
-#Region "Check BOMTestEquipment"
+#Region "Check TestEquipment"
         'must have atleast 1
         bomTestEqiupmentTbl = DBAccess.GetBOMTestEquipment(bomId)
         If bomTestEqiupmentTbl.Rows.Count > 0 Then
@@ -522,7 +552,13 @@ Public Class SetupConfirm
         End If
 #End Region
 
-#Region "Read Text File & Add Spe GO/NG Sample"
+        If errorMessageList.Count > 0 Then
+            ShowErrorMessage(String.Join("<br/>", errorMessageList.ToArray()))
+            Exit Sub
+        End If
+#End Region
+
+#Region "Read Text File & Check Lot & Add Spe GO/NG Sample"
         Try
             Dim currentTransLotsTbl As DataTable
 
@@ -534,10 +570,10 @@ Public Class SetupConfirm
             End Try
 
             If currentTransLotsTbl.Rows.Count = 0 Then
-                ShowErrorMessage(String.Format("LotNo not found <br/>"))
+                ShowErrorMessage(String.Format("ไม่พบ Lot No : " + m_Data.LotNo + " โปรดตรวจสอบที่ ATOM : [cellcon].[sp_get_current_trans_lots] <br/>"))
                 Exit Sub
             ElseIf currentTransLotsTbl.Rows.Count > 1 Then
-                ShowErrorMessage(String.Format("LotNo found : " + currentTransLotsTbl.Rows.Count.ToString() + " rows <br/>"))
+                ShowErrorMessage(String.Format("พบ Lot No : " + currentTransLotsTbl.Rows.Count.ToString() + " rows โปรดแจ้ง SYSTEM : [cellcon].[sp_get_current_trans_lots] <br/>"))
                 Exit Sub
             End If
 
@@ -551,26 +587,70 @@ Public Class SetupConfirm
             Dim qualityState As String = currentTransLotsRow("QualityState").ToString()
             Dim isSpecialFlow As Int32 = Int32.Parse(currentTransLotsRow("IsSpecialFlow").ToString())
             Dim processCategory As Int32 = Int32.Parse(currentTransLotsRow("ProductionCategory").ToString())
-
-            Dim fileReaderMC As String
-            Dim fileReaderFlow As String
+            Dim lotOISRank As String = currentTransLotsRow("LotOISRank").ToString()
             Dim SetupStatus As String
-            fileReaderMC = My.Computer.FileSystem.ReadAllText("\\10.28.33.113\www\FTSetupCheckSheet\_backup\MCNo.txt")
-            fileReaderFlow = My.Computer.FileSystem.ReadAllText("\\10.28.33.113\www\FTSetupCheckSheet\_backup\Flow.txt") 'm_Data.TestFlow = AUTO2ASISAMPLE | flowName = AUTO(2)ASISAMPLE
+
+            'Now is Special Flow then Is it GO/NG Sample Judge
+            If (String.IsNullOrEmpty(flowName)) Then
+                ShowErrorMessage("ไม่พบ Flow โปรดตรวจสอบที่ ATOM : [cellcon].[sp_get_current_trans_lots] <br/>")
+                Exit Sub
+            End If
+
+            'Split Device from Rank ex. BD450M2FP3-CE2 to (0) = BD450M2FP3, (1) = CE2
+            Dim splitNewDeviceName As String() = m_Data.DeviceName.Split("-"c)
+
+            If m_Data.OISDevice <> splitNewDeviceName(0) Then
+                ShowErrorMessage("Lot Device = '" + splitNewDeviceName(0) + "' not match with OIS Device = '" + m_Data.OISDevice + "' โปรดตรวจสอบ Device ของ Lot และ OIS <br/>")
+                Exit Sub
+            End If
+
+            'OIS Rank = -/C/M 'WS Rank = "","C"
+            Dim wordsRank As String() = m_Data.OISRank.Split("/"c)
+            Dim rankChecked As Boolean = False
+
+            If lotOISRank = "" Then
+                lotOISRank = "-"
+            End If
+
+            For index = 0 To wordsRank.Length - 1
+                If wordsRank(index).Equals(lotOISRank) Then
+                    rankChecked = True
+                    Exit For
+                End If
+            Next
+
+            If rankChecked = False Then
+                ShowErrorMessage("Lot Rank = '" + lotOISRank + "' not match with OIS Rank = '" + m_Data.OISRank + "' โปรดตรวจสอบ Rank ของ Lot และ OIS <br/>")
+                Exit Sub
+            End If
+
+            Dim fileReaderMC As String = My.Computer.FileSystem.ReadAllText("\\10.28.33.113\www\FTSetupCheckSheet\_backup\MCNo.txt")
+            'm_Data.TestFlow = AUTO2ASISAMPLE | flowName = AUTO(2)ASISAMPLE
+            Dim fileReaderFlow As String = My.Computer.FileSystem.ReadAllText("\\10.28.33.113\www\FTSetupCheckSheet\_backup\Flow.txt")
+
+            'Split by new line " & vbCrLf & "
+            Dim wordsFlow As String() = fileReaderFlow.Split(New String() {Environment.NewLine}, StringSplitOptions.None)
+            Dim flowChecked As Boolean = True
+
+            'wordsFlow(0) = AUTO2ASISAMPLE
+            'wordsFlow(1) = AUTO3ASI
+            'is(wordsFlow(0,1,..) == AUTO2)?
+            For index = 0 To wordsFlow.Length - 1
+                If wordsFlow(index).Equals(m_Data.TestFlow) Then
+                    flowChecked = False
+                    Exit For
+                End If
+            Next
 
             'M/C No in control, Not E Lot(processCategory = 30), Not AUTO2ASISAMPLE Flow
-            If fileReaderMC.Contains(m_Data.MCNo) And (processCategory <> 30) And Not fileReaderFlow.Contains(m_Data.TestFlow) Then
+            If fileReaderMC.Contains(m_Data.MCNo) And (processCategory <> 30) And flowChecked Then
 
                 'Split Device from Rank ex. BD450M2FP3-CE2 to (0) = BD450M2FP3, (1) = CE2
-                Dim splitNewDeviceName() As String
-                splitNewDeviceName = m_Data.DeviceName.Split(CType("-", Char()))
+                Dim splitOldDeviceName As String() = m_OldData.DeviceName.Split("-"c)
 
-                Dim splitOldDeviceName() As String
-                splitOldDeviceName = m_OldData.DeviceName.Split(CType("-", Char()))
-
-                '(ProgramName CHANGED or (ProgramName NOT CHANGED but DeviceName CHANGED)) or oldSetupStatus = GOODNGTEST
+                '(ProgramName CHANGED or (ProgramName NOT CHANGED but DeviceName CHANGED))
                 If (m_OldData.SetupStatus = "GOODNGTEST") OrElse
-                   (m_Data.ProgramName <> m_OldData.ProgramName) Or
+                   (m_Data.ProgramName <> m_OldData.ProgramName) OrElse
                    (m_Data.ProgramName = m_OldData.ProgramName And splitNewDeviceName(0) <> splitOldDeviceName(0)) Then
                     SetupStatus = SETUP_STATUS_GOODNGTEST
                 Else
@@ -580,47 +660,46 @@ Public Class SetupConfirm
                 SetupStatus = SETUP_STATUS_CONFIRMED
             End If
 
-            'Add Special Flow at GO/NGSampleJudge only
-            If SetupStatus = SETUP_STATUS_GOODNGTEST Then
+            If flowName.Contains("AUTO(") Then
+                Dim splitFlowName As String() = flowName.Split(CType("(", Char()))
 
-                Dim flowPatternId As Int32 = 1689
-                Dim userId As Int32 = 1289
-                Dim transLotsFlowsTbl As DataTable
+                Dim comparableFlowName As String
+                comparableFlowName = splitFlowName(0)
+                splitFlowName = splitFlowName(1).Split(CType(")", Char()))
+                comparableFlowName += splitFlowName(0)
 
-                'Now is Special Flow then Is it GO/NG Sample Judge
-                If (String.IsNullOrEmpty(flowName)) Then
-                    ShowErrorMessage("Now Flow is NULL : cellcon.GetCurrentTransLots<br/>")
-                    Exit Sub
-                ElseIf flowName = "GO/NGSampleJudge" Then
-                    ConfirmReport(SetupStatus)
-                    Exit Sub
+                If splitFlowName.Count > 1 Then
+                    For index = 1 To splitFlowName.Count - 1
+                        comparableFlowName += splitFlowName(index)
+                    Next
                 End If
 
-                If flowName.Contains("AUTO(") Then
-                    Dim splitFlowName() As String
-                    splitFlowName = flowName.Split(CType("(", Char()))
+                'Check is Now Flow is matching with OIS
+                If (comparableFlowName = m_Data.TestFlow) Then
 
-                    Dim comparableFlowName As String
-                    comparableFlowName = splitFlowName(0)
-                    splitFlowName = splitFlowName(1).Split(CType(")", Char()))
-                    comparableFlowName += splitFlowName(0)
-                    If splitFlowName.Count > 1 Then
-                        For index = 1 To splitFlowName.Count - 1
-                            comparableFlowName += splitFlowName(index)
-                        Next
-                    End If
+                    If (wipState = "WIP" OrElse wipState = "Already Input") Then
 
-                    'Check is Now Flow is matching with OIS
-                    If (comparableFlowName = m_Data.TestFlow) Then
+                        If (processState = "Wait" OrElse processState = "Abnormal WIP") Then
 
-                        If (isSpecialFlow = 1 And qualityState = "Special Flow") Then 'Skip for now wait multi add specialFlow
-                            ConfirmReport("LotSpecialSkip")
-                            Exit Sub
-                        ElseIf (isSpecialFlow = 0 And qualityState = "Normal") Then
+                            If (isSpecialFlow = 1 And qualityState = "Special Flow") Then 'Skip for now wait multi add specialFlow
 
-                            If (wipState = "WIP" Or wipState = "Already Input") Then
+                                If SetupStatus = "GOODNGTEST" Then
+                                    ShowErrorMessage("Lot เป็น Special Flow ไม่สามารถนำมา Confirm กับเครื่องที่เข้าเงื่อนไขที่ต้องรัน GO/NG Sample ได้ กรุณาเปลี่ยน Lot <br/>")
+                                    Exit Sub
+                                End If
 
-                                If (processState = "Wait" Or processState = "Abnormal WIP") Then
+                                ConfirmReport(SETUP_STATUS_CONFIRMED)
+                                Exit Sub
+
+                            ElseIf (isSpecialFlow = 0 And qualityState = "Normal") Then
+
+                                'Add Special Flow at GO/NGSampleJudge only
+                                If SetupStatus = SETUP_STATUS_GOODNGTEST Then
+
+                                    Dim flowPatternId As Int32 = 1689
+                                    Dim userId As Int32 = 1289
+
+                                    Dim transLotsFlowsTbl As DataTable
 
                                     Try
                                         transLotsFlowsTbl = DBAccess.GetTransLotsFlows(lotId)
@@ -643,11 +722,10 @@ Public Class SetupConfirm
                                                 End If
 
                                                 For index2 = index - 1 To 0 Step -1
-                                                    If Int32.Parse(transLotsFlowsTbl.Rows(index2)("is_skipped").ToString()) = 0 And transLotsFlowsTbl.Rows(index2)("job_name").ToString() <> transLotsFlowsTbl.Rows(index)("job_name").ToString() Then
-                                                        If transLotsFlowsTbl.Rows(index2)("step_no").ToString().EndsWith("0") Then
-                                                            stepNo = Int32.Parse(transLotsFlowsTbl.Rows(index2)("step_no").ToString())
-                                                            Exit For
-                                                        End If
+                                                    If Int32.Parse(transLotsFlowsTbl.Rows(index2)("is_skipped").ToString()) = 0 And
+                                                           transLotsFlowsTbl.Rows(index2)("job_name").ToString() <> transLotsFlowsTbl.Rows(index)("job_name").ToString() Then
+                                                        stepNo = Int32.Parse(transLotsFlowsTbl.Rows(index2)("step_no").ToString())
+                                                        Exit For
                                                     End If
                                                 Next
 
@@ -657,49 +735,36 @@ Public Class SetupConfirm
                                             End If
                                         Next
 
-                                        'Set Special Flow here
-                                        Try
-                                            DBAccess.SetSpecialFlow(lotId, stepNo, backStepNo, userId, flowPatternId, 1)
-                                        Catch ex As Exception
-                                            ShowErrorMessage("Failed to Add Special Flows :" & ex.Message)
-                                            Exit Sub
-                                        End Try
+                                        SetSpecialFlowHere(lotId, stepNo, backStepNo, userId, flowPatternId)
 
                                     Else
-                                        ShowErrorMessage("Lot Flow not found <br/>")
+                                        ShowErrorMessage("ไม่พบ Lot Details โปรดตรวจสอบที่ ATOM : [atom].[sp_get_trans_lot_flows] <br/>")
                                         Exit Sub
                                     End If
 
                                 Else
-                                    ShowErrorMessage(">>> processState is '" + processState.Trim() + "' Please contact SYSTEM <<< <br/>")
-                                    Exit Sub
+                                    ConfirmReport(SETUP_STATUS_CONFIRMED)
                                 End If
                             Else
-                                ShowErrorMessage(">>> wipState is '" + wipState.Trim() + "' Please contact SYSTEM <<< <br/>")
+                                ShowErrorMessage(">>> isSpecialFlow is '" + isSpecialFlow.ToString() + "' And qualityState Is '" + qualityState.Trim() + "' โปรดติดต่อ SYSTEM <<< <br/>")
                                 Exit Sub
                             End If
                         Else
-                            ShowErrorMessage(">>> isSpecialFlow is '" + isSpecialFlow.ToString() + "' And qualityState Is '" + qualityState.Trim() + "' Please contact SYSTEM <<< <br/>")
+                            ShowErrorMessage(">>> processState is '" + processState.Trim() + "' โปรดติดต่อ SYSTEM <<< <br/>")
                             Exit Sub
                         End If
                     Else
-                        ShowErrorMessage(">>> ATOM Flow is '" + flowName.Trim() + "' not match with SETUP Flow is '" + m_Data.TestFlow.Trim() + "' <<< <br/>")
+                        ShowErrorMessage(">>> wipState is '" + wipState.Trim() + "' โปรดติดต่อ SYSTEM <<< <br/>")
                         Exit Sub
                     End If
                 Else
-                    ShowErrorMessage("flowName is " & flowName)
+                    ShowErrorMessage(">>> ATOM Flow is '" + flowName.Trim() + "' not match with OIS Flow is '" + m_Data.TestFlow.Trim() + "' โปรดติดต่อ SYSTEM <<< <br/>")
                     Exit Sub
                 End If
-            End If
-
-#End Region
-
-            If errorMessageList.Count > 0 Then
-                ShowErrorMessage(String.Join("<br/>", errorMessageList.ToArray()))
+            Else
+                ShowErrorMessage("Flow is " + flowName.Trim() + "ไม่สามารถนำมา Setup ได้ กรุณาเปลี่ยน Lot")
                 Exit Sub
             End If
-
-            ConfirmReport(SetupStatus)
 
         Catch ex As Exception
             ShowErrorMessage("Confirmation is failed : " & ex.Message)
@@ -710,35 +775,189 @@ Public Class SetupConfirm
 
     Private Sub ConfirmReport(setupStatus As String)
 
+        SetNextLotHere(m_Data.MCNo, m_Data.LotNo)
+
+        m_Data.SetupStatus = setupStatus
+
+        SetFTReport()
+
+    End Sub
+
+    Private Sub SetSpecialFlowHere(lotId As Int32, stepNo As Int32, backStepNo As Int32, userId As Int32, flowPatternId As Int32)
+        'Set Special Flow here
+        Try
+            DBAccess.SetSpecialFlow(lotId, stepNo, backStepNo, userId, flowPatternId, 1)
+            ConfirmReport(SETUP_STATUS_GOODNGTEST)
+        Catch ex As Exception
+            ShowErrorMessage("Failed to Add Special Flows :" & ex.Message)
+            Exit Sub
+        End Try
+    End Sub
+
+    Private Sub SetNextLotHere(mcNo As String, lotNo As String)
         'Set Next Lot here
         Try
-            DBAccess.SetNextLot(m_Data.MCNo, m_Data.LotNo)
+            DBAccess.SetNextLot(mcNo, lotNo)
         Catch ex As Exception
             ShowErrorMessage("Failed to Add Next Lots :" & ex.Message)
             Exit Sub
         End Try
+    End Sub
 
-        If setupStatus = "LotSpecialSkip" Then
+    Private Sub SetFTReport()
+        Try
+            Dim affRow As Integer = DBAccess.UpdateFTSetupReport(m_Data.MCNo,
+                                                                 m_Data.LotNo,
+                                                                 m_Data.PackageName,
+                                                                 m_Data.DeviceName,
+                                                                 m_Data.ProgramName,
+                                                                 m_Data.TesterType,
+                                                                 m_Data.TestFlow,
+                                                                 m_Data.OISRank,
+                                                                 m_Data.OISDevice,
+                                                                 m_Data.QRCodesocket1,
+                                                                 m_Data.QRCodesocket2,
+                                                                 m_Data.QRCodesocket3,
+                                                                 m_Data.QRCodesocket4,
+                                                                 m_Data.QRCodesocketChannel1,
+                                                                 m_Data.QRCodesocketChannel2,
+                                                                 m_Data.QRCodesocketChannel3,
+                                                                 m_Data.QRCodesocketChannel4,
+                                                                 m_Data.QRCodesocket5,
+                                                                 m_Data.QRCodesocket6,
+                                                                 m_Data.QRCodesocket7,
+                                                                 m_Data.QRCodesocket8,
+                                                                 m_Data.QRCodesocketChannel5,
+                                                                 m_Data.QRCodesocketChannel6,
+                                                                 m_Data.QRCodesocketChannel7,
+                                                                 m_Data.QRCodesocketChannel8,
+                                                                 m_Data.TesterNoA,
+                                                                 m_Data.TesterNoAQRcode,
+                                                                 m_Data.TesterNoB,
+                                                                 m_Data.TesterNoBQRcode,
+                                                                 m_Data.TesterNoC,
+                                                                 m_Data.TesterNoCQRcode,
+                                                                 m_Data.TesterNoD,
+                                                                 m_Data.TesterNoDQRcode,
+                                                                 m_Data.ChannelAFTB,
+                                                                 m_Data.ChannelAFTBQRcode,
+                                                                 m_Data.ChannelBFTB,
+                                                                 m_Data.ChannelBFTBQRcode,
+                                                                 m_Data.ChannelCFTB,
+                                                                 m_Data.ChannelCFTBQRcode,
+                                                                 m_Data.ChannelDFTB,
+                                                                 m_Data.ChannelDFTBQRcode,
+                                                                 m_Data.ChannelEFTB,
+                                                                 m_Data.ChannelEFTBQRcode,
+                                                                 m_Data.ChannelFFTB,
+                                                                 m_Data.ChannelFFTBQRcode,
+                                                                 m_Data.ChannelGFTB,
+                                                                 m_Data.ChannelGFTBQRcode,
+                                                                 m_Data.ChannelHFTB,
+                                                                 m_Data.ChannelHFTBQRcode,
+                                                                 m_Data.TestBoxA,
+                                                                 m_Data.TestBoxAQRcode,
+                                                                 m_Data.TestBoxB,
+                                                                 m_Data.TestBoxBQRcode,
+                                                                 m_Data.TestBoxC,
+                                                                 m_Data.TestBoxCQRcode,
+                                                                 m_Data.TestBoxD,
+                                                                 m_Data.TestBoxDQRcode,
+                                                                 m_Data.TestBoxE,
+                                                                 m_Data.TestBoxEQRcode,
+                                                                 m_Data.TestBoxF,
+                                                                 m_Data.TestBoxFQRcode,
+                                                                 m_Data.TestBoxG,
+                                                                 m_Data.TestBoxGQRcode,
+                                                                 m_Data.TestBoxH,
+                                                                 m_Data.TestBoxHQRcode,
+                                                                 m_Data.AdaptorA,
+                                                                 m_Data.AdaptorAQRcode,
+                                                                 m_Data.AdaptorB,
+                                                                 m_Data.AdaptorBQRcode,
+                                                                 m_Data.DutcardA,
+                                                                 m_Data.DutcardAQRcode,
+                                                                 m_Data.DutcardB,
+                                                                 m_Data.DutcardBQRcode,
+                                                                 m_Data.BridgecableA,
+                                                                 m_Data.BridgecableAQRcode,
+                                                                 m_Data.BridgecableB,
+                                                                 m_Data.BridgecableBQRcode,
+                                                                 m_Data.TypeChangePackage,
+                                                                 m_Data.SetupStartDate,
+                                                                 m_Data.SetupEndDate,
+                                                                 m_Data.BoxTesterConnection,
+                                                                 m_Data.OptionSetup,
+                                                                 m_Data.OptionConnection,
+                                                                 m_Data.OptionName1,
+                                                                 m_Data.OptionName2,
+                                                                 m_Data.OptionName3,
+                                                                 m_Data.OptionName4,
+                                                                 m_Data.OptionName5,
+                                                                 m_Data.OptionName6,
+                                                                 m_Data.OptionName7,
+                                                                 m_Data.OptionType1,
+                                                                 m_Data.OptionType1QRcode,
+                                                                 m_Data.OptionType2,
+                                                                 m_Data.OptionType2QRcode,
+                                                                 m_Data.OptionType3,
+                                                                 m_Data.OptionType3QRcode,
+                                                                 m_Data.OptionType4,
+                                                                 m_Data.OptionType4QRcode,
+                                                                 m_Data.OptionType5,
+                                                                 m_Data.OptionType5QRcode,
+                                                                 m_Data.OptionType6,
+                                                                 m_Data.OptionType6QRcode,
+                                                                 m_Data.OptionType7,
+                                                                 m_Data.OptionType7QRcode,
+                                                                 m_Data.OptionSetting1,
+                                                                 m_Data.OptionSetting2,
+                                                                 m_Data.OptionSetting3,
+                                                                 m_Data.OptionSetting4,
+                                                                 m_Data.OptionSetting5,
+                                                                 m_Data.OptionSetting6,
+                                                                 m_Data.OptionSetting7,
+                                                                 m_Data.QfpVacuumPad,
+                                                                 m_Data.QfpSocketSetup,
+                                                                 m_Data.QfpSocketDecision,
+                                                                 m_Data.QfpDecisionLeadPress,
+                                                                 m_Data.QfpTray, m_Data.SopStopper,
+                                                                 m_Data.SopSocketDecision,
+                                                                 m_Data.SopDecisionLeadPress,
+                                                                 m_Data.ManualCheckTest,
+                                                                 m_Data.ManualCheckTE,
+                                                                 m_Data.ManualCheckRequestTE,
+                                                                 m_Data.ManualCheckRequestTEConfirm,
+                                                                 m_Data.PkgGood, m_Data.PkgNG,
+                                                                 m_Data.PkgGoodJudgement,
+                                                                 m_Data.PkgNGJudgement,
+                                                                 m_Data.PkgNishikiCamara,
+                                                                 m_Data.PkgNishikiCamaraJudgement,
+                                                                 m_Data.PkqBantLead,
+                                                                 m_Data.PkqKakeHige,
+                                                                 m_Data.BgaSmallBall,
+                                                                 m_Data.BgaBentTape,
+                                                                 m_Data.Bge5S,
+                                                                 m_Data.SetupStatus,
+                                                                 m_Data.ConfirmedCheckSheetOp,
+                                                                 m_Data.ConfirmedCheckSheetSection,
+                                                                 m_Data.ConfirmedCheckSheetGL,
+                                                                 m_Data.ConfirmedShonoSection,
+                                                                 m_Data.ConfirmedShonoGL,
+                                                                 m_Data.ConfirmedShonoOp,
+                                                                 m_Data.StatusShonoOP,
+                                                                 m_Data.SetupConfirmDate)
 
-            m_Data.SetupStatus = "LotSpecialSkip"
-
-            DBAccess.ConfirmFTReport(m_Data.MCNo, m_Data.LotNo, m_Data.PackageName, m_Data.DeviceName, SETUP_STATUS_CONFIRMED)
+            Session(SESSION_KEY_DATA) = m_Data
+            Session(SESSION_KEY_NEW_DATA_SETUP) = Nothing
+            Session(SESSION_KEY_OLD_DATA) = m_OldData
 
             HideErrorMessage()
 
             Response.Redirect("~/SetupMain.aspx", False)
-
-        Else
-
-            m_Data.SetupStatus = setupStatus
-
-            DBAccess.ConfirmFTReport(m_Data.MCNo, m_Data.LotNo, m_Data.PackageName, m_Data.DeviceName, m_Data.SetupStatus)
-
-            HideErrorMessage()
-
-            Response.Redirect("~/Default.aspx", False)
-
-        End If
+        Catch ex As Exception
+            ShowErrorMessage("Update Failed : " & HttpUtility.HtmlEncode(ex.Message & vbNewLine & ex.StackTrace))
+        End Try
     End Sub
 
     Private Sub ShowErrorMessage(errMessage As String)

@@ -2,15 +2,18 @@
     Inherits System.Web.UI.Page
 
     Private m_Data As FTSetupReport
+    Private m_OldData As FTSetupReportHistory
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
 
         Dim tmp As Object = Session(SESSION_KEY_NEW_DATA_SETUP)
+        Dim tmp2 As Object = Session(SESSION_KEY_OLD_DATA)
 
         If tmp Is Nothing Then
             Response.Redirect("~/SetupMain.aspx")
         Else
             m_Data = CType(tmp, FTSetupReport)
+            m_OldData = CType(tmp2, FTSetupReportHistory)
         End If
 
         If Not IsPostBack Then
@@ -39,7 +42,55 @@
         m_Data.DeviceName = ""
         m_Data.SetupConfirmDate = Nothing
         m_Data.Bge5S = selecBge5s.Value
-     
+        m_Data.SetupStatus = SETUP_STATUS_WAITING
+
+        MatchOldandNewEQP()
+        SetFTReport()
+
+    End Sub
+
+    Private Sub MatchOldandNewEQP()
+        'not press old_eqp button and not same eqp
+        If m_Data.StatusOldEQP = False And (m_Data.TesterNoA <> m_OldData.TesterNoA And m_Data.TesterNoAQRcode <> m_OldData.TesterNoAQRcode And
+                                            m_Data.TesterNoB <> m_OldData.TesterNoB And m_Data.TesterNoBQRcode <> m_OldData.TesterNoBQRcode And
+                                            m_Data.TesterNoC <> m_OldData.TesterNoC And m_Data.TesterNoCQRcode <> m_OldData.TesterNoCQRcode And
+                                            m_Data.TesterNoD <> m_OldData.TesterNoD And m_Data.TesterNoDQRcode <> m_OldData.TesterNoDQRcode And
+                                            m_Data.ChannelAFTB <> m_OldData.ChannelAFTB And m_Data.ChannelAFTBQRcode <> m_OldData.ChannelAFTBQRcode And
+                                            m_Data.ChannelBFTB <> m_OldData.ChannelBFTB And m_Data.ChannelBFTBQRcode <> m_OldData.ChannelBFTBQRcode And
+                                            m_Data.ChannelCFTB <> m_OldData.ChannelCFTB And m_Data.ChannelCFTBQRcode <> m_OldData.ChannelCFTBQRcode And
+                                            m_Data.ChannelDFTB <> m_OldData.ChannelDFTB And m_Data.ChannelDFTBQRcode <> m_OldData.ChannelDFTBQRcode And
+                                            m_Data.ChannelEFTB <> m_OldData.ChannelEFTB And m_Data.ChannelEFTBQRcode <> m_OldData.ChannelEFTBQRcode And
+                                            m_Data.ChannelFFTB <> m_OldData.ChannelFFTB And m_Data.ChannelFFTBQRcode <> m_OldData.ChannelFFTBQRcode And
+                                            m_Data.ChannelGFTB <> m_OldData.ChannelGFTB And m_Data.ChannelGFTBQRcode <> m_OldData.ChannelGFTBQRcode And
+                                            m_Data.ChannelHFTB <> m_OldData.ChannelHFTB And m_Data.ChannelHFTBQRcode <> m_OldData.ChannelHFTBQRcode And
+                                            m_Data.TestBoxA <> m_OldData.TestBoxA And m_Data.TestBoxAQRcode <> m_OldData.TestBoxAQRcode And
+                                            m_Data.TestBoxB <> m_OldData.TestBoxB And m_Data.TestBoxBQRcode <> m_OldData.TestBoxBQRcode And
+                                            m_Data.TestBoxC <> m_OldData.TestBoxC And m_Data.TestBoxCQRcode <> m_OldData.TestBoxCQRcode And
+                                            m_Data.TestBoxD <> m_OldData.TestBoxD And m_Data.TestBoxDQRcode <> m_OldData.TestBoxDQRcode And
+                                            m_Data.TestBoxE <> m_OldData.TestBoxE And m_Data.TestBoxEQRcode <> m_OldData.TestBoxEQRcode And
+                                            m_Data.TestBoxF <> m_OldData.TestBoxF And m_Data.TestBoxFQRcode <> m_OldData.TestBoxFQRcode And
+                                            m_Data.TestBoxG <> m_OldData.TestBoxG And m_Data.TestBoxGQRcode <> m_OldData.TestBoxGQRcode And
+                                            m_Data.TestBoxH <> m_OldData.TestBoxH And m_Data.TestBoxHQRcode <> m_OldData.TestBoxHQRcode And
+                                            m_Data.AdaptorA <> m_OldData.AdaptorA And m_Data.AdaptorAQRcode <> m_OldData.AdaptorAQRcode And
+                                            m_Data.AdaptorB <> m_OldData.AdaptorB And m_Data.AdaptorBQRcode <> m_OldData.AdaptorBQRcode And
+                                            m_Data.DutcardA <> m_OldData.DutcardA And m_Data.DutcardAQRcode <> m_OldData.DutcardAQRcode And
+                                            m_Data.DutcardB <> m_OldData.DutcardB And m_Data.DutcardBQRcode <> m_OldData.DutcardBQRcode And
+                                            m_Data.BridgecableA <> m_OldData.BridgecableA And m_Data.BridgecableAQRcode <> m_OldData.BridgecableAQRcode And
+                                            m_Data.BridgecableB <> m_OldData.BridgecableB And m_Data.BridgecableBQRcode <> m_OldData.BridgecableBQRcode) Then
+
+            m_Data.StatusShonoOP = "0"
+            m_Data.ConfirmedShonoGL = ""
+            m_Data.ConfirmedShonoOp = ""
+            m_Data.ConfirmedShonoSection = ""
+        Else
+            m_Data.StatusShonoOP = m_OldData.StatusShonoOP
+            m_Data.ConfirmedShonoGL = m_OldData.ConfirmedShonoGL
+            m_Data.ConfirmedShonoOp = m_OldData.ConfirmedShonoOp
+            m_Data.ConfirmedShonoSection = m_OldData.ConfirmedShonoSection
+        End If
+    End Sub
+
+    Private Sub SetFTReport()
         Try
             Dim affRow As Integer = DBAccess.UpdateFTSetupReport(m_Data.MCNo,
                                                                  m_Data.LotNo,
@@ -48,6 +99,8 @@
                                                                  m_Data.ProgramName,
                                                                  m_Data.TesterType,
                                                                  m_Data.TestFlow,
+                                                                 m_Data.OISRank,
+                                                                 m_Data.OISDevice,
                                                                  m_Data.QRCodesocket1,
                                                                  m_Data.QRCodesocket2,
                                                                  m_Data.QRCodesocket3,
@@ -56,18 +109,54 @@
                                                                  m_Data.QRCodesocketChannel2,
                                                                  m_Data.QRCodesocketChannel3,
                                                                  m_Data.QRCodesocketChannel4,
+                                                                 m_Data.QRCodesocket5,
+                                                                 m_Data.QRCodesocket6,
+                                                                 m_Data.QRCodesocket7,
+                                                                 m_Data.QRCodesocket8,
+                                                                 m_Data.QRCodesocketChannel5,
+                                                                 m_Data.QRCodesocketChannel6,
+                                                                 m_Data.QRCodesocketChannel7,
+                                                                 m_Data.QRCodesocketChannel8,
                                                                  m_Data.TesterNoA,
                                                                  m_Data.TesterNoAQRcode,
                                                                  m_Data.TesterNoB,
                                                                  m_Data.TesterNoBQRcode,
+                                                                 m_Data.TesterNoC,
+                                                                 m_Data.TesterNoCQRcode,
+                                                                 m_Data.TesterNoD,
+                                                                 m_Data.TesterNoDQRcode,
                                                                  m_Data.ChannelAFTB,
                                                                  m_Data.ChannelAFTBQRcode,
                                                                  m_Data.ChannelBFTB,
                                                                  m_Data.ChannelBFTBQRcode,
+                                                                 m_Data.ChannelCFTB,
+                                                                 m_Data.ChannelCFTBQRcode,
+                                                                 m_Data.ChannelDFTB,
+                                                                 m_Data.ChannelDFTBQRcode,
+                                                                 m_Data.ChannelEFTB,
+                                                                 m_Data.ChannelEFTBQRcode,
+                                                                 m_Data.ChannelFFTB,
+                                                                 m_Data.ChannelFFTBQRcode,
+                                                                 m_Data.ChannelGFTB,
+                                                                 m_Data.ChannelGFTBQRcode,
+                                                                 m_Data.ChannelHFTB,
+                                                                 m_Data.ChannelHFTBQRcode,
                                                                  m_Data.TestBoxA,
                                                                  m_Data.TestBoxAQRcode,
                                                                  m_Data.TestBoxB,
                                                                  m_Data.TestBoxBQRcode,
+                                                                 m_Data.TestBoxC,
+                                                                 m_Data.TestBoxCQRcode,
+                                                                 m_Data.TestBoxD,
+                                                                 m_Data.TestBoxDQRcode,
+                                                                 m_Data.TestBoxE,
+                                                                 m_Data.TestBoxEQRcode,
+                                                                 m_Data.TestBoxF,
+                                                                 m_Data.TestBoxFQRcode,
+                                                                 m_Data.TestBoxG,
+                                                                 m_Data.TestBoxGQRcode,
+                                                                 m_Data.TestBoxH,
+                                                                 m_Data.TestBoxHQRcode,
                                                                  m_Data.AdaptorA,
                                                                  m_Data.AdaptorAQRcode,
                                                                  m_Data.AdaptorB,
@@ -118,14 +207,16 @@
                                                                  m_Data.QfpSocketSetup,
                                                                  m_Data.QfpSocketDecision,
                                                                  m_Data.QfpDecisionLeadPress,
-                                                                 m_Data.QfpTray, m_Data.SopStopper,
+                                                                 m_Data.QfpTray,
+                                                                 m_Data.SopStopper,
                                                                  m_Data.SopSocketDecision,
                                                                  m_Data.SopDecisionLeadPress,
                                                                  m_Data.ManualCheckTest,
                                                                  m_Data.ManualCheckTE,
                                                                  m_Data.ManualCheckRequestTE,
                                                                  m_Data.ManualCheckRequestTEConfirm,
-                                                                 m_Data.PkgGood, m_Data.PkgNG,
+                                                                 m_Data.PkgGood,
+                                                                 m_Data.PkgNG,
                                                                  m_Data.PkgGoodJudgement,
                                                                  m_Data.PkgNGJudgement,
                                                                  m_Data.PkgNishikiCamara,
@@ -135,7 +226,7 @@
                                                                  m_Data.BgaSmallBall,
                                                                  m_Data.BgaBentTape,
                                                                  m_Data.Bge5S,
-                                                                 SETUP_STATUS_WAITING,
+                                                                 m_Data.SetupStatus,
                                                                  m_Data.ConfirmedCheckSheetOp,
                                                                  m_Data.ConfirmedCheckSheetSection,
                                                                  m_Data.ConfirmedCheckSheetGL,
@@ -144,8 +235,6 @@
                                                                  m_Data.ConfirmedShonoOp,
                                                                  m_Data.StatusShonoOP,
                                                                  m_Data.SetupConfirmDate)
-
-            m_Data.SetupStatus = SETUP_STATUS_WAITING
 
             Session(SESSION_KEY_DATA) = m_Data
             Session(SESSION_KEY_NEW_DATA_SETUP) = Nothing

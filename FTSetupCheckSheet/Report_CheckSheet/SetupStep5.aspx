@@ -8,37 +8,37 @@
 <div class="container"> 
   <div class="panel-group"> 
     <div class="panel panel-warning">
-       <div class="panel-heading">(12) Option 1 (ｵﾌﾟｼｮﾝ名) </div>
+       <div class="panel-heading">(5.1) Option 1 (ｵﾌﾟｼｮﾝ名) </div>
        <asp:TextBox ID="OptionType1TextBox" runat="server" CssClass="form-control" Height="30px" AutoPostBack="True"></asp:TextBox>
     </div>
 
      <div class="panel panel-warning">
-       <div class="panel-heading">(13) Option 2 (ｵﾌﾟｼｮﾝ名) </div>
+       <div class="panel-heading">(5.2) Option 2 (ｵﾌﾟｼｮﾝ名) </div>
        <asp:TextBox ID="OptionType2TextBox" runat="server" CssClass="form-control" Height="30px" AutoPostBack="True"></asp:TextBox>
     </div>
 
      <div class="panel panel-warning">
-       <div class="panel-heading">(14) Option 3 (ｵﾌﾟｼｮﾝ名) </div>
+       <div class="panel-heading">(5.3) Option 3 (ｵﾌﾟｼｮﾝ名) </div>
        <asp:TextBox ID="OptionType3TextBox" runat="server" CssClass="form-control" Height="30px" AutoPostBack="True"></asp:TextBox>
     </div>
 
      <div class="panel panel-warning">
-       <div class="panel-heading">(15) Option 4 (ｵﾌﾟｼｮﾝ名) </div>
+       <div class="panel-heading">(5.4) Option 4 (ｵﾌﾟｼｮﾝ名) </div>
        <asp:TextBox ID="OptionType4TextBox" runat="server" CssClass="form-control" Height="30px" AutoPostBack="True"></asp:TextBox>
     </div>
 
      <div class="panel panel-warning">
-       <div class="panel-heading">(16) Option 5 (ｵﾌﾟｼｮﾝ名) </div>
+       <div class="panel-heading">(5.5) Option 5 (ｵﾌﾟｼｮﾝ名) </div>
        <asp:TextBox ID="OptionType5TextBox" runat="server" CssClass="form-control" Height="30px" AutoPostBack="True"></asp:TextBox>
     </div>
 
      <div class="panel panel-warning">
-       <div class="panel-heading">(17) Option 6 (ｵﾌﾟｼｮﾝ名) </div>
+       <div class="panel-heading">(5.6) Option 6 (ｵﾌﾟｼｮﾝ名) </div>
        <asp:TextBox ID="OptionType6TextBox" runat="server" CssClass="form-control" Height="30px" AutoPostBack="True"></asp:TextBox>
     </div>
 
      <div class="panel panel-warning">
-       <div class="panel-heading">(18) Option 7 (ｵﾌﾟｼｮﾝ名) </div>
+       <div class="panel-heading">(5.7) Option 7 (ｵﾌﾟｼｮﾝ名) </div>
        <asp:TextBox ID="OptionType7TextBox" runat="server" CssClass="form-control" Height="30px" AutoPostBack="True"></asp:TextBox>
     </div>
 

@@ -32,6 +32,16 @@
         End If
     End Sub
 
+    Private Sub ButtonNext_Click(sender As Object, e As EventArgs) Handles ButtonNext.Click
+        UpdateSessionData()
+        Response.Redirect("~/SetupStep7CheckSheet5.aspx")
+    End Sub
+
+    Private Sub ButtonPrevious_Click(sender As Object, e As EventArgs) Handles ButtonPrevious.Click
+        UpdateSessionData()
+        Response.Redirect("~/SetupStep7CheckSheet3.aspx")
+    End Sub
+
     Public Sub UpdateSessionData()
 
         m_Data.ManualCheckTE = selecManualCheckTE.Value
@@ -53,16 +63,6 @@
         End If
 
         Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
-    End Sub
-
-    Private Sub ButtonNext_Click(sender As Object, e As EventArgs) Handles ButtonNext.Click
-        UpdateSessionData()
-        Response.Redirect("~/SetupStep7CheckSheet5.aspx")
-    End Sub
-
-    Private Sub ButtonPrevious_Click(sender As Object, e As EventArgs) Handles ButtonPrevious.Click
-        UpdateSessionData()
-        Response.Redirect("~/SetupStep7CheckSheet3.aspx")
     End Sub
 
 End Class

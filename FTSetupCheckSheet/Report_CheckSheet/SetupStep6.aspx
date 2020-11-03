@@ -8,33 +8,53 @@
 <div class="container"> 
   <div class="panel-group"> 
     <div class="panel panel-default">
-       <div class="panel-heading">(19) PROGRAM NAME  (ﾌﾟﾛｸﾞﾗﾑ名)</div>
+       <div class="panel-heading">(6.1) PROGRAM NAME  (ﾌﾟﾛｸﾞﾗﾑ名)</div>
        <asp:TextBox ID="ProgramNameTextBox" runat="server" CssClass="form-control" Height="30px" AutoPostBack="True" ReadOnly="true"></asp:TextBox>
     </div>
 
     <div class="panel panel-default">
-       <div class="panel-heading">(20) TYPE CHANGE PACKAGE  (ﾀｲﾌﾟ交換)</div>
+       <div class="panel-heading">(6.2) TYPE CHANGE PACKAGE  (ﾀｲﾌﾟ交換)</div>
        <asp:TextBox ID="TypechangepackageTextBox" runat="server" CssClass="form-control" Height="30px" AutoPostBack="True"></asp:TextBox>
     </div>
 
      <div class="panel panel-default">
-       <div class="panel-heading">(21) QR CODE SOCKET : Channel 1 (QRコードｿｹｯﾄ)</div>
+       <div class="panel-heading">(6.3) QR CODE SOCKET : Channel 1 (QRコードｿｹｯﾄ)</div>
        <asp:TextBox ID="QRcodeSocket1TextBox" runat="server" CssClass="form-control" Height="30px" AutoPostBack="True"></asp:TextBox>
     </div>
     
       <div class="panel panel-default">
-        <div class="panel-heading">(22) QR CODE SOCKET : Channel 2 (QRコードｿｹｯﾄ) </div>
+        <div class="panel-heading">(6.4) QR CODE SOCKET : Channel 2 (QRコードｿｹｯﾄ) </div>
         <asp:TextBox ID="QRcodeSocket2TextBox" runat="server" CssClass="form-control" Height="30px" AutoPostBack="True"></asp:TextBox>
     </div>
 
      <div class="panel panel-default">
-        <div class="panel-heading">(23) QR CODE SOCKET : Channel 3 (QRコードｿｹｯﾄ) </div>
+        <div class="panel-heading">(6.5) QR CODE SOCKET : Channel 3 (QRコードｿｹｯﾄ) </div>
         <asp:TextBox ID="QRcodeSocket3TextBox" runat="server" CssClass="form-control" Height="30px" AutoPostBack="True"></asp:TextBox>
     </div>
 
       <div class="panel panel-default">
-        <div class="panel-heading">(24) QR CODE SOCKET : Channel 4 (QRコードｿｹｯﾄ) </div>
+        <div class="panel-heading">(6.6) QR CODE SOCKET : Channel 4 (QRコードｿｹｯﾄ) </div>
         <asp:TextBox ID="QRcodeSocket4TextBox" runat="server" CssClass="form-control" Height="30px" AutoPostBack="True"></asp:TextBox>
+    </div>
+
+      <div class="panel panel-default" runat="server" id="panelSocket5" style="display:none">
+       <div class="panel-heading">(6.7) QR CODE SOCKET : Channel 5 (QRコードｿｹｯﾄ)</div>
+       <asp:TextBox ID="QRcodeSocket5TextBox" runat="server" CssClass="form-control" Height="30px" AutoPostBack="True"></asp:TextBox>
+    </div>
+    
+      <div class="panel panel-default" runat="server" id="panelSocket6" style="display:none">
+        <div class="panel-heading">(6.8) QR CODE SOCKET : Channel 6 (QRコードｿｹｯﾄ) </div>
+        <asp:TextBox ID="QRcodeSocket6TextBox" runat="server" CssClass="form-control" Height="30px" AutoPostBack="True"></asp:TextBox>
+    </div>
+
+     <div class="panel panel-default" runat="server" id="panelSocket7" style="display:none">
+        <div class="panel-heading">(6.9) QR CODE SOCKET : Channel 7 (QRコードｿｹｯﾄ) </div>
+        <asp:TextBox ID="QRcodeSocket7TextBox" runat="server" CssClass="form-control" Height="30px" AutoPostBack="True"></asp:TextBox>
+    </div>
+
+      <div class="panel panel-default" runat="server" id="panelSocket8" style="display:none">
+        <div class="panel-heading">(6.10) QR CODE SOCKET : Channel 8 (QRコードｿｹｯﾄ) </div>
+        <asp:TextBox ID="QRcodeSocket8TextBox" runat="server" CssClass="form-control" Height="30px" AutoPostBack="True"></asp:TextBox>
     </div>
 
     <div class="panel">

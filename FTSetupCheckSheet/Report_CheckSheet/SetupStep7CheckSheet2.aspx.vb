@@ -26,16 +26,6 @@ Partial Public Class SetupStep7CheckSheet2
         End If
     End Sub
 
-    Public Sub UpdateSessionData()
-        m_Data.QfpDecisionLeadPress = selecQfpDecisionLeadPress.Value
-        m_Data.QfpSocketDecision = selecQfpSocketDecision.Value
-        m_Data.QfpTray = selecQfpTray.Value
-        m_Data.QfpVacuumPad = selecQfpVacuumPad.Value
-        m_Data.QfpSocketSetup = selectQfpSetupSocket.Value
-
-        Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
-    End Sub
-
     Protected Sub ButtonPrevious_Click(sender As Object, e As EventArgs) Handles ButtonPrevious.Click
         UpdateSessionData()
         Response.Redirect("~/SetupStep7CheckSheet1.aspx")
@@ -44,6 +34,16 @@ Partial Public Class SetupStep7CheckSheet2
     Protected Sub ButtonNext_Click(sender As Object, e As EventArgs) Handles ButtonNext.Click
         UpdateSessionData()
         Response.Redirect("~/SetupStep7CheckSheet3.aspx")
+    End Sub
+
+    Public Sub UpdateSessionData()
+        m_Data.QfpDecisionLeadPress = selecQfpDecisionLeadPress.Value
+        m_Data.QfpSocketDecision = selecQfpSocketDecision.Value
+        m_Data.QfpTray = selecQfpTray.Value
+        m_Data.QfpVacuumPad = selecQfpVacuumPad.Value
+        m_Data.QfpSocketSetup = selectQfpSetupSocket.Value
+
+        Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
     End Sub
 
 End Class

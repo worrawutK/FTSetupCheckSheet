@@ -20,14 +20,6 @@
         End If
     End Sub
 
-    Public Sub UpdateSessionData()
-        m_Data.SopDecisionLeadPress = selecSopDecisionLeadClamper.Value
-        m_Data.SopSocketDecision = selecSopSocketDecision.Value
-        m_Data.SopStopper = selectStopper.Value
-
-        Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
-    End Sub
-
     Private Sub ButtonNext_Click(sender As Object, e As EventArgs) Handles ButtonNext.Click
         UpdateSessionData()
         Response.Redirect("~/SetupStep7CheckSheet4.aspx")
@@ -36,6 +28,14 @@
     Private Sub ButtonPrevious_Click(sender As Object, e As EventArgs) Handles ButtonPrevious.Click
         UpdateSessionData()
         Response.Redirect("~/SetupStep7CheckSheet2.aspx")
+    End Sub
+
+    Public Sub UpdateSessionData()
+        m_Data.SopDecisionLeadPress = selecSopDecisionLeadClamper.Value
+        m_Data.SopSocketDecision = selecSopSocketDecision.Value
+        m_Data.SopStopper = selectStopper.Value
+
+        Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
     End Sub
 
 End Class

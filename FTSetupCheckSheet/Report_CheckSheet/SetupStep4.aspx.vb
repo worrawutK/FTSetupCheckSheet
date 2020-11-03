@@ -30,29 +30,25 @@ Public Class SetupStep4
             DutcardBTextBox.Text = m_Data.DutcardB
             BridgecableATextBox.Text = m_Data.BridgecableA
             BridgecableBTextBox.Text = m_Data.BridgecableB
+
+            If m_Data.MCNo.StartsWith("FT") Then
+                panelAdaptorB.Style.Item("display") = "block"
+                panelDutcardB.Style.Item("display") = "block"
+                panelBridgecableB.Style.Item("display") = "block"
+            End If
+
+            If m_Data.StatusOldEQP Then
+                AdaptorATextBox.ReadOnly = True
+                AdaptorBTextBox.ReadOnly = True
+                DutcardATextBox.ReadOnly = True
+                DutcardBTextBox.ReadOnly = True
+                BridgecableATextBox.ReadOnly = True
+                BridgecableBTextBox.ReadOnly = True
+            End If
         End If
+
         AdaptorATextBox.Focus()
-    End Sub
 
-    Private Sub UpdateSessionData()
-        m_Data.AdaptorA = AdaptorATextBox.Text
-        m_Data.AdaptorB = AdaptorBTextBox.Text
-        m_Data.DutcardA = DutcardATextBox.Text
-        m_Data.DutcardB = DutcardBTextBox.Text
-        m_Data.BridgecableA = BridgecableATextBox.Text
-        m_Data.BridgecableB = BridgecableBTextBox.Text
-
-        Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
-    End Sub
-
-    Private Sub ButtonNext_Click(sender As Object, e As EventArgs) Handles ButtonNext.Click
-        UpdateSessionData()
-        Response.Redirect("~/SetupStep5.aspx")
-    End Sub
-
-    Private Sub ButtonPrevious_Click(sender As Object, e As EventArgs) Handles ButtonPrevious.Click
-        UpdateSessionData()
-        Response.Redirect("~/SetupStep3.aspx")
     End Sub
 
     Protected Sub Adaptor1TextBox_TextChanged(sender As Object, e As EventArgs) Handles AdaptorATextBox.TextChanged
@@ -62,7 +58,7 @@ Public Class SetupStep4
         If Not String.IsNullOrEmpty(AdaptorATextBox.Text) Then
 
             Dim qrName As String = AdaptorATextBox.Text.ToUpper
-            m_Data.AdaptorAQRcode = AdaptorATextBox.Text
+            m_Data.AdaptorAQRcode = qrName
 
             Using dt As DataTable = DBAccess.GetEquipmentByQRName(qrName, EQUIPMENT_TYPE_ID_ADAPTOR)
                 If dt.Rows.Count = 1 Then
@@ -86,7 +82,7 @@ Public Class SetupStep4
         If Not String.IsNullOrEmpty(AdaptorBTextBox.Text) Then
 
             Dim qrName As String = AdaptorBTextBox.Text.ToUpper
-            m_Data.AdaptorBQRcode = AdaptorBTextBox.Text
+            m_Data.AdaptorBQRcode = qrName
 
             Using dt As DataTable = DBAccess.GetEquipmentByQRName(qrName, EQUIPMENT_TYPE_ID_ADAPTOR)
                 If dt.Rows.Count = 1 Then
@@ -108,7 +104,7 @@ Public Class SetupStep4
 
         If Not String.IsNullOrEmpty(DutcardATextBox.Text) Then
             Dim qrName As String = DutcardATextBox.Text.ToUpper
-            m_Data.DutcardAQRcode = DutcardATextBox.Text
+            m_Data.DutcardAQRcode = qrName
 
             Using dt As DataTable = DBAccess.GetEquipmentByQRName(qrName, EQUIPMENT_TYPE_ID_DUTCARD)
 
@@ -133,7 +129,7 @@ Public Class SetupStep4
 
         If Not String.IsNullOrEmpty(DutcardBTextBox.Text) Then
             Dim qrName As String = DutcardBTextBox.Text.ToUpper
-            m_Data.DutcardBQRcode = DutcardBTextBox.Text
+            m_Data.DutcardBQRcode = qrName
 
             Using dt As DataTable = DBAccess.GetEquipmentByQRName(qrName, EQUIPMENT_TYPE_ID_DUTCARD)
 
@@ -158,7 +154,7 @@ Public Class SetupStep4
 
         If Not String.IsNullOrEmpty(BridgecableATextBox.Text) Then
             Dim qrName As String = BridgecableATextBox.Text.ToUpper
-            m_Data.BridgecableAQRcode = BridgecableATextBox.Text
+            m_Data.BridgecableAQRcode = qrName
 
             Using dt As DataTable = DBAccess.GetEquipmentByQRName(qrName, EQUIPMENT_TYPE_ID_BRIDGE_CABLE)
 
@@ -180,7 +176,7 @@ Public Class SetupStep4
 
         If Not String.IsNullOrEmpty(BridgecableBTextBox.Text) Then
             Dim qrName As String = BridgecableBTextBox.Text.ToUpper
-            m_Data.BridgecableBQRcode = BridgecableBTextBox.Text
+            m_Data.BridgecableBQRcode = qrName
 
             Using dt As DataTable = DBAccess.GetEquipmentByQRName(qrName, EQUIPMENT_TYPE_ID_BRIDGE_CABLE)
 
@@ -200,4 +196,24 @@ Public Class SetupStep4
 
     End Sub
 
+    Private Sub ButtonNext_Click(sender As Object, e As EventArgs) Handles ButtonNext.Click
+        UpdateSessionData()
+        Response.Redirect("~/SetupStep5.aspx")
+    End Sub
+
+    Private Sub ButtonPrevious_Click(sender As Object, e As EventArgs) Handles ButtonPrevious.Click
+        UpdateSessionData()
+        Response.Redirect("~/SetupStep3.aspx")
+    End Sub
+
+    Private Sub UpdateSessionData()
+        m_Data.AdaptorA = AdaptorATextBox.Text
+        m_Data.AdaptorB = AdaptorBTextBox.Text
+        m_Data.DutcardA = DutcardATextBox.Text
+        m_Data.DutcardB = DutcardBTextBox.Text
+        m_Data.BridgecableA = BridgecableATextBox.Text
+        m_Data.BridgecableB = BridgecableBTextBox.Text
+
+        Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
+    End Sub
 End Class

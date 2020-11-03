@@ -22,12 +22,12 @@
             <asp:TextBox ID="TesternoBTextBox" runat="server" CssClass="form-control" Height="30px" AutoPostBack="True"></asp:TextBox>
         </div>
 
-        <div class="panel panel-info" style="display:none">
+        <div class="panel panel-info" runat="server" id="panelTesternoC">
             <div class="panel-heading">(2.3) TESTER NO  (ﾃｽﾀｰ№) : C channel </div>
             <asp:TextBox ID="TesternoCTextBox" runat="server" CssClass="form-control" Height="30px" AutoPostBack="True"></asp:TextBox>
         </div>
 
-        <div class="panel panel-info" style="display:none">
+        <div class="panel panel-info" runat="server" id="panelTesternoD">
             <div class="panel-heading">(2.4) TESTER NO  (ﾃｽﾀｰ№) : D channel </div>
             <asp:TextBox ID="TesternoDTextBox" runat="server" CssClass="form-control" Height="30px" AutoPostBack="True"></asp:TextBox>
         </div>

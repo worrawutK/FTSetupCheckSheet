@@ -19,14 +19,6 @@
         End If
     End Sub
 
-    Public Sub UpdateSessionData()
-        m_Data.PkgGoodJudgement = selecPkgGoodjudgement.Value
-        m_Data.PkgNGJudgement = selecPkgNGjudgement.Value
-        m_Data.PkgNishikiCamaraJudgement = SelectPKgNishikijudgement.Value
-
-        Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
-    End Sub
-
     Private Sub ButtonNext_Click(sender As Object, e As EventArgs) Handles ButtonNext.Click
         UpdateSessionData()
         Response.Redirect("~/SetupStep7CheckSheet7.aspx")
@@ -35,6 +27,14 @@
     Private Sub ButtonPrevious_Click(sender As Object, e As EventArgs) Handles ButtonPrevious.Click
         UpdateSessionData()
         Response.Redirect("~/SetupStep7CheckSheet5.aspx")
+    End Sub
+
+    Public Sub UpdateSessionData()
+        m_Data.PkgGoodJudgement = selecPkgGoodjudgement.Value
+        m_Data.PkgNGJudgement = selecPkgNGjudgement.Value
+        m_Data.PkgNishikiCamaraJudgement = SelectPKgNishikijudgement.Value
+
+        Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
     End Sub
 
 End Class
