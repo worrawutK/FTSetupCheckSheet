@@ -410,6 +410,7 @@ Public Class DBAccess
     Public Shared Function SetNextLot(mcNo As String, lotNo As String) As Integer
         'After SaveBtn is pressed (From SetupStep7CheckSheet9)
         Dim row As Integer
+        Dim program_name As String = "setupchecksheet"
 
         Using connection As New SqlConnection(My.Settings.APCsUserSPConnectionString)
             connection.Open()
@@ -421,6 +422,7 @@ Public Class DBAccess
 
                 cmd.Parameters.Add("@mc_name", SqlDbType.VarChar, 30).Value = mcNo
                 cmd.Parameters.Add("@lot_no", SqlDbType.VarChar, 10).Value = lotNo
+                cmd.Parameters.Add("@program_name", SqlDbType.VarChar).Value = program_name
 
                 row = cmd.ExecuteNonQuery()
 

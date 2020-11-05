@@ -109,6 +109,9 @@ Public Class SetupMain
                         RemoveSpecialFlow(lotId, specialflowId)
                     End If
 
+                    'Clear Next Lot 
+                    SetNextLotHere(mcNo, "")
+
                 End If
 
                 '009363 clear all data before save to database
@@ -595,6 +598,16 @@ Public Class SetupMain
             DBAccess.ClearSpecialFlow(lotId, specialflowId)
         Catch ex As Exception
             ShowErrorMessage("ไม่สามารถลบ Special Flows ได้ กรุณาติดต่อ SYSTEM :" & ex.Message)
+            Exit Sub
+        End Try
+    End Sub
+
+    Private Sub SetNextLotHere(mcNo As String, lotNo As String)
+        'Set Next Lot here
+        Try
+            DBAccess.SetNextLot(mcNo, lotNo)
+        Catch ex As Exception
+            ShowErrorMessage("Failed to Add Next Lots :" & ex.Message)
             Exit Sub
         End Try
     End Sub
