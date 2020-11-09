@@ -51,32 +51,32 @@
 
     Private Sub MatchOldandNewEQP()
         'not press old_eqp button and not same eqp
-        If m_Data.StatusOldEQP = False And (m_Data.TesterNoA <> m_OldData.TesterNoA And m_Data.TesterNoAQRcode <> m_OldData.TesterNoAQRcode And
-                                            m_Data.TesterNoB <> m_OldData.TesterNoB And m_Data.TesterNoBQRcode <> m_OldData.TesterNoBQRcode And
-                                            m_Data.TesterNoC <> m_OldData.TesterNoC And m_Data.TesterNoCQRcode <> m_OldData.TesterNoCQRcode And
-                                            m_Data.TesterNoD <> m_OldData.TesterNoD And m_Data.TesterNoDQRcode <> m_OldData.TesterNoDQRcode And
-                                            m_Data.ChannelAFTB <> m_OldData.ChannelAFTB And m_Data.ChannelAFTBQRcode <> m_OldData.ChannelAFTBQRcode And
-                                            m_Data.ChannelBFTB <> m_OldData.ChannelBFTB And m_Data.ChannelBFTBQRcode <> m_OldData.ChannelBFTBQRcode And
-                                            m_Data.ChannelCFTB <> m_OldData.ChannelCFTB And m_Data.ChannelCFTBQRcode <> m_OldData.ChannelCFTBQRcode And
-                                            m_Data.ChannelDFTB <> m_OldData.ChannelDFTB And m_Data.ChannelDFTBQRcode <> m_OldData.ChannelDFTBQRcode And
-                                            m_Data.ChannelEFTB <> m_OldData.ChannelEFTB And m_Data.ChannelEFTBQRcode <> m_OldData.ChannelEFTBQRcode And
-                                            m_Data.ChannelFFTB <> m_OldData.ChannelFFTB And m_Data.ChannelFFTBQRcode <> m_OldData.ChannelFFTBQRcode And
-                                            m_Data.ChannelGFTB <> m_OldData.ChannelGFTB And m_Data.ChannelGFTBQRcode <> m_OldData.ChannelGFTBQRcode And
-                                            m_Data.ChannelHFTB <> m_OldData.ChannelHFTB And m_Data.ChannelHFTBQRcode <> m_OldData.ChannelHFTBQRcode And
-                                            m_Data.TestBoxA <> m_OldData.TestBoxA And m_Data.TestBoxAQRcode <> m_OldData.TestBoxAQRcode And
-                                            m_Data.TestBoxB <> m_OldData.TestBoxB And m_Data.TestBoxBQRcode <> m_OldData.TestBoxBQRcode And
-                                            m_Data.TestBoxC <> m_OldData.TestBoxC And m_Data.TestBoxCQRcode <> m_OldData.TestBoxCQRcode And
-                                            m_Data.TestBoxD <> m_OldData.TestBoxD And m_Data.TestBoxDQRcode <> m_OldData.TestBoxDQRcode And
-                                            m_Data.TestBoxE <> m_OldData.TestBoxE And m_Data.TestBoxEQRcode <> m_OldData.TestBoxEQRcode And
-                                            m_Data.TestBoxF <> m_OldData.TestBoxF And m_Data.TestBoxFQRcode <> m_OldData.TestBoxFQRcode And
-                                            m_Data.TestBoxG <> m_OldData.TestBoxG And m_Data.TestBoxGQRcode <> m_OldData.TestBoxGQRcode And
-                                            m_Data.TestBoxH <> m_OldData.TestBoxH And m_Data.TestBoxHQRcode <> m_OldData.TestBoxHQRcode And
-                                            m_Data.AdaptorA <> m_OldData.AdaptorA And m_Data.AdaptorAQRcode <> m_OldData.AdaptorAQRcode And
-                                            m_Data.AdaptorB <> m_OldData.AdaptorB And m_Data.AdaptorBQRcode <> m_OldData.AdaptorBQRcode And
-                                            m_Data.DutcardA <> m_OldData.DutcardA And m_Data.DutcardAQRcode <> m_OldData.DutcardAQRcode And
-                                            m_Data.DutcardB <> m_OldData.DutcardB And m_Data.DutcardBQRcode <> m_OldData.DutcardBQRcode And
-                                            m_Data.BridgecableA <> m_OldData.BridgecableA And m_Data.BridgecableAQRcode <> m_OldData.BridgecableAQRcode And
-                                            m_Data.BridgecableB <> m_OldData.BridgecableB And m_Data.BridgecableBQRcode <> m_OldData.BridgecableBQRcode) Then
+        If m_Data.StatusOldEQP = False And Not (m_Data.TesterNoA = m_OldData.TesterNoA AndAlso m_Data.TesterNoAQRcode = m_OldData.TesterNoAQRcode AndAlso
+                                            m_Data.TesterNoB = m_OldData.TesterNoB AndAlso m_Data.TesterNoBQRcode = m_OldData.TesterNoBQRcode AndAlso
+                                            m_Data.TesterNoC = m_OldData.TesterNoC AndAlso m_Data.TesterNoCQRcode = m_OldData.TesterNoCQRcode AndAlso
+                                            m_Data.TesterNoD = m_OldData.TesterNoD AndAlso m_Data.TesterNoDQRcode = m_OldData.TesterNoDQRcode AndAlso
+                                            m_Data.ChannelAFTB = m_OldData.ChannelAFTB AndAlso m_Data.ChannelAFTBQRcode = m_OldData.ChannelAFTBQRcode AndAlso
+                                            m_Data.ChannelBFTB = m_OldData.ChannelBFTB AndAlso m_Data.ChannelBFTBQRcode = m_OldData.ChannelBFTBQRcode AndAlso
+                                            m_Data.ChannelCFTB = m_OldData.ChannelCFTB AndAlso m_Data.ChannelCFTBQRcode = m_OldData.ChannelCFTBQRcode AndAlso
+                                            m_Data.ChannelDFTB = m_OldData.ChannelDFTB AndAlso m_Data.ChannelDFTBQRcode = m_OldData.ChannelDFTBQRcode AndAlso
+                                            m_Data.ChannelEFTB = m_OldData.ChannelEFTB AndAlso m_Data.ChannelEFTBQRcode = m_OldData.ChannelEFTBQRcode AndAlso
+                                            m_Data.ChannelFFTB = m_OldData.ChannelFFTB AndAlso m_Data.ChannelFFTBQRcode = m_OldData.ChannelFFTBQRcode AndAlso
+                                            m_Data.ChannelGFTB = m_OldData.ChannelGFTB AndAlso m_Data.ChannelGFTBQRcode = m_OldData.ChannelGFTBQRcode AndAlso
+                                            m_Data.ChannelHFTB = m_OldData.ChannelHFTB AndAlso m_Data.ChannelHFTBQRcode = m_OldData.ChannelHFTBQRcode AndAlso
+                                            m_Data.TestBoxA = m_OldData.TestBoxA AndAlso m_Data.TestBoxAQRcode = m_OldData.TestBoxAQRcode AndAlso
+                                            m_Data.TestBoxB = m_OldData.TestBoxB AndAlso m_Data.TestBoxBQRcode = m_OldData.TestBoxBQRcode AndAlso
+                                            m_Data.TestBoxC = m_OldData.TestBoxC AndAlso m_Data.TestBoxCQRcode = m_OldData.TestBoxCQRcode AndAlso
+                                            m_Data.TestBoxD = m_OldData.TestBoxD AndAlso m_Data.TestBoxDQRcode = m_OldData.TestBoxDQRcode AndAlso
+                                            m_Data.TestBoxE = m_OldData.TestBoxE AndAlso m_Data.TestBoxEQRcode = m_OldData.TestBoxEQRcode AndAlso
+                                            m_Data.TestBoxF = m_OldData.TestBoxF AndAlso m_Data.TestBoxFQRcode = m_OldData.TestBoxFQRcode AndAlso
+                                            m_Data.TestBoxG = m_OldData.TestBoxG AndAlso m_Data.TestBoxGQRcode = m_OldData.TestBoxGQRcode AndAlso
+                                            m_Data.TestBoxH = m_OldData.TestBoxH AndAlso m_Data.TestBoxHQRcode = m_OldData.TestBoxHQRcode AndAlso
+                                            m_Data.AdaptorA = m_OldData.AdaptorA AndAlso m_Data.AdaptorAQRcode = m_OldData.AdaptorAQRcode AndAlso
+                                            m_Data.AdaptorB = m_OldData.AdaptorB AndAlso m_Data.AdaptorBQRcode = m_OldData.AdaptorBQRcode AndAlso
+                                            m_Data.DutcardA = m_OldData.DutcardA AndAlso m_Data.DutcardAQRcode = m_OldData.DutcardAQRcode AndAlso
+                                            m_Data.DutcardB = m_OldData.DutcardB AndAlso m_Data.DutcardBQRcode = m_OldData.DutcardBQRcode AndAlso
+                                            m_Data.BridgecableA = m_OldData.BridgecableA AndAlso m_Data.BridgecableAQRcode = m_OldData.BridgecableAQRcode AndAlso
+                                            m_Data.BridgecableB = m_OldData.BridgecableB AndAlso m_Data.BridgecableBQRcode = m_OldData.BridgecableBQRcode) Then
 
             m_Data.StatusShonoOP = "0"
             m_Data.ConfirmedShonoGL = ""
