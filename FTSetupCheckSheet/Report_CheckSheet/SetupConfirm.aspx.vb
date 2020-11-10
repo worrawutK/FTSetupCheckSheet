@@ -778,6 +778,7 @@ Public Class SetupConfirm
         SetNextLotHere(m_Data.MCNo, m_Data.LotNo)
 
         m_Data.SetupStatus = setupStatus
+        m_Data.SetupConfirmDate = Now
 
         SetFTReport()
 
