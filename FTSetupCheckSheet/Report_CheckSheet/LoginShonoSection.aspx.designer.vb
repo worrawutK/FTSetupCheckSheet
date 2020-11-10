@@ -12,7 +12,7 @@ Option Explicit On
 
 
 Partial Public Class LoginShonoSection
-    
+
     '''<summary>
     '''dateLabel control.
     '''</summary>
@@ -21,7 +21,25 @@ Partial Public Class LoginShonoSection
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents dateLabel As Global.System.Web.UI.WebControls.Label
-    
+
+    '''<summary>
+    '''panelError control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panelError As Global.System.Web.UI.HtmlControls.HtmlGenericControl
+
+    '''<summary>
+    '''ErrorMessageLabel control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents ErrorMessageLabel As Global.System.Web.UI.WebControls.Label
+
     '''<summary>
     '''usernameTextBox control.
     '''</summary>
@@ -30,7 +48,7 @@ Partial Public Class LoginShonoSection
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents usernameTextBox As Global.System.Web.UI.WebControls.TextBox
-    
+
     '''<summary>
     '''Submit control.
     '''</summary>

@@ -50,6 +50,12 @@
                         <asp:Label ID="dateLabel" runat="server" Text="__________"></asp:Label>
                     </h3>
 			 	</div>
+                <div class="panel-group">             
+                    <div class="panel panel-danger" id="panelError" runat="server" style="display:none">
+                        <div class="panel-heading">ERROR !!</div>
+                        <asp:Label ID="ErrorMessageLabel" runat="server" Text="THERE IS ERROR MESSAGE !!!!" ForeColor="Red" Font-Size="Large"></asp:Label>
+                    </div>
+                </div>
 			  	<div class="panel-body">
 			    	  	<div class="form-group">
                               <asp:TextBox ID="usernameTextBox" runat="server" CssClass="auto-style1"></asp:TextBox>                         

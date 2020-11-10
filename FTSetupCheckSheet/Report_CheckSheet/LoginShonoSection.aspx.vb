@@ -80,7 +80,21 @@ Public Class LoginShonoSection
         End Using
 
         Dim pdffile1 As New Document(PageSize.A4)
-        Dim pdfReader As PdfReader = New PdfReader(System.IO.File.ReadAllBytes(My.Settings.ShonokokoshiPDFPath & Request.QueryString("LotNo") & "_" & Request.QueryString("MCNo") & ".pdf"))
+        Dim pdfReader As PdfReader
+
+        Try
+            pdfReader = New PdfReader(System.IO.File.ReadAllBytes(My.Settings.ShonokokoshiPDFPath & Request.QueryString("LotNo") & "_" & Request.QueryString("MCNo") & ".pdf"))
+        Catch ex As Exception
+            Dim str As String() = ex.Message.Split("'"c)
+            Dim str2 As String() = str(1).Split("\"c)
+            Dim errMessage As List(Of String) = New List(Of String)
+
+            errMessage.Add("ไม่พบ File Shoko ที่ \\" + str2(2) + "\" + str2(3) + "\" + str2(4))
+            errMessage.Add(str2(5))
+            ShowErrorMessage(String.Join("<br/>", errMessage.ToArray()))
+            Exit Sub
+        End Try
+
         Dim dt As New FileStream(My.Settings.ShonokokoshiPDFPath & Request.QueryString("LotNo") & "_" & Request.QueryString("MCNo") & ".pdf", FileMode.Create)
 
         Dim pdfWriter As PdfWriter = PdfWriter.GetInstance(pdffile1, dt)
@@ -116,4 +130,14 @@ Public Class LoginShonoSection
         Response.Redirect(String.Format("~/ConfirmedReport.aspx?LotNo={0}&MCNo={1}",
                                         Request.QueryString("LotNo"), Request.QueryString("MCNo")))
     End Sub
+
+    Private Sub ShowErrorMessage(errMessage As String)
+        ErrorMessageLabel.Text = errMessage
+        panelError.Style.Item("display") = "block"
+    End Sub
+
+    Private Sub HideErrorMessage()
+        panelError.Style.Item("display") = "none"
+    End Sub
+
 End Class

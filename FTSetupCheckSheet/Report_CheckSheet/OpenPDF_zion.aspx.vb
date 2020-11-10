@@ -62,8 +62,22 @@ Public Class OpenPDF_zion
         Dim pdffile1 As New Document(PageSize.A4)
         Dim dt As New MemoryStream()
         Dim pdfWriter As PdfWriter = PdfWriter.GetInstance(pdffile1, dt)
-        Dim pdfReader As PdfReader = New PdfReader(My.Settings.ShonokokoshiPDFPath + s_LotNo + "_" + s_MCNo + ".pdf")
-        Dim pdfimportopen As PdfImportedPage = pdfWriter.GetImportedPage(pdfReader, 1)
+        Dim pdfReader As PdfReader
+
+        Try
+            pdfReader = New PdfReader(My.Settings.ShonokokoshiPDFPath + s_LotNo + "_" + s_MCNo + ".pdf")
+        Catch ex As Exception
+            Dim str As String() = ex.Message.Split("'"c)
+            Dim str2 As String() = str(1).Split("\"c)
+            Dim errMessage As List(Of String) = New List(Of String)
+
+            errMessage.Add("ไม่พบ File Shoko ที่ \\" + str2(2) + "\" + str2(3) + "\" + str2(4))
+            errMessage.Add(str2(5))
+            ShowErrorMessage(String.Join("<br/>", errMessage.ToArray()))
+            Exit Sub
+        End Try
+
+        Dim pdfimportopen As PdfImportedPage = pdfWriter.GetImportedPage(PdfReader, 1)
 
         pdffile1.Open()
 
@@ -81,6 +95,15 @@ Public Class OpenPDF_zion
         Response.OutputStream.Write(dt.GetBuffer(), 0, dt.GetBuffer().Length)
         Response.Flush()
         Response.Clear()
+    End Sub
+
+    Private Sub ShowErrorMessage(errMessage As String)
+        ErrorMessageLabel.Text = errMessage
+        panelError.Style.Item("display") = "block"
+    End Sub
+
+    Private Sub HideErrorMessage()
+        panelError.Style.Item("display") = "none"
     End Sub
 
 End Class
