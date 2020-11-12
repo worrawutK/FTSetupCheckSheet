@@ -11,9 +11,6 @@ Imports System.Data.SqlClient
 Public Class OpenShono
     Inherits System.Web.UI.Page
 
-    Private m_Data As FTSetupReport
-
-
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
 
         'dateTimesetupLabel.Text = DateTime.Now.ToString("yyyy/MM/dd")
@@ -28,47 +25,64 @@ Public Class OpenShono
         Dim s_ConfirmedShonoGL As String
         Dim s_ConfirmedShonoOp As String
 
-        Using con As SqlConnection = New SqlConnection(My.Settings.DBxConnectionString)
-            con.Open()
-            Dim sqlFtSetup As String = "SELECT MCNo, LotNo, PackageName, DeviceName, ProgramName, TesterType, TestFlow, QRCodesocket1, QRCodesocket2, QRCodesocket3, 
-                                      QRCodesocket4, QRCodesocketChannel1, QRCodesocketChannel2, QRCodesocketChannel3, QRCodesocketChannel4, TesterNoA, 
-                                      TesterNoAQRcode, TesterNoB, TesterNoBQRcode, ChannelAFTB, ChannelAFTBQRcode, ChannelBFTB, ChannelBFTBQRcode, TestBoxA, 
-                                      TestBoxAQRcode, TestBoxB, TestBoxBQRcode, AdaptorA, AdaptorAQRcode, AdaptorB, AdaptorBQRcode, DutcardA, DutcardAQRcode, DutcardB, 
-                                      DutcardBQRcode, BridgecableA, BridgecableAQRcode, BridgecableB, BridgecableBQRcode, TypeChangePackage, SetupStartDate, SetupEndDate, 
-                                      BoxTesterConnection, OptionSetup, OptionConnection, OptionName1, OptionName2, OptionName3, OptionName4, OptionName5, OptionName6, 
-                                      OptionName7, OptionType1, OptionType1QRcode, OptionType2, OptionType2QRcode, OptionType3, OptionType3QRcode, OptionType4, 
-                                      OptionType4QRcode, OptionType5, OptionType5QRcode, OptionType6, OptionType6QRcode, OptionType7, OptionType7QRcode, OptionSetting1, 
-                                      OptionSetting2, OptionSetting3, OptionSetting4, OptionSetting5, OptionSetting6, OptionSetting7, QfpVacuumPad, QfpSocketSetup, QfpSocketDecision, 
-                                      QfpDecisionLeadPress, QfpTray, SopStopper, SopSocketDecision, SopDecisionLeadPress, ManualCheckTest, ManualCheckTE, ManualCheckRequestTE, 
-                                      ManualCheckRequestTEConfirm, PkgGood, PkgNG, PkgGoodJudgement, PkgNGJudgement, PkgNishikiCamara, PkgNishikiCamaraJudgement, 
-                                      PkqBantLead, PkqKakeHige, BgaSmallBall, BgaBentTape, Bge5S, SetupStatus,ConfirmedCheckSheetOp, 
-                                      ConfirmedCheckSheetSection, ConfirmedCheckSheetGL, ConfirmedShonoSection, ConfirmedShonoGL, ConfirmedShonoOp,StatusShonoOP,SetupConfirmDate,RecordTime
-                                      FROM DBx.dbo.FTSetupReportHistory WHERE LotNo ='" & Request.QueryString("LotNo") & "'AND MCNo ='" & Request.QueryString("MCNo") & "'"
+        Dim d As DataRow
+        Using dt3 As DataTable = DBAccess.GetFTSetupReportHistoryByMCNo(Request.QueryString("MCNo"), Request.QueryString("LotNo"))
 
-            Using cmd As New SqlCommand(sqlFtSetup, con)
-                Using d As SqlDataReader = cmd.ExecuteReader()
-                    If d.Read Then
-                        s_MCNo = d("MCNo").ToString()
-                        s_LotNo = d("LotNo").ToString()
-                        s_PackageName = d("PackageName").ToString()
-                        s_DeviceName = d("DeviceName").ToString()
-                        s_TesterNoA = d("TesterNoA").ToString()
-                        s_SetupStatus = d("SetupStatus").ToString()
-                        s_ConfirmedShonoSection = d("ConfirmedShonoSection").ToString()
-                        s_ConfirmedShonoGL = d("ConfirmedShonoGL").ToString()
-                        s_ConfirmedShonoOp = d("ConfirmedShonoOp").ToString()
+            d = dt3.Rows(0)
 
-                    End If
-                End Using
-            End Using
+            s_MCNo = d("MCNo").ToString()
+            s_LotNo = d("LotNo").ToString()
+            s_PackageName = d("PackageName").ToString()
+            s_DeviceName = d("DeviceName").ToString()
+            s_TesterNoA = d("TesterNoA").ToString()
+            s_SetupStatus = d("SetupStatus").ToString()
+            s_ConfirmedShonoSection = d("ConfirmedShonoSection").ToString()
+            s_ConfirmedShonoGL = d("ConfirmedShonoGL").ToString()
+            s_ConfirmedShonoOp = d("ConfirmedShonoOp").ToString()
+
         End Using
+
+        'Using con As SqlConnection = New SqlConnection(My.Settings.DBxConnectionString)
+        '    con.Open()
+        '    Dim sqlFtSetup As String = "SELECT MCNo, LotNo, PackageName, DeviceName, ProgramName, TesterType, TestFlow, QRCodesocket1, QRCodesocket2, QRCodesocket3, 
+        '                              QRCodesocket4, QRCodesocketChannel1, QRCodesocketChannel2, QRCodesocketChannel3, QRCodesocketChannel4, TesterNoA, 
+        '                              TesterNoAQRcode, TesterNoB, TesterNoBQRcode, ChannelAFTB, ChannelAFTBQRcode, ChannelBFTB, ChannelBFTBQRcode, TestBoxA, 
+        '                              TestBoxAQRcode, TestBoxB, TestBoxBQRcode, AdaptorA, AdaptorAQRcode, AdaptorB, AdaptorBQRcode, DutcardA, DutcardAQRcode, DutcardB, 
+        '                              DutcardBQRcode, BridgecableA, BridgecableAQRcode, BridgecableB, BridgecableBQRcode, TypeChangePackage, SetupStartDate, SetupEndDate, 
+        '                              BoxTesterConnection, OptionSetup, OptionConnection, OptionName1, OptionName2, OptionName3, OptionName4, OptionName5, OptionName6, 
+        '                              OptionName7, OptionType1, OptionType1QRcode, OptionType2, OptionType2QRcode, OptionType3, OptionType3QRcode, OptionType4, 
+        '                              OptionType4QRcode, OptionType5, OptionType5QRcode, OptionType6, OptionType6QRcode, OptionType7, OptionType7QRcode, OptionSetting1, 
+        '                              OptionSetting2, OptionSetting3, OptionSetting4, OptionSetting5, OptionSetting6, OptionSetting7, QfpVacuumPad, QfpSocketSetup, QfpSocketDecision, 
+        '                              QfpDecisionLeadPress, QfpTray, SopStopper, SopSocketDecision, SopDecisionLeadPress, ManualCheckTest, ManualCheckTE, ManualCheckRequestTE, 
+        '                              ManualCheckRequestTEConfirm, PkgGood, PkgNG, PkgGoodJudgement, PkgNGJudgement, PkgNishikiCamara, PkgNishikiCamaraJudgement, 
+        '                              PkqBantLead, PkqKakeHige, BgaSmallBall, BgaBentTape, Bge5S, SetupStatus,ConfirmedCheckSheetOp, 
+        '                              ConfirmedCheckSheetSection, ConfirmedCheckSheetGL, ConfirmedShonoSection, ConfirmedShonoGL, ConfirmedShonoOp,StatusShonoOP,SetupConfirmDate,RecordTime
+        '                              FROM DBx.dbo.FTSetupReportHistory WHERE LotNo ='" & Request.QueryString("LotNo") & "'AND MCNo ='" & Request.QueryString("MCNo") & "'"
+
+        '    Using cmd As New SqlCommand(sqlFtSetup, con)
+        '        Using d As SqlDataReader = cmd.ExecuteReader()
+        '            If d.Read Then
+        '                s_MCNo = d("MCNo").ToString()
+        '                s_LotNo = d("LotNo").ToString()
+        '                s_PackageName = d("PackageName").ToString()
+        '                s_DeviceName = d("DeviceName").ToString()
+        '                s_TesterNoA = d("TesterNoA").ToString()
+        '                s_SetupStatus = d("SetupStatus").ToString()
+        '                s_ConfirmedShonoSection = d("ConfirmedShonoSection").ToString()
+        '                s_ConfirmedShonoGL = d("ConfirmedShonoGL").ToString()
+        '                s_ConfirmedShonoOp = d("ConfirmedShonoOp").ToString()
+
+        '            End If
+        '        End Using
+        '    End Using
+        'End Using
 
         'Create File PDF
         Dim pdf As New Document(PageSize.A4, 1, 1, 1, 1)
         Dim rt As New MemoryStream()
 
-        Dim pdfWriter As PdfWriter = Nothing
-        pdfWriter = PdfWriter.GetInstance(pdf, rt)
+        Dim pdfWriter As PdfWriter = PdfWriter.GetInstance(pdf, rt)
+        'pdfWriter = PdfWriter.GetInstance(pdf, rt)
 
         pdf.Open()
 

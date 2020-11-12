@@ -114,7 +114,7 @@ Public Class DBAccess
 
     End Function
 
-    Public Shared Function GetFTSetupReportHistoryByMCNo(mcNo As String) As DataTable
+    Public Shared Function GetFTSetupReportHistoryByMCNo(mcNo As String, Optional lotNo As String = "%") As DataTable
         Dim dt As DataTable = New DataTable()
 
         Using connection As New SqlConnection(My.Settings.SPConnectionString)
@@ -125,6 +125,7 @@ Public Class DBAccess
                 cmd.CommandType = CommandType.StoredProcedure
                 cmd.CommandText = "[dbo].[sp_get_setupchecksheet_getlastconfirmed]"
                 cmd.Parameters.Add("@MCNo", SqlDbType.VarChar, 15).Value = mcNo
+                cmd.Parameters.Add("@LotNo", SqlDbType.VarChar, 10).Value = lotNo
 
                 dt.Load(cmd.ExecuteReader())
 
