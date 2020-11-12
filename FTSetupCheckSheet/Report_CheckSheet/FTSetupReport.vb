@@ -1191,7 +1191,7 @@ Public Class FTSetupReport
     End Property
     Private m_SopDecisionLeadPress As String = ""
 
-    Public Property ManualCheckTest() As System.Nullable(Of Integer)
+    Public Property ManualCheckTest() As Integer 'System.Nullable(Of Integer)
         Get
             Return m_ManualCheckTest
         End Get
@@ -1199,7 +1199,7 @@ Public Class FTSetupReport
             m_ManualCheckTest = Value
         End Set
     End Property
-    Private m_ManualCheckTest As System.Nullable(Of Integer)
+    Private m_ManualCheckTest As Integer = 0 'System.Nullable(Of Integer)
 
     Public Property ManualCheckTE() As String
         Get
@@ -1211,7 +1211,7 @@ Public Class FTSetupReport
     End Property
     Private m_ManualCheckTE As String = ""
 
-    Public Property ManualCheckRequestTE() As System.Nullable(Of Integer)
+    Public Property ManualCheckRequestTE() As Integer 'System.Nullable(Of Integer)
         Get
             Return m_ManualCheckRequestTE
         End Get
@@ -1219,7 +1219,7 @@ Public Class FTSetupReport
             m_ManualCheckRequestTE = Value
         End Set
     End Property
-    Private m_ManualCheckRequestTE As System.Nullable(Of Integer)
+    Private m_ManualCheckRequestTE As Integer = 0 'System.Nullable(Of Integer)
 
     Public Property ManualCheckRequestTEConfirm() As String
         Get

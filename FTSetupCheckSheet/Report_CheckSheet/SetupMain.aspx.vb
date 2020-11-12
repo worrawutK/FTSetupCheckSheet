@@ -554,9 +554,9 @@ Public Class SetupMain
                     m_Data.SopStopper = row("SopStopper").ToString().ToUpper
                     m_Data.SopSocketDecision = row("SopSocketDecision").ToString().ToUpper
                     m_Data.SopDecisionLeadPress = row("SopDecisionLeadPress").ToString().ToUpper
-                    m_Data.ManualCheckTest = CType(row("ManualCheckTest"), System.Nullable(Of Integer))
+                    m_Data.ManualCheckTest = Int32.Parse(row("ManualCheckTest").ToString())
                     m_Data.ManualCheckTE = row("ManualCheckTE").ToString().ToUpper
-                    m_Data.ManualCheckRequestTE = CType(row("ManualCheckRequestTE"), System.Nullable(Of Integer))
+                    m_Data.ManualCheckRequestTE = Int32.Parse(row("ManualCheckRequestTE").ToString())
                     m_Data.ManualCheckRequestTEConfirm = row("ManualCheckRequestTEConfirm").ToString().ToUpper
                     m_Data.PkgGood = row("PkgGood").ToString().ToUpper
                     m_Data.PkgNG = row("PkgNG").ToString().ToUpper

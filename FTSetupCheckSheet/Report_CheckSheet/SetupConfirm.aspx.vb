@@ -605,16 +605,18 @@ Public Class SetupConfirm
             End If
 
             'OIS Rank = -/C/M 'WS Rank = "","C"
-            m_Data.OISRank = m_Data.OISRank.Replace("-", "")
             Dim wordsRank As String() = m_Data.OISRank.Split("/"c)
+            Dim words As List(Of String) = New List(Of String)
+
+            For Each rank As String In wordsRank
+                Dim a = rank.Replace("-", "")
+                words.Add(a)
+            Next
+
             Dim rankChecked As Boolean = False
 
-            'If lotOISRank = "" Then
-            '    lotOISRank = "-"
-            'End If
-
-            For index = 0 To wordsRank.Length - 1
-                If wordsRank(index).Equals(lotOISRank) Then
+            For index = 0 To words.Count - 1
+                If words(index).Equals(lotOISRank) Then
                     rankChecked = True
                     Exit For
                 End If

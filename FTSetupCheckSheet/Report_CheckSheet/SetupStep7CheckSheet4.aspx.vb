@@ -15,20 +15,10 @@
         End If
 
         If Not IsPostBack Then
+            selecManualCheckTest.Value = m_Data.ManualCheckTest.ToString()
             selecManualCheckTE.Value = m_Data.ManualCheckTE
+            selectManualCheckRequestTE.Value = m_Data.ManualCheckRequestTE.ToString()
             selectManualCheckRequestTEConfirm.Value = m_Data.ManualCheckRequestTEConfirm
-
-            If m_Data.ManualCheckRequestTE.HasValue Then
-                selectManualCheckRequestTE.Value = m_Data.ManualCheckRequestTE.Value.ToString()
-            Else
-                selectManualCheckRequestTE.Value = ""
-            End If
-
-            If m_Data.ManualCheckTest.HasValue Then
-                selecManualCheckTest.Value = m_Data.ManualCheckTest.Value.ToString()
-            Else
-                selecManualCheckTest.Value = ""
-            End If
         End If
     End Sub
 
@@ -52,14 +42,14 @@
         If Integer.TryParse(selectManualCheckRequestTE.Value, tmpTE) Then
             m_Data.ManualCheckRequestTE = tmpTE
         Else
-            m_Data.ManualCheckRequestTE = Nothing
+            m_Data.ManualCheckRequestTE = 0
         End If
 
         Dim tmp As Integer = 0
         If Integer.TryParse(selecManualCheckTest.Value, tmp) Then
             m_Data.ManualCheckTest = tmp
         Else
-            m_Data.ManualCheckTest = Nothing
+            m_Data.ManualCheckTest = 0
         End If
 
         Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data

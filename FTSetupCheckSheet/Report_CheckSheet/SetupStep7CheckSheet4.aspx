@@ -16,8 +16,8 @@
         <div class="panel panel-Default">
               <div class="panel-heading"> (12) ทำการ Test ซ้ำไปมา (繰り返し精度) </div>
                   <div class="form-group">
-                      <select runat="server" class="form-control" id="selecManualCheckTest">
-                        <option>   </option>
+                      <select runat="server" class="form-control" id="selecManualCheckTest" style="vertical-align:middle">
+                        <option value ="0">0</option>
                         <option value ="1">1</option>
                         <option value ="2">2</option>
                         <option value ="3">3</option>
@@ -46,8 +46,8 @@
         <div class="panel panel-Default">
               <div class="panel-heading"> (14) ทำการยืนยันหลังการ Request TE (計測対応後再確認) </div>
                   <div class="form-group">
-                      <select runat="server" class="form-control" id="selectManualCheckRequestTE">
-                        <option>   </option>
+                      <select runat="server" class="form-control" id="selectManualCheckRequestTE" style="vertical-align:middle">
+                        <option value ="0">0</option>
                         <option value ="1">1</option>
                         <option value ="2">2</option>
                         <option value ="3">3</option>
