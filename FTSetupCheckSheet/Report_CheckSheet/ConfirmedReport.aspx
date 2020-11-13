@@ -182,7 +182,24 @@
                   <SortedDescendingHeaderStyle BackColor="#383838" />
               </asp:GridView>
               .</div>
-          <asp:SqlDataSource ID="ConfirmedReportSqlDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:Report_CheckSheet.My.MySettings.DBxConnectionString %>" SelectCommand="SELECT MCNo, LotNo, PackageName, SetupStatus, SetupStartDate, SetupEndDate, ConfirmedCheckSheetOp, ConfirmedCheckSheetSection, ConfirmedCheckSheetGL, StatusShonoOP, ConfirmedShonoOp, ConfirmedShonoSection, ConfirmedShonoGL, TestFlow, DeviceName FROM FTSetupReport WHERE (SetupStatus = 'CONFIRMED') AND (MCNo LIKE @MCNo) ORDER BY SetupEndDate DESC">
+          <asp:SqlDataSource ID="ConfirmedReportSqlDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:Report_CheckSheet.My.MySettings.DBxConnectionString %>" SelectCommand="SELECT TOP(1) MCNo
+	                                                                                                                                                                                              , LotNo
+	                                                                                                                                                                                              , PackageName
+	                                                                                                                                                                                              , SetupStatus
+	                                                                                                                                                                                              , SetupStartDate
+	                                                                                                                                                                                              , SetupEndDate
+	                                                                                                                                                                                              , ConfirmedCheckSheetOp
+	                                                                                                                                                                                              , ConfirmedCheckSheetSection
+	                                                                                                                                                                                              , ConfirmedCheckSheetGL
+	                                                                                                                                                                                              , StatusShonoOP
+	                                                                                                                                                                                              , ConfirmedShonoOp
+	                                                                                                                                                                                              , ConfirmedShonoSection
+	                                                                                                                                                                                              , ConfirmedShonoGL
+	                                                                                                                                                                                              , TestFlow
+	                                                                                                                                                                                              , DeviceName 
+	                                                                                                                                                                                              FROM DBx.dbo.FTSetupReportHistory
+	                                                                                                                                                                                              WHERE (SetupStatus = 'CONFIRMED') AND (MCNo LIKE @MCNo) 
+	                                                                                                                                                                                              ORDER BY Id DESC">
               <SelectParameters>
                   <asp:ControlParameter ControlID="MCNoTextBox" DefaultValue="%" Name="MCNo" PropertyName="Text" />
               </SelectParameters>
