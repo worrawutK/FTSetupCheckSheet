@@ -182,24 +182,32 @@
                   <SortedDescendingHeaderStyle BackColor="#383838" />
               </asp:GridView>
               .</div>
-          <asp:SqlDataSource ID="ConfirmedReportSqlDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:Report_CheckSheet.My.MySettings.DBxConnectionString %>" SelectCommand="SELECT TOP(1) MCNo
-	                                                                                                                                                                                              , LotNo
-	                                                                                                                                                                                              , PackageName
-	                                                                                                                                                                                              , SetupStatus
-	                                                                                                                                                                                              , SetupStartDate
-	                                                                                                                                                                                              , SetupEndDate
-	                                                                                                                                                                                              , ConfirmedCheckSheetOp
-	                                                                                                                                                                                              , ConfirmedCheckSheetSection
-	                                                                                                                                                                                              , ConfirmedCheckSheetGL
-	                                                                                                                                                                                              , StatusShonoOP
-	                                                                                                                                                                                              , ConfirmedShonoOp
-	                                                                                                                                                                                              , ConfirmedShonoSection
-	                                                                                                                                                                                              , ConfirmedShonoGL
-	                                                                                                                                                                                              , TestFlow
-	                                                                                                                                                                                              , DeviceName 
-	                                                                                                                                                                                              FROM DBx.dbo.FTSetupReportHistory
-	                                                                                                                                                                                              WHERE (SetupStatus = 'CONFIRMED') AND (MCNo LIKE @MCNo) 
-	                                                                                                                                                                                              ORDER BY Id DESC">
+          <asp:SqlDataSource ID="ConfirmedReportSqlDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:Report_CheckSheet.My.MySettings.DBxConnectionString %>" SelectCommand="SELECT A.MCNo
+                                                                                                                                                                                                  , A.LotNo
+                                                                                                                                                                                                  , A.PackageName
+                                                                                                                                                                                                  , A.SetupStatus
+                                                                                                                                                                                                  , A.SetupStartDate
+                                                                                                                                                                                                  , A.SetupEndDate
+                                                                                                                                                                                                  , A.ConfirmedCheckSheetOp
+                                                                                                                                                                                                  , A.ConfirmedCheckSheetSection
+                                                                                                                                                                                                  , A.ConfirmedCheckSheetGL
+                                                                                                                                                                                                  , A.StatusShonoOP
+                                                                                                                                                                                                  , A.ConfirmedShonoOp
+                                                                                                                                                                                                  , A.ConfirmedShonoSection
+                                                                                                                                                                                                  , A.ConfirmedShonoGL
+                                                                                                                                                                                                  , A.TestFlow
+                                                                                                                                                                                                  , A.DeviceName 
+                                                                                                                                                                                                  FROM DBx.dbo.FTSetupReportHistory AS A
+                                                                                                                                                                                                  INNER JOIN (SELECT MAX(id) AS id, MCNo --For Last Id of Each M/C
+                                                                                                                                                                                                                         FROM DBx.dbo.FTSetupReportHistory
+   	                                                                                                                                                                                                      WHERE (SetupStatus = 'CONFIRMED') AND (MCNo LIKE ('%' + @MCNo + '%'))
+                                                                                                                                                                                                                         GROUP BY MCNo) AS B ON A.id = B.id
+                                                                                                                                                                                                  INNER JOIN (SELECT MCNo --For Current M/C
+	                                                                                                                                                                                                      FROM DBx.dbo.FTSetupReport
+	                                                                                                                                                                                                      WHERE (SetupStatus = 'CONFIRMED') AND (MCNo LIKE ('%' + @MCNo + '%'))) AS C 
+                                                                                                                                                                                                                         ON A.MCNo = C.MCNo
+                                                                                                                                                                                                  WHERE (A.SetupStatus = 'CONFIRMED') AND (A.MCNo LIKE ('%' + @MCNo + '%'))
+                                                                                                                                                                                                  ORDER BY A.MCNo, A.id desc">
               <SelectParameters>
                   <asp:ControlParameter ControlID="MCNoTextBox" DefaultValue="%" Name="MCNo" PropertyName="Text" />
               </SelectParameters>

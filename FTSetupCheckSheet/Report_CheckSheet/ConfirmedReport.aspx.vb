@@ -150,16 +150,14 @@ Public Class ConfirmedReport
         End If
     End Sub
 
-    Protected Sub ImageButton1_Click(sender As Object, e As ImageClickEventArgs) Handles ImageButton1.Click
-        Response.Redirect("ShowDataSetup.aspx")
-    End Sub
+    'Protected Sub ImageButton1_Click(sender As Object, e As ImageClickEventArgs)
+    '    Response.Redirect("ShowDataSetup.aspx")
+    'End Sub
 
     Private Sub ConfirmedReport_Load(sender As Object, e As EventArgs) Handles Me.Load
-        If Not IsPostBack Then
-            If Not String.IsNullOrEmpty(Request.QueryString("MCNo")) Then
-                MCNoTextBox.Text = Request.QueryString("MCNo")
-                ConfirmedReportSqlDataSource.DataBind()
-            End If
+        If Not String.IsNullOrEmpty(Request.QueryString("MCNo")) Then
+            MCNoTextBox.Text = Request.QueryString("MCNo")
+            ConfirmedReportSqlDataSource.DataBind()
         End If
     End Sub
 End Class

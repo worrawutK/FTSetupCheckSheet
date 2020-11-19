@@ -45,6 +45,10 @@ Public Class LoginShonoSection
                     End If
                 End Using
             End Using
+        Else
+            usernameTextBox.Text = ""
+            MyAlert(Page, "!!! Please Input User Section. 6 Digits !!!")
+            Exit Sub
         End If
 
         Dim ConfirmedShonoSection As String = usernameTextBox.Text

@@ -36,7 +36,8 @@ Public Class Login
 
             Using cmd As New SqlCommand(sdqData, constr)
                 Using d As SqlDataReader = cmd.ExecuteReader()
-                    If d.Read Then
+                    d.Read()
+                    If d.HasRows Then
                         usernameTextBox.Text = d("Name").ToString()
                         dateLabel.Text = DateTime.Now.ToString("yyyy/MM/dd")
                     Else
@@ -46,6 +47,10 @@ Public Class Login
                     End If
                 End Using
             End Using
+        Else
+            usernameTextBox.Text = ""
+            MyAlert(Page, "!!! Please Input User OP. 6 Digits !!!")
+            Exit Sub
         End If
 
         Dim ConfirmedCheckSheetOp As String = usernameTextBox.Text

@@ -42,6 +42,10 @@ Public Class LoginSection
                     End If
                 End Using
             End Using
+        Else
+            usernameTextBox.Text = ""
+            MyAlert(Page, "!!! Please Input User Section. 6 Digits !!!")
+            Exit Sub
         End If
 
         Dim ConfirmedCheckSheetSection As String = usernameTextBox.Text

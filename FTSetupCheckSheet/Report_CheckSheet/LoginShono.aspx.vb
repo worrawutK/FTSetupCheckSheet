@@ -45,6 +45,10 @@ Public Class LoginShono
                     End If
                 End Using
             End Using
+        Else
+            usernameTextBox.Text = ""
+            MyAlert(Page, "!!! Please Input User OP. 6 Digits !!!")
+            Exit Sub
         End If
 
         Dim ConfirmedShonoOp As String = usernameTextBox.Text
