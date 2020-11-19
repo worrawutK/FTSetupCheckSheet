@@ -52,12 +52,13 @@ Public Class SetupConfirm
             m_Data.LotNo = qrTest.Substring(30, 10).ToUpper().Trim()
             'm_Data.PackageName = QRcodeTextBox.Text.Substring(0, 10).ToUpper().Trim()
             'm_Data.DeviceName = QRcodeTextBox.Text.Substring(232, 20).ToUpper().Trim()
-
-        ElseIf qrTest.Length = 10 Then
-            m_Data.LotNo = qrTest
         Else
-            QRcodeTextBox.Text = ""
-            Exit Sub
+            If qrTest.Trim().Length = 10 Then
+                m_Data.LotNo = qrTest.Trim()
+            Else
+                QRcodeTextBox.Text = ""
+                Exit Sub
+            End If
         End If
 
         Dim apcsdbDenpyoTbl As DataTable
@@ -581,13 +582,13 @@ Public Class SetupConfirm
 
             Dim lotId As Int32 = Int32.Parse(currentTransLotsRow("LotId").ToString())
             Dim backStepNo As Int32 = Int32.Parse(currentTransLotsRow("StepNo").ToString())
-            Dim flowName As String = currentTransLotsRow("FlowName").ToString()
-            Dim wipState As String = currentTransLotsRow("WipState").ToString()
-            Dim processState As String = currentTransLotsRow("ProcessState").ToString()
-            Dim qualityState As String = currentTransLotsRow("QualityState").ToString()
+            Dim flowName As String = currentTransLotsRow("FlowName").ToString().Trim()
+            Dim wipState As String = currentTransLotsRow("WipState").ToString().Trim()
+            Dim processState As String = currentTransLotsRow("ProcessState").ToString().Trim()
+            Dim qualityState As String = currentTransLotsRow("QualityState").ToString().Trim()
             Dim isSpecialFlow As Int32 = Int32.Parse(currentTransLotsRow("IsSpecialFlow").ToString())
             Dim processCategory As Int32 = Int32.Parse(currentTransLotsRow("ProductionCategory").ToString())
-            Dim lotOISRank As String = currentTransLotsRow("LotOISRank").ToString()
+            Dim lotOISRank As String = currentTransLotsRow("LotOISRank").ToString().Trim()
             Dim SetupStatus As String
 
             'Now is Special Flow then Is it GO/NG Sample Judge
@@ -682,26 +683,31 @@ Public Class SetupConfirm
 
                     If (wipState = "WIP" OrElse wipState = "Already Input") Then
 
-                        If (processState = "Wait" OrElse processState = "Abnormal WIP") Then
+                        If (processState = "Wait" OrElse processState = "Abnormal WIP" OrElse (processState = "Processing" And m_OldData.LotNo = m_Data.LotNo)) Then
 
-                            If (isSpecialFlow = 1 And qualityState = "Special Flow") Then 'Skip for now wait multi add specialFlow
+                            If (isSpecialFlow = 1 And qualityState = "Special Flow") Then
 
-                                If SetupStatus = "GOODNGTEST" Then
-                                    ShowErrorMessage("Lot เป็น Special Flow ไม่สามารถนำมา Confirm กับเครื่องที่เข้าเงื่อนไขที่ต้องรัน GO/NG Sample ได้ กรุณาเปลี่ยน Lot <br/>")
+                                If (SetupStatus = SETUP_STATUS_CONFIRMED) Then 'Matching FlowName with OIS at LINE:682
+                                    ConfirmReport(SetupStatus)
                                     Exit Sub
-                                End If
 
-                                ConfirmReport(SETUP_STATUS_CONFIRMED)
-                                Exit Sub
+                                Else 'SetupStatus = SETUP_STATUS_GOODNGTEST but flowName is anything else (Skip for now wait multi add specialFlow)
+                                    ShowErrorMessage("Lot เป็น Special Flow : '" + flowName + "' ไม่สามารถนำมา Confirm กับเครื่องที่เข้าเงื่อนไขที่ต้องรัน GO/NG Sample ได้ กรุณาเปลี่ยน Lot <br/>")
+                                    Exit Sub
+
+                                End If
 
                             ElseIf (isSpecialFlow = 0 And qualityState = "Normal") Then
 
-                                'Add Special Flow at GO/NGSampleJudge only
-                                If SetupStatus = SETUP_STATUS_GOODNGTEST Then
+                                If SetupStatus = SETUP_STATUS_CONFIRMED Then
+                                    ConfirmReport(SetupStatus)
+                                    Exit Sub
+
+                                    'Add Special Flow at GO/NGSampleJudge only
+                                Else
 
                                     Dim flowPatternId As Int32 = 1689
                                     Dim userId As Int32 = 1289
-
                                     Dim transLotsFlowsTbl As DataTable
 
                                     Try
@@ -726,7 +732,7 @@ Public Class SetupConfirm
 
                                                 For index2 = index - 1 To 0 Step -1
                                                     If Int32.Parse(transLotsFlowsTbl.Rows(index2)("is_skipped").ToString()) = 0 And
-                                                           transLotsFlowsTbl.Rows(index2)("job_name").ToString() <> transLotsFlowsTbl.Rows(index)("job_name").ToString() Then
+                                                       transLotsFlowsTbl.Rows(index2)("job_name").ToString() <> transLotsFlowsTbl.Rows(index)("job_name").ToString() Then
                                                         stepNo = Int32.Parse(transLotsFlowsTbl.Rows(index2)("step_no").ToString())
                                                         Exit For
                                                     End If
@@ -739,34 +745,75 @@ Public Class SetupConfirm
                                         Next
 
                                         SetSpecialFlowHere(lotId, stepNo, backStepNo, userId, flowPatternId)
-
+                                        Exit Sub
                                     Else
                                         ShowErrorMessage("ไม่พบ Lot Details โปรดตรวจสอบที่ ATOM : [atom].[sp_get_trans_lot_flows] <br/>")
                                         Exit Sub
                                     End If
-
-                                Else
-                                    ConfirmReport(SETUP_STATUS_CONFIRMED)
                                 End If
                             Else
-                                ShowErrorMessage(">>> isSpecialFlow is '" + isSpecialFlow.ToString() + "' And qualityState Is '" + qualityState.Trim() + "' โปรดติดต่อ SYSTEM <<< <br/>")
+                                ShowErrorMessage(">>> isSpecialFlow คือ '" + isSpecialFlow.ToString() + "' และ qualityState คือ '" + qualityState + "' โปรดติดต่อ SYSTEM <<< <br/>")
                                 Exit Sub
                             End If
-                        Else
-                            ShowErrorMessage(">>> processState is '" + processState.Trim() + "' โปรดติดต่อ SYSTEM <<< <br/>")
+
+                        ElseIf processState = "Processing" And m_OldData.LotNo <> m_Data.LotNo Then
+
+                            ShowErrorMessage(">>> processState คือ '" + processState + "' แต่ LotNo เก่า คือ '" + m_OldData.LotNo + "' ไม่ตรงกับ LotNo ใหม่ คือ '" + m_Data.LotNo + "' กรุณาเปลี่ยน Lot <<< <br/>")
                             Exit Sub
+
+                        Else
+
+                            ShowErrorMessage(">>> processState คือ '" + processState + "' โปรดติดต่อ SYSTEM <<< <br/>")
+                            Exit Sub
+
                         End If
+
                     Else
-                        ShowErrorMessage(">>> wipState is '" + wipState.Trim() + "' โปรดติดต่อ SYSTEM <<< <br/>")
+
+                        ShowErrorMessage(">>> wipState คือ '" + wipState + "' โปรดติดต่อ SYSTEM <<< <br/>")
                         Exit Sub
+
                     End If
+
                 Else
-                    ShowErrorMessage(">>> ATOM Flow is '" + flowName.Trim() + "' not match with OIS Flow is '" + m_Data.TestFlow.Trim() + "' โปรดติดต่อ SYSTEM <<< <br/>")
+
+                    ShowErrorMessage(">>> ATOM Flow คือ '" + flowName + "' ไม่ตรงกับ OIS Flow คือ '" + m_Data.TestFlow + "' โปรดติดต่อ SYSTEM <<< <br/>")
                     Exit Sub
+
                 End If
+
+            ElseIf SetupStatus = SETUP_STATUS_GOODNGTEST And flowName = "GO/NGSampleJudge" Then
+
+                If wipState = "WIP" OrElse wipState = "Already Input" Then
+                    If processState = "Wait" OrElse processState = "Abnormal WIP" OrElse (processState = "Processing" And m_OldData.LotNo = m_Data.LotNo) Then
+
+                        ConfirmReport(SetupStatus)
+                        Exit Sub
+
+                    ElseIf processState = "Processing" And m_OldData.LotNo <> m_Data.LotNo Then
+
+                        ShowErrorMessage(">>> (go/ng) processState คือ '" + processState + "' แต่ LotNo เก่า คือ '" + m_OldData.LotNo + "' ไม่ตรงกับ LotNo ใหม่ คือ '" + m_Data.LotNo + "' กรุณาเปลี่ยน Lot <<< <br/>")
+                        Exit Sub
+
+                    Else
+
+                        ShowErrorMessage(">>> (go/ng) processState คือ '" + processState + "' โปรดติดต่อ SYSTEM <<< <br/>")
+                        Exit Sub
+
+                    End If
+
+                Else
+
+                    ShowErrorMessage(">>> (go/ng) wipState(go/ng) คือ '" + wipState + "' โปรดติดต่อ SYSTEM <<< <br/>")
+                    Exit Sub
+
+                End If
+
             Else
-                ShowErrorMessage("Flow is " + flowName.Trim() + "ไม่สามารถนำมา Setup ได้ กรุณาเปลี่ยน Lot")
+
+                ShowErrorMessage("ATOM Flow คือ '" + flowName + "' ไม่สามารถนำมา Setup ได้ กรุณาเปลี่ยน Lot")
                 Exit Sub
+
             End If
 
         Catch ex As Exception

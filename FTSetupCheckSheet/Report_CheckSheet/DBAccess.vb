@@ -383,7 +383,7 @@ Public Class DBAccess
 
     End Function
 
-    Public Shared Function ClearSpecialFlow(lotId As Int32, specialflowId As Int32) As Integer
+    Public Shared Function ClearSpecialFlow(lotId As Int32, specialflowId As Int32, Optional flowId As Int32 = 0) As Integer
         'After CancelBtn is pressed (From SetupMain)
         Dim row As Integer
 
@@ -397,8 +397,9 @@ Public Class DBAccess
 
                 cmd.Parameters.Add("@lot_id", SqlDbType.Int).Value = lotId
                 cmd.Parameters.Add("@special_id", SqlDbType.Int).Value = specialflowId
+                cmd.Parameters.Add("@flowfon", SqlDbType.Int).Value = flowId
 
-                row = cmd.ExecuteNonQuery()
+                row = CInt(cmd.ExecuteScalar())
 
                 connection.Close()
             End Using

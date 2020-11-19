@@ -106,7 +106,7 @@ Public Class SetupMain
 
                     'Any SpecialflowId but flowId = 366 (GO/NG Sample Judge)
                     If specialflowId <> 0 AndAlso flowId = 366 Then
-                        RemoveSpecialFlow(lotId, specialflowId)
+                        RemoveSpecialFlow(lotId, specialflowId, flowId)
                     End If
 
                     'Clear Next Lot 
@@ -592,12 +592,20 @@ Public Class SetupMain
         End Using
     End Sub
 
-    Private Sub RemoveSpecialFlow(lotId As Int32, specialflowId As Int32)
+    Private Sub RemoveSpecialFlow(lotId As Int32, specialflowId As Int32, flowId As Int32)
         'Clear Special Flow here
         Try
-            DBAccess.ClearSpecialFlow(lotId, specialflowId)
+            Dim result As Integer = DBAccess.ClearSpecialFlow(lotId, specialflowId, flowId)
+
+            If result = 1 Then
+                ShowErrorMessage("ไม่สามารถลบ Flows GO/NG Sample Judge ได้ Lot เป็น Multi-Special Flows")
+                Exit Sub
+            ElseIf result = 2 Then
+                ShowErrorMessage("ไม่สามารถลบ Flows GO/NG Sample Judge ได้ Lot เป็น Processing")
+                Exit Sub
+            End If
         Catch ex As Exception
-            ShowErrorMessage("ไม่สามารถลบ Special Flows ได้ กรุณาติดต่อ SYSTEM :" & ex.Message)
+            ShowErrorMessage("Failed to clear special flow : " & ex.Message)
             Exit Sub
         End Try
     End Sub
