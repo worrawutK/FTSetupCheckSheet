@@ -515,8 +515,8 @@ Public Class SetupMain
                     m_Data.BridgecableB = row("BridgecableB").ToString().ToUpper
                     m_Data.BridgecableBQRcode = row("BridgecableBQRcode").ToString().ToUpper
                     m_Data.TypeChangePackage = row("TypeChangePackage").ToString().ToUpper
-                    m_Data.SetupStartDate = CDate(row("SetupStartDate").ToString())
-                    m_Data.SetupEndDate = CDate(row("SetupEndDate").ToString())
+                    m_Data.SetupStartDate = CType(row("SetupStartDate").ToString(), DateTime?)
+                    m_Data.SetupEndDate = CType(row("SetupEndDate").ToString(), DateTime?)
                     m_Data.BoxTesterConnection = row("BoxTesterConnection").ToString().ToUpper
                     m_Data.OptionSetup = row("OptionSetup").ToString().ToUpper
                     m_Data.OptionConnection = row("OptionConnection").ToString().ToUpper
