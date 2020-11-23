@@ -207,7 +207,7 @@
 	                                                                                                                                                                                                      WHERE (SetupStatus = 'CONFIRMED') AND (MCNo LIKE ('%' + @MCNo + '%'))) AS C 
                                                                                                                                                                                                                          ON A.MCNo = C.MCNo
                                                                                                                                                                                                   WHERE (A.SetupStatus = 'CONFIRMED') AND (A.MCNo LIKE ('%' + @MCNo + '%'))
-                                                                                                                                                                                                  ORDER BY A.MCNo, A.id desc">
+                                                                                                                                                                                                  ORDER BY A.SetupConfirmDate desc">
               <SelectParameters>
                   <asp:ControlParameter ControlID="MCNoTextBox" DefaultValue="%" Name="MCNo" PropertyName="Text" />
               </SelectParameters>
