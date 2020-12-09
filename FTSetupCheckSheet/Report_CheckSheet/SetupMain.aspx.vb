@@ -429,7 +429,7 @@ Public Class SetupMain
 
     Private Sub GetFTSetupReport(row As DataRow)
         Using dt2 As DataTable = DBAccess.GetFTSetupReportByMCNo(m_Data.MCNo)
-
+            Dim datetime As DateTime
             If dt2.Rows.Count = 1 Then
 
                 row = dt2.Rows(0)
@@ -515,6 +515,8 @@ Public Class SetupMain
                     m_Data.BridgecableB = row("BridgecableB").ToString().ToUpper
                     m_Data.BridgecableBQRcode = row("BridgecableBQRcode").ToString().ToUpper
                     m_Data.TypeChangePackage = row("TypeChangePackage").ToString().ToUpper
+                    m_Data.SetupStartDate = CDate(row("SetupStartDate"))
+                    m_Data.SetupEndDate = CDate(row("SetupEndDate"))
                     m_Data.BoxTesterConnection = row("BoxTesterConnection").ToString().ToUpper
                     m_Data.OptionSetup = row("OptionSetup").ToString().ToUpper
                     m_Data.OptionConnection = row("OptionConnection").ToString().ToUpper
