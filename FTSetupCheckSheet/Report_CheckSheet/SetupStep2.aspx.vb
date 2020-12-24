@@ -29,7 +29,7 @@ Public Class SetupStep2
             TesternoCTextBox.Text = m_Data.TesterNoC
             TesternoDTextBox.Text = m_Data.TesterNoD
 
-            If m_Data.MCNo.StartsWith("FT") Then
+            If m_Data.MCNo.StartsWith("FT") OrElse m_Data.MCNo.StartsWith("TP") Then
                 panelTesternoC.Style.Item("display") = "none"
                 panelTesternoD.Style.Item("display") = "none"
             End If

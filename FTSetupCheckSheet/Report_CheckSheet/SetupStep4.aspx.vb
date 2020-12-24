@@ -31,7 +31,7 @@ Public Class SetupStep4
             BridgecableATextBox.Text = m_Data.BridgecableA
             BridgecableBTextBox.Text = m_Data.BridgecableB
 
-            If m_Data.MCNo.StartsWith("FT") Then
+            If m_Data.MCNo.StartsWith("FT") OrElse m_Data.MCNo.StartsWith("TP") Then
                 panelAdaptorB.Style.Item("display") = "block"
                 panelDutcardB.Style.Item("display") = "block"
                 panelBridgecableB.Style.Item("display") = "block"

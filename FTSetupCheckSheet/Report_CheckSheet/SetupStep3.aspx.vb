@@ -24,7 +24,7 @@ Public Class SetupStep3
             TestBoxGTextBox.Text = m_Data.TestBoxG
             TestBoxHTextBox.Text = m_Data.TestBoxH
 
-            If m_Data.MCNo.StartsWith("FT") Then
+            If m_Data.MCNo.StartsWith("FT") OrElse m_Data.MCNo.StartsWith("TP") Then
                 panelTestBoxC.Style.Item("display") = "none"
                 panelTestBoxD.Style.Item("display") = "none"
                 panelTestBoxE.Style.Item("display") = "none"

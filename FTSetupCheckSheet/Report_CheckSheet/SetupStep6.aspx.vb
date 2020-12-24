@@ -32,7 +32,7 @@ Public Class SetupStep6
             QRcodeSocket3TextBox.Text = m_Data.QRCodesocket3
             QRcodeSocket4TextBox.Text = m_Data.QRCodesocket4
 
-            If m_Data.MCNo.StartsWith("FT") Then
+            If m_Data.MCNo.StartsWith("FT") OrElse m_Data.MCNo.StartsWith("TP") Then
                 panelSocket5.Style.Item("display") = "block"
                 panelSocket6.Style.Item("display") = "block"
                 panelSocket7.Style.Item("display") = "block"
