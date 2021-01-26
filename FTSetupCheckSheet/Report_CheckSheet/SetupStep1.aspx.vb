@@ -58,6 +58,7 @@ Public Class SetupStep1
             OISRankTextBox.Text = m_Data.OISRank
 
             ButtonSkip.Enabled = True
+            ButtonNext.Enabled = True
 
             m_Data.StatusOldEQP = False
 
@@ -81,7 +82,7 @@ Public Class SetupStep1
 
         GetFTSetupReportHistory_OldEQP()
 
-        Response.Redirect("~/SetupStep7CheckSheet1.aspx")
+        Response.Redirect("~/SetupStep7CheckSheet9.aspx")
     End Sub
 
     Private Sub GetFTSetupReportHistory_OldEQP()
@@ -195,6 +196,43 @@ Public Class SetupStep1
                 m_Data.ConfirmedShonoGL = row("ConfirmedShonoGL").ToString().ToUpper
                 m_Data.ConfirmedShonoOp = row("ConfirmedShonoOp").ToString().ToUpper
                 m_Data.StatusShonoOP = row("StatusShonoOP").ToString().ToUpper
+
+                'SetupStep7CheckSheet1
+                m_Data.BoxTesterConnection = row("BoxTesterConnection").ToString().ToUpper
+                m_Data.OptionSetup = row("OptionSetup").ToString().ToUpper
+                m_Data.OptionConnection = row("OptionConnection").ToString().ToUpper
+                'SetupStep7CheckSheet2
+                m_Data.QfpDecisionLeadPress = row("QfpDecisionLeadPress").ToString().ToUpper
+                m_Data.QfpSocketDecision = row("QfpSocketDecision").ToString().ToUpper
+                m_Data.QfpTray = row("QfpTray").ToString().ToUpper
+                m_Data.QfpVacuumPad = row("QfpVacuumPad").ToString().ToUpper
+                m_Data.QfpSocketSetup = row("QfpSocketSetup").ToString().ToUpper
+                'SetupStep7CheckSheet3
+                m_Data.SopDecisionLeadPress = row("SopDecisionLeadPress").ToString().ToUpper
+                m_Data.SopSocketDecision = row("SopSocketDecision").ToString().ToUpper
+                m_Data.SopStopper = row("SopStopper").ToString().ToUpper
+                'SetupStep7CheckSheet4
+                m_Data.ManualCheckTest = Integer.Parse(row("ManualCheckTest").ToString())
+                m_Data.ManualCheckTE = row("ManualCheckTE").ToString().ToUpper
+                m_Data.ManualCheckRequestTE = Integer.Parse(row("ManualCheckRequestTE").ToString())
+                m_Data.ManualCheckRequestTEConfirm = row("ManualCheckRequestTEConfirm").ToString().ToUpper
+                'SetupStep7CheckSheet5
+                m_Data.PkgGood = row("PkgGood").ToString().ToUpper
+                m_Data.PkgNG = row("PkgNG").ToString().ToUpper
+                m_Data.PkgNishikiCamara = row("PkgNishikiCamara").ToString().ToUpper
+                'SetupStep7CheckSheet6
+                m_Data.PkgGoodJudgement = row("PkgGoodJudgement").ToString().ToUpper
+                m_Data.PkgNGJudgement = row("PkgNGJudgement").ToString().ToUpper
+                m_Data.PkgNishikiCamaraJudgement = row("PkgNishikiCamaraJudgement").ToString().ToUpper
+                'SetupStep7CheckSheet7
+                m_Data.PkqBantLead = row("PkqBantLead").ToString().ToUpper
+                m_Data.PkqKakeHige = row("PkqKakeHige").ToString().ToUpper
+                'SetupStep7CheckSheet8
+                m_Data.BgaSmallBall = row("BgaSmallBall").ToString().ToUpper
+                m_Data.BgaBentTape = row("BgaBentTape").ToString().ToUpper
+                'SetupStep7CheckSheet9
+                m_Data.SetupStatus = row("SetupStatus").ToString().ToUpper
+                m_Data.Bge5S = row("Bge5S").ToString().ToUpper
 
             Else
                 Response.Redirect("~/SetupMain.aspx")

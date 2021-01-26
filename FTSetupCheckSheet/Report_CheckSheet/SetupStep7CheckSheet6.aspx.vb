@@ -16,6 +16,13 @@
             selecPkgGoodjudgement.Value = m_Data.PkgGoodJudgement
             selecPkgNGjudgement.Value = m_Data.PkgNGJudgement
             SelectPKgNishikijudgement.Value = m_Data.PkgNishikiCamaraJudgement
+
+            If m_Data.StatusOldEQP Then
+                selecPkgGoodjudgement.Disabled = True
+                selecPkgNGjudgement.Disabled = True
+                SelectPKgNishikijudgement.Disabled = True
+            End If
+
         End If
     End Sub
 

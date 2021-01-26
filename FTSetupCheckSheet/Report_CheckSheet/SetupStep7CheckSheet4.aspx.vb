@@ -19,6 +19,14 @@
             selecManualCheckTE.Value = m_Data.ManualCheckTE
             selectManualCheckRequestTE.Value = m_Data.ManualCheckRequestTE.ToString()
             selectManualCheckRequestTEConfirm.Value = m_Data.ManualCheckRequestTEConfirm
+
+            If m_Data.StatusOldEQP Then
+                selecManualCheckTest.Disabled = True
+                selecManualCheckTE.Disabled = True
+                selectManualCheckRequestTE.Disabled = True
+                selectManualCheckRequestTEConfirm.Disabled = True
+            End If
+
         End If
     End Sub
 

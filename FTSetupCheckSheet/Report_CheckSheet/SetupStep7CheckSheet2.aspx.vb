@@ -23,6 +23,15 @@ Partial Public Class SetupStep7CheckSheet2
             selecQfpTray.Value = m_Data.QfpTray
             selecQfpVacuumPad.Value = m_Data.QfpVacuumPad
             selectQfpSetupSocket.Value = m_Data.QfpSocketSetup
+
+            If m_Data.StatusOldEQP Then
+                selecQfpDecisionLeadPress.Disabled = True
+                selecQfpSocketDecision.Disabled = True
+                selecQfpTray.Disabled = True
+                selecQfpVacuumPad.Disabled = True
+                selectQfpSetupSocket.Disabled = True
+            End If
+
         End If
     End Sub
 

@@ -17,6 +17,13 @@
             selecSopDecisionLeadClamper.Value = m_Data.SopDecisionLeadPress
             selecSopSocketDecision.Value = m_Data.SopSocketDecision
             selectStopper.Value = m_Data.SopStopper
+
+            If m_Data.StatusOldEQP Then
+                selecSopDecisionLeadClamper.Disabled = True
+                selecSopSocketDecision.Disabled = True
+                selectStopper.Disabled = True
+            End If
+
         End If
     End Sub
 

@@ -16,6 +16,12 @@
         If Not IsPostBack Then
             selecBgaSmallBall.Value = m_Data.BgaSmallBall
             selelBgaBentTape.Value = m_Data.BgaBentTape
+
+            If m_Data.StatusOldEQP Then
+                selecBgaSmallBall.Disabled = True
+                selelBgaBentTape.Disabled = True
+            End If
+
         End If
     End Sub
 

@@ -16,6 +16,12 @@
         If Not IsPostBack Then
             selecPkgBentLead.Value = m_Data.PkqBantLead
             selecPkgKakeHige.Value = m_Data.PkqKakeHige
+
+            If m_Data.StatusOldEQP Then
+                selecPkgBentLead.Disabled = True
+                selecPkgKakeHige.Disabled = True
+            End If
+
         End If
     End Sub
 

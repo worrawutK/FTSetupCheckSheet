@@ -17,6 +17,13 @@
             selecPkgGood.Value = m_Data.PkgGood
             selecPkgNG.Value = m_Data.PkgNG
             selecPkgNishikiCamara.Value = m_Data.PkgNishikiCamara
+
+            If m_Data.StatusOldEQP Then
+                selecPkgGood.Disabled = True
+                selecPkgNG.Disabled = True
+                selecPkgNishikiCamara.Disabled = True
+            End If
+
         End If
     End Sub
 

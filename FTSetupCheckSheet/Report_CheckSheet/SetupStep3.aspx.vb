@@ -57,7 +57,7 @@ Public Class SetupStep3
             Dim qrName As String = TestBoxATextBox.Text.ToUpper
             m_Data.TestBoxAQRcode = qrName
 
-            Using dt As DataTable = DBAccess.GetEquipmentByQRName(qrName, EQUIPMENT_TYPE_ID_BOX, EQUIPMENT_TYPE_ID_BOARD)
+            Using dt As DataTable = DBAccess.GetEquipmentByQRName(qrName, EQUIPMENT_TYPE_ID_BOX, EQUIPMENT_TYPE_ID_BOARD, EQUIPMENT_TYPE_ID_TESTCARD)
                 If dt.Rows.Count = 1 Then
                     Dim row As DataRow = dt.Rows(0)
                     m_Data.TestBoxA = row("SubType").ToString().ToUpper

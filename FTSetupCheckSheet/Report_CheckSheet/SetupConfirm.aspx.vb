@@ -336,6 +336,10 @@ Public Class SetupConfirm
 
     Protected Sub Confirmbutton_Click(sender As Object, e As EventArgs) Handles Confirmbutton_Check.Click
 
+#Region "SOCKET"
+        SetupSocket()
+#End Region
+
 #Region "BOM"
 
         'get PCMain
@@ -652,10 +656,11 @@ Public Class SetupConfirm
                 'Split Device from Rank ex. BD450M2FP3-CE2 to (0) = BD450M2FP3, (1) = CE2
                 Dim splitOldDeviceName As String() = m_OldData.DeviceName.Split("-"c)
 
-                '(ProgramName CHANGED or (ProgramName NOT CHANGED but DeviceName CHANGED))
-                If (m_OldData.SetupStatus = "GOODNGTEST") OrElse
+                '(ProgramName CHANGED or (ProgramName NOT CHANGED but DeviceName CHANGED)) 'FT%' only
+                If m_Data.MCNo.StartsWith("FT") AndAlso
+                   ((m_OldData.SetupStatus = "GOODNGTEST") OrElse
                    (m_Data.ProgramName <> m_OldData.ProgramName) OrElse
-                   (m_Data.ProgramName = m_OldData.ProgramName And splitNewDeviceName(0) <> splitOldDeviceName(0)) Then
+                   (m_Data.ProgramName = m_OldData.ProgramName And splitNewDeviceName(0) <> splitOldDeviceName(0))) Then
                     SetupStatus = SETUP_STATUS_GOODNGTEST
                 Else
                     SetupStatus = SETUP_STATUS_CONFIRMED
@@ -1009,6 +1014,10 @@ Public Class SetupConfirm
         Catch ex As Exception
             ShowErrorMessage("Update Failed : " & HttpUtility.HtmlEncode(ex.Message & vbNewLine & ex.StackTrace))
         End Try
+    End Sub
+
+    Private Sub SetupSocket()
+
     End Sub
 
     Private Sub ShowErrorMessage(errMessage As String)

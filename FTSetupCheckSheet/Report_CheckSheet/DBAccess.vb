@@ -137,30 +137,6 @@ Public Class DBAccess
 
     End Function
 
-    Public Shared Function GetOSPSocketSystem(QRcode As String) As DataTable
-        Dim dt As DataTable = New DataTable()
-
-        Using con As SqlConnection = New SqlConnection(My.Settings.DBxConnectionString)
-            con.Open()
-
-            Using cmd As SqlCommand = con.CreateCommand()
-
-                cmd.CommandText = "Select JIG.TempData.ID, JIG.TempData.QRCode, JIG.TempData.SmallCode,
-                                   JIG.TempType.LSIProcessID FROM JIG.TempData INNER Join
-                                   JIG.TempSubType ON JIG.TempData.SubTypeID = JIG.TempSubType.ID INNER Join
-                                   JIG.TempType ON JIG.TempSubType.TypeID = JIG.TempType.ID
-                                   Where (JIG.TempType.LSIProcessID = '9') AND (JIG.TempData.QRCode = @QRcode)"
-
-                cmd.Parameters.Add("@QRcode", SqlDbType.VarChar, 50).Value = QRcode
-                dt.Load(cmd.ExecuteReader())
-            End Using
-        End Using
-
-        Return dt
-
-    End Function
-
-
     Public Shared Function GetBOM(customerDeviceName As String, assyPackageName As String, testFlowName As String, testerType As String, pcMain As String) As DataTable
         'ConfirmedReport Working Slip 2
         Dim tbl As DataTable = New DataTable()
@@ -254,6 +230,29 @@ Public Class DBAccess
         End Using
 
         Return tbl
+
+    End Function
+
+    Public Shared Function GetOSPSocketSystem(QRcode As String) As DataTable
+        Dim dt As DataTable = New DataTable()
+
+        Using connection As SqlConnection = New SqlConnection(My.Settings.SPConnectionString)
+            connection.Open()
+
+            Using cmd As New SqlCommand
+                cmd.Connection = connection
+                cmd.CommandType = CommandType.StoredProcedure
+                cmd.CommandText = "[jig].[sp_get_type]"
+                cmd.Parameters.Add("@QRCode", SqlDbType.VarChar, 15).Value = QRcode
+
+                dt.Load(cmd.ExecuteReader())
+
+                connection.Close()
+            End Using
+
+        End Using
+
+        Return dt
 
     End Function
 
@@ -647,4 +646,30 @@ Public Class DBAccess
         Return row
 
     End Function
+
+    Public Shared Function SetupSocket(QRCodeIn As String, MCNo As String) As Integer
+        'After CancelBtn is pressed (From SetupMain)
+        Dim row As Integer
+
+        Using connection As New SqlConnection(My.Settings.SPConnectionString)
+            connection.Open()
+
+            Using cmd As New SqlCommand
+                cmd.Connection = connection
+                cmd.CommandType = CommandType.StoredProcedure
+                cmd.CommandText = "[jig].[sp_set_socket_setup]"
+
+                cmd.Parameters.Add("@QRCodeIn", SqlDbType.VarChar, 15).Value = QRCodeIn
+                cmd.Parameters.Add("@MCNo", SqlDbType.VarChar, 50).Value = MCNo
+
+                row = CInt(cmd.ExecuteScalar())
+
+                connection.Close()
+            End Using
+        End Using
+
+        Return row
+
+    End Function
+
 End Class

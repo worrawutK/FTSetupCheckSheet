@@ -19,6 +19,12 @@
         If Not IsPostBack Then
             selecCheckSheet.Value = m_Data.SetupStatus
             selecBge5s.Value = m_Data.Bge5S
+
+            If m_Data.StatusOldEQP Then
+                selecCheckSheet.Disabled = True
+                selecBge5s.Disabled = True
+            End If
+
         End If
     End Sub
 

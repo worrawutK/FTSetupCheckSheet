@@ -27,10 +27,12 @@
              }
      </style>
 
-    <div class="jumbotron">
-        <h1 class="text-center login-title" style="font-family: 'Waffle Regular'; font-weight: bold;">SET-UP  CHECK  SHEET</h1>
-        <h2 class="text-center login-title" style="font-family : 'Waffle Regular'; font-weight: bold;" >ｾｯﾄｱｯﾌﾟﾁｪｯｸｼｰﾄ</h2>
-         <h2 class="text-center login-title" style="font-family : 'Waffle Regular'; font-weight: bold;" >Release Date: 2020/12/24</h2>
+    <div class="jumbotron">        
+        <h1 class="text-center login-title" style="font-family: 'Waffle Regular'; font-weight: bold; margin-top: 0px; margin-bottom: 10px;">SET-UP  CHECK  SHEET</h1>
+        <h2 class="text-center login-title" style="font-family: 'Waffle Regular'; font-weight: bold; margin-top: 0px; margin-bottom: 20px;">FL-FT-TP PROCESS</h2>
+         <p class="text-center login-title" style="font-family: 'Waffle Regular'; font-weight: bold; margin-top: 0px; margin-bottom: 10px; font-size:55px;" >セットアップチェックシート</p>
+        <h2 class="text-center login-title" style="font-family: 'Waffle Regular'; font-weight: bold; margin-top: 0px; margin-bottom: 20px;" >FL-FT-TP プロセス</h2>
+        <h3 class="text-center login-title" style="font-family: 'Waffle Regular'; font-weight: bold; margin-top: 0px; margin-bottom: 0px;" >Release Date: 2021/01/26</h3>
     </div>
 
     <div class="row">

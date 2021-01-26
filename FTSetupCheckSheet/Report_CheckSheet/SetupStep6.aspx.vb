@@ -31,6 +31,10 @@ Public Class SetupStep6
             QRcodeSocket2TextBox.Text = m_Data.QRCodesocket2
             QRcodeSocket3TextBox.Text = m_Data.QRCodesocket3
             QRcodeSocket4TextBox.Text = m_Data.QRCodesocket4
+            QRcodeSocket5TextBox.Text = m_Data.QRCodesocket5
+            QRcodeSocket6TextBox.Text = m_Data.QRCodesocket6
+            QRcodeSocket7TextBox.Text = m_Data.QRCodesocket7
+            QRcodeSocket8TextBox.Text = m_Data.QRCodesocket8
 
             If m_Data.MCNo.StartsWith("FT") OrElse m_Data.MCNo.StartsWith("TP") Then
                 panelSocket5.Style.Item("display") = "block"
@@ -79,11 +83,20 @@ Public Class SetupStep6
             m_Data.QRCodesocketChannel1 = QRcodeSocket1TextBox.Text.ToUpper
 
             Using dt As DataTable = DBAccess.GetOSPSocketSystem(qrCode)
-                If dt.Rows.Count = 1 Then
-                    Dim row As DataRow = dt.Rows(0)
-                    Dim data_SmallCode1 As String = row.ItemArray(2).ToString
 
-                    m_Data.QRCodesocket1 = data_SmallCode1
+                If dt.Rows.Count = 1 Then
+
+                    Dim row As DataRow = dt.Rows(0)
+
+                    If row("Is_Pass").ToString().Equals("TRUE") Then
+
+                        Dim data_SmallCode1 As String = row("SmallCode").ToString
+                        m_Data.QRCodesocket1 = data_SmallCode1
+
+                    Else
+                        m_Data.QRCodesocket1 = ""
+                    End If
+
                 Else
                     m_Data.QRCodesocket1 = ""
                 End If
@@ -103,17 +116,28 @@ Public Class SetupStep6
             Dim qrCodeSocket2 As String = QRcodeSocket2TextBox.Text.ToUpper
             m_Data.QRCodesocketChannel2 = QRcodeSocket2TextBox.Text
 
-            Using at As DataTable = DBAccess.GetOSPSocketSystem(qrCodeSocket2)
-                If at.Rows.Count = 1 Then
-                    Dim row1 As DataRow = at.Rows(0)
-                    Dim data_SmallCode2 As String = row1.ItemArray(2).ToString
+            Using dt As DataTable = DBAccess.GetOSPSocketSystem(qrCodeSocket2)
 
-                    m_Data.QRCodesocket2 = data_SmallCode2
+                If dt.Rows.Count = 1 Then
+
+                    Dim row As DataRow = dt.Rows(0)
+
+                    If row("Is_Pass").ToString().Equals("TRUE") Then
+
+                        Dim data_SmallCode2 As String = row("SmallCode").ToString
+                        m_Data.QRCodesocket2 = data_SmallCode2
+
+                    Else
+                        m_Data.QRCodesocket2 = ""
+                    End If
+
                 Else
                     m_Data.QRCodesocket2 = ""
                 End If
+
                 QRcodeSocket2TextBox.Text = m_Data.QRCodesocket2
                 Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
+
             End Using
         End If
     End Sub
@@ -126,17 +150,28 @@ Public Class SetupStep6
             Dim qrCodeSocket3 As String = QRcodeSocket3TextBox.Text.ToUpper
             m_Data.QRCodesocketChannel3 = QRcodeSocket3TextBox.Text
 
-            Using ot As DataTable = DBAccess.GetOSPSocketSystem(qrCodeSocket3)
-                If ot.Rows.Count = 1 Then
-                    Dim row2 As DataRow = ot.Rows(0)
-                    Dim data_SmallCode3 As String = row2.ItemArray(2).ToString
+            Using dt As DataTable = DBAccess.GetOSPSocketSystem(qrCodeSocket3)
 
-                    m_Data.QRCodesocket3 = data_SmallCode3
+                If dt.Rows.Count = 1 Then
+
+                    Dim row As DataRow = dt.Rows(0)
+
+                    If row("Is_Pass").ToString().Equals("TRUE") Then
+
+                        Dim data_SmallCode3 As String = row("SmallCode").ToString
+                        m_Data.QRCodesocket3 = data_SmallCode3
+
+                    Else
+                        m_Data.QRCodesocket3 = ""
+                    End If
+
                 Else
                     m_Data.QRCodesocket3 = ""
                 End If
+
                 QRcodeSocket3TextBox.Text = m_Data.QRCodesocket3
                 Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
+
             End Using
         End If
     End Sub
@@ -149,17 +184,28 @@ Public Class SetupStep6
             Dim qrCodeSocket4 As String = QRcodeSocket4TextBox.Text.ToUpper
             m_Data.QRCodesocketChannel4 = QRcodeSocket4TextBox.Text
 
-            Using ot As DataTable = DBAccess.GetOSPSocketSystem(qrCodeSocket4)
-                If ot.Rows.Count = 1 Then
-                    Dim row2 As DataRow = ot.Rows(0)
-                    Dim data_SmallCode4 As String = row2.ItemArray(2).ToString
+            Using dt As DataTable = DBAccess.GetOSPSocketSystem(qrCodeSocket4)
 
-                    m_Data.QRCodesocket4 = data_SmallCode4
+                If dt.Rows.Count = 1 Then
+
+                    Dim row As DataRow = dt.Rows(0)
+
+                    If row("Is_Pass").ToString().Equals("TRUE") Then
+
+                        Dim data_SmallCode4 As String = row("SmallCode").ToString
+                        m_Data.QRCodesocket4 = data_SmallCode4
+
+                    Else
+                        m_Data.QRCodesocket4 = ""
+                    End If
+
                 Else
                     m_Data.QRCodesocket4 = ""
                 End If
+
                 QRcodeSocket4TextBox.Text = m_Data.QRCodesocket4
                 Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
+
             End Using
         End If
     End Sub
@@ -174,15 +220,24 @@ Public Class SetupStep6
 
             Using ot As DataTable = DBAccess.GetOSPSocketSystem(qrCodeSocket5)
                 If ot.Rows.Count = 1 Then
-                    Dim row2 As DataRow = ot.Rows(0)
-                    Dim data_SmallCode5 As String = row2.ItemArray(2).ToString
+                    Dim row As DataRow = ot.Rows(0)
 
-                    m_Data.QRCodesocket5 = data_SmallCode5
+                    If row("Is_Pass").ToString().Equals("TRUE") Then
+
+                        Dim data_SmallCode5 As String = row("SmallCode").ToString
+                        m_Data.QRCodesocket5 = data_SmallCode5
+
+                    Else
+                        m_Data.QRCodesocket5 = ""
+                    End If
+
                 Else
                     m_Data.QRCodesocket5 = ""
                 End If
+
                 QRcodeSocket5TextBox.Text = m_Data.QRCodesocket5
                 Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
+
             End Using
         End If
     End Sub
@@ -196,16 +251,27 @@ Public Class SetupStep6
             m_Data.QRCodesocketChannel6 = QRcodeSocket6TextBox.Text
 
             Using ot As DataTable = DBAccess.GetOSPSocketSystem(qrCodeSocket6)
-                If ot.Rows.Count = 1 Then
-                    Dim row2 As DataRow = ot.Rows(0)
-                    Dim data_SmallCode6 As String = row2.ItemArray(2).ToString
 
-                    m_Data.QRCodesocket6 = data_SmallCode6
+                If ot.Rows.Count = 1 Then
+
+                    Dim row As DataRow = ot.Rows(0)
+
+                    If row("Is_Pass").ToString().Equals("TRUE") Then
+
+                        Dim data_SmallCode6 As String = row("SmallCode").ToString
+                        m_Data.QRCodesocket6 = data_SmallCode6
+
+                    Else
+                        m_Data.QRCodesocket6 = ""
+                    End If
+
                 Else
                     m_Data.QRCodesocket6 = ""
                 End If
+
                 QRcodeSocket6TextBox.Text = m_Data.QRCodesocket6
                 Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
+
             End Using
         End If
     End Sub
@@ -219,16 +285,27 @@ Public Class SetupStep6
             m_Data.QRCodesocketChannel7 = QRcodeSocket7TextBox.Text
 
             Using ot As DataTable = DBAccess.GetOSPSocketSystem(qrCodeSocket7)
-                If ot.Rows.Count = 1 Then
-                    Dim row2 As DataRow = ot.Rows(0)
-                    Dim data_SmallCode7 As String = row2.ItemArray(2).ToString
 
-                    m_Data.QRCodesocket7 = data_SmallCode7
+                If ot.Rows.Count = 1 Then
+
+                    Dim row As DataRow = ot.Rows(0)
+
+                    If row("Is_Pass").ToString().Equals("TRUE") Then
+
+                        Dim data_SmallCode7 As String = row("SmallCode").ToString
+                        m_Data.QRCodesocket7 = data_SmallCode7
+
+                    Else
+                        m_Data.QRCodesocket7 = ""
+                    End If
+
                 Else
                     m_Data.QRCodesocket7 = ""
                 End If
+
                 QRcodeSocket7TextBox.Text = m_Data.QRCodesocket7
                 Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
+
             End Using
         End If
     End Sub
@@ -241,17 +318,28 @@ Public Class SetupStep6
             Dim qrCodeSocket8 As String = QRcodeSocket8TextBox.Text.ToUpper
             m_Data.QRCodesocketChannel8 = QRcodeSocket8TextBox.Text
 
-            Using ot As DataTable = DBAccess.GetOSPSocketSystem(qrCodeSocket8)
-                If ot.Rows.Count = 1 Then
-                    Dim row2 As DataRow = ot.Rows(0)
-                    Dim data_SmallCode8 As String = row2.ItemArray(2).ToString
+            Using dt As DataTable = DBAccess.GetOSPSocketSystem(qrCodeSocket8)
 
-                    m_Data.QRCodesocket8 = data_SmallCode8
+                If dt.Rows.Count = 1 Then
+
+                    Dim row As DataRow = dt.Rows(0)
+
+                    If row("Is_Pass").ToString().Equals("TRUE") Then
+
+                        Dim data_SmallCode8 As String = row("SmallCode").ToString
+                        m_Data.QRCodesocket8 = data_SmallCode8
+
+                    Else
+                        m_Data.QRCodesocket8 = ""
+                    End If
+
                 Else
                     m_Data.QRCodesocket8 = ""
                 End If
-                QRcodeSocket7TextBox.Text = m_Data.QRCodesocket8
+
+                QRcodeSocket8TextBox.Text = m_Data.QRCodesocket8
                 Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
+
             End Using
         End If
     End Sub
@@ -272,7 +360,10 @@ Public Class SetupStep6
         m_Data.QRCodesocket2 = QRcodeSocket2TextBox.Text
         m_Data.QRCodesocket3 = QRcodeSocket3TextBox.Text
         m_Data.QRCodesocket4 = QRcodeSocket4TextBox.Text
+        m_Data.QRCodesocket5 = QRcodeSocket5TextBox.Text
+        m_Data.QRCodesocket6 = QRcodeSocket6TextBox.Text
+        m_Data.QRCodesocket7 = QRcodeSocket7TextBox.Text
+        m_Data.QRCodesocket8 = QRcodeSocket8TextBox.Text
         Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
     End Sub
-
 End Class

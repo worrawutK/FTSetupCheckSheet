@@ -17,6 +17,13 @@
             selectBoxTesterConnection.Value = m_Data.BoxTesterConnection
             selecOptionSetup.Value = m_Data.OptionSetup
             selecOptionConnection.Value = m_Data.OptionConnection
+
+            If m_Data.StatusOldEQP Then
+                selectBoxTesterConnection.Disabled = True
+                selecOptionSetup.Disabled = True
+                selecOptionConnection.Disabled = True
+            End If
+
         End If
     End Sub
 
