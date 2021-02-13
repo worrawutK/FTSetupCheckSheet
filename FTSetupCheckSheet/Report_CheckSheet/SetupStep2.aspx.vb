@@ -181,6 +181,7 @@ Public Class SetupStep2
 
         Dim ret As Boolean = True
         Dim lstTester As New List(Of String)
+        Dim lstTesterType As New List(Of String)
 
         If TesternoATextBox.Text = "" Then 'Data = "" -> Clear Data
 
@@ -232,11 +233,9 @@ Public Class SetupStep2
             lstTester.Add(" - Tester No : D")
             ret = False
 
-        End If 'Same Data
+        End If 'Same Data        
 
-        If ret = True Then
-            Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
-        Else
+        If ret = False Then
             Dim a As String = ">>> ค่าไม่ถูกต้อง กรุณาแสกนใหม่ <<< <br/>"
 
             For Each str As String In lstTester
@@ -244,6 +243,84 @@ Public Class SetupStep2
             Next
 
             ShowErrorMessage(a)
+            Return ret
+        End If
+
+        TesternoATextBox.BackColor = Drawing.Color.White
+        TesternoBTextBox.BackColor = Drawing.Color.White
+        TesternoCTextBox.BackColor = Drawing.Color.White
+        TesternoDTextBox.BackColor = Drawing.Color.White
+
+        Dim testerType As String
+
+        If Not String.IsNullOrWhiteSpace(m_Data.TesterNoAQRcode) Then
+            Dim dt As DataTable = DBAccess.GetTesterTypebyQRCode(m_Data.TesterNoAQRcode)
+            If dt.Rows.Count = 1 Then
+                Dim row As DataRow = dt.Rows(0)
+                testerType = row("TesterType").ToString()
+                lstTesterType.Add(" - Tester A : " + row("TesterType").ToString())
+            End If
+        End If
+
+        If Not String.IsNullOrWhiteSpace(m_Data.TesterNoBQRcode) Then
+            Dim dt As DataTable = DBAccess.GetTesterTypebyQRCode(m_Data.TesterNoBQRcode)
+            If dt.Rows.Count = 1 Then
+                Dim row As DataRow = dt.Rows(0)
+                If String.IsNullOrEmpty(testerType) Then
+                    testerType = row("TesterType").ToString()
+                Else
+                    If Not testerType = row("TesterType").ToString() Then
+                        ret = False
+                    End If
+                End If
+                lstTesterType.Add(" - Tester B : " + row("TesterType").ToString())
+            End If
+        End If
+
+        If Not String.IsNullOrWhiteSpace(m_Data.TesterNoCQRcode) Then
+            Dim dt As DataTable = DBAccess.GetTesterTypebyQRCode(m_Data.TesterNoCQRcode)
+            If dt.Rows.Count = 1 Then
+                Dim row As DataRow = dt.Rows(0)
+                If String.IsNullOrEmpty(testerType) Then
+                    testerType = row("TesterType").ToString()
+                Else
+                    If Not testerType = row("TesterType").ToString() Then
+                        ret = False
+                    End If
+                End If
+                lstTesterType.Add(" - Tester C : " + row("TesterType").ToString())
+            End If
+        End If
+
+        If Not String.IsNullOrWhiteSpace(m_Data.TesterNoDQRcode) Then
+            Dim dt As DataTable = DBAccess.GetTesterTypebyQRCode(m_Data.TesterNoDQRcode)
+            If dt.Rows.Count = 1 Then
+                Dim row As DataRow = dt.Rows(0)
+                If String.IsNullOrEmpty(testerType) Then
+                    testerType = row("TesterType").ToString()
+                Else
+                    If Not testerType = row("TesterType").ToString() Then
+                        ret = False
+                    End If
+                End If
+                lstTesterType.Add(" - Tester D : " + row("TesterType").ToString())
+            End If
+        End If
+
+        If ret = True Then
+            m_Data.TesterType = testerType
+            Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
+        Else
+            m_Data.TesterType = ""
+
+            Dim a As String = ">>> มี TesterType ไม่ตรงกัน กรุณาแสกนใหม่ <<< <br/>"
+
+            For Each str As String In lstTesterType
+                a = a & str & "<br/>"
+            Next
+
+            ShowErrorMessage(a)
+            Return ret
         End If
 
         Return ret

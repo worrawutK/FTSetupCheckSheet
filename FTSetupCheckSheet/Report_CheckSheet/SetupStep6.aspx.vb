@@ -79,10 +79,10 @@ Public Class SetupStep6
         QRcodeSocket2TextBox.Focus()
 
         If Not String.IsNullOrEmpty(QRcodeSocket1TextBox.Text) Then
-            Dim qrCode As String = QRcodeSocket1TextBox.Text.ToUpper
-            m_Data.QRCodesocketChannel1 = QRcodeSocket1TextBox.Text.ToUpper
+            Dim qrCodeSocket1 As String = QRcodeSocket1TextBox.Text.ToUpper.Trim
+            m_Data.QRCodesocketChannel1 = qrCodeSocket1
 
-            Using dt As DataTable = DBAccess.GetOSPSocketSystem(qrCode)
+            Using dt As DataTable = DBAccess.GetOSPSocketSystem(qrCodeSocket1)
 
                 If dt.Rows.Count = 1 Then
 
@@ -113,8 +113,8 @@ Public Class SetupStep6
         QRcodeSocket3TextBox.Focus()
 
         If Not String.IsNullOrEmpty(QRcodeSocket2TextBox.Text) Then
-            Dim qrCodeSocket2 As String = QRcodeSocket2TextBox.Text.ToUpper
-            m_Data.QRCodesocketChannel2 = QRcodeSocket2TextBox.Text
+            Dim qrCodeSocket2 As String = QRcodeSocket2TextBox.Text.ToUpper.Trim
+            m_Data.QRCodesocketChannel2 = qrCodeSocket2
 
             Using dt As DataTable = DBAccess.GetOSPSocketSystem(qrCodeSocket2)
 
@@ -147,8 +147,8 @@ Public Class SetupStep6
         QRcodeSocket4TextBox.Focus()
 
         If Not String.IsNullOrEmpty(QRcodeSocket3TextBox.Text) Then
-            Dim qrCodeSocket3 As String = QRcodeSocket3TextBox.Text.ToUpper
-            m_Data.QRCodesocketChannel3 = QRcodeSocket3TextBox.Text
+            Dim qrCodeSocket3 As String = QRcodeSocket3TextBox.Text.ToUpper.Trim
+            m_Data.QRCodesocketChannel3 = qrCodeSocket3
 
             Using dt As DataTable = DBAccess.GetOSPSocketSystem(qrCodeSocket3)
 
@@ -181,8 +181,8 @@ Public Class SetupStep6
         QRcodeSocket5TextBox.Focus()
 
         If Not String.IsNullOrEmpty(QRcodeSocket4TextBox.Text) Then
-            Dim qrCodeSocket4 As String = QRcodeSocket4TextBox.Text.ToUpper
-            m_Data.QRCodesocketChannel4 = QRcodeSocket4TextBox.Text
+            Dim qrCodeSocket4 As String = QRcodeSocket4TextBox.Text.ToUpper.Trim
+            m_Data.QRCodesocketChannel4 = qrCodeSocket4
 
             Using dt As DataTable = DBAccess.GetOSPSocketSystem(qrCodeSocket4)
 
@@ -215,8 +215,8 @@ Public Class SetupStep6
         QRcodeSocket6TextBox.Focus()
 
         If Not String.IsNullOrEmpty(QRcodeSocket5TextBox.Text) Then
-            Dim qrCodeSocket5 As String = QRcodeSocket5TextBox.Text.ToUpper
-            m_Data.QRCodesocketChannel5 = QRcodeSocket5TextBox.Text
+            Dim qrCodeSocket5 As String = QRcodeSocket5TextBox.Text.ToUpper.Trim
+            m_Data.QRCodesocketChannel5 = qrCodeSocket5
 
             Using ot As DataTable = DBAccess.GetOSPSocketSystem(qrCodeSocket5)
                 If ot.Rows.Count = 1 Then
@@ -247,8 +247,8 @@ Public Class SetupStep6
         QRcodeSocket7TextBox.Focus()
 
         If Not String.IsNullOrEmpty(QRcodeSocket6TextBox.Text) Then
-            Dim qrCodeSocket6 As String = QRcodeSocket6TextBox.Text.ToUpper
-            m_Data.QRCodesocketChannel6 = QRcodeSocket6TextBox.Text
+            Dim qrCodeSocket6 As String = QRcodeSocket6TextBox.Text.ToUpper.Trim
+            m_Data.QRCodesocketChannel6 = qrCodeSocket6
 
             Using ot As DataTable = DBAccess.GetOSPSocketSystem(qrCodeSocket6)
 
@@ -281,8 +281,8 @@ Public Class SetupStep6
         QRcodeSocket8TextBox.Focus()
 
         If Not String.IsNullOrEmpty(QRcodeSocket7TextBox.Text) Then
-            Dim qrCodeSocket7 As String = QRcodeSocket7TextBox.Text.ToUpper
-            m_Data.QRCodesocketChannel7 = QRcodeSocket7TextBox.Text
+            Dim qrCodeSocket7 As String = QRcodeSocket7TextBox.Text.ToUpper.Trim
+            m_Data.QRCodesocketChannel7 = qrCodeSocket7
 
             Using ot As DataTable = DBAccess.GetOSPSocketSystem(qrCodeSocket7)
 
@@ -315,8 +315,8 @@ Public Class SetupStep6
         'QRcodeSocket8TextBox.Focus()
 
         If Not String.IsNullOrEmpty(QRcodeSocket8TextBox.Text) Then
-            Dim qrCodeSocket8 As String = QRcodeSocket8TextBox.Text.ToUpper
-            m_Data.QRCodesocketChannel8 = QRcodeSocket8TextBox.Text
+            Dim qrCodeSocket8 As String = QRcodeSocket8TextBox.Text.ToUpper.Trim
+            m_Data.QRCodesocketChannel8 = qrCodeSocket8
 
             Using dt As DataTable = DBAccess.GetOSPSocketSystem(qrCodeSocket8)
 

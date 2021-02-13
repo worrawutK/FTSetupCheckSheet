@@ -1,8 +1,6 @@
 ﻿Imports System.Data.SqlClient
 
 Public Class DBAccess
-    Private Sub New()
-    End Sub
 
     Public Shared Function CreateBlankFTSetupRecord(mcNo As String) As Integer
         'After Scan Machine QRCode 1 (First Time Machine)
@@ -325,33 +323,28 @@ Public Class DBAccess
 
     End Function
 
-    'Public Shared Function ConfirmFTReport(mcNo As String, lotNo As String, PackageName As String, deviceName As String, SetupStatus As String) As Integer
-    '    'ConfirmedReport Working Slip 5
-    '    Dim ret As Integer
+    Friend Shared Function GetTesterTypebyQRCode(qrCode As String) As DataTable
 
-    '    Using connection As New SqlConnection(My.Settings.SPConnectionString)
-    '        connection.Open()
+        Dim tbl = New DataTable()
 
-    '        Using cmd As New SqlCommand
-    '            cmd.Connection = connection
-    '            cmd.CommandType = CommandType.StoredProcedure
-    '            cmd.CommandText = "[dbo].[sp_set_setupchecksheet_confirmftreport]"
-    '            cmd.Parameters.Add("@MCNo", SqlDbType.VarChar, 15).Value = mcNo
-    '            cmd.Parameters.Add("@LotNo", SqlDbType.VarChar, 10).Value = lotNo
-    '            cmd.Parameters.Add("@PackageName", SqlDbType.VarChar, 10).Value = PackageName
-    '            cmd.Parameters.Add("@DeviceName", SqlDbType.VarChar, 20).Value = deviceName
-    '            cmd.Parameters.Add("@SetupStatus", SqlDbType.VarChar, 10).Value = SetupStatus
-    '            cmd.Parameters.Add("@SetupConfirmDate", SqlDbType.DateTime).Value = Now
+        Using connection As New SqlConnection(My.Settings.SPConnectionString)
+            connection.Open()
 
-    '            ret = cmd.ExecuteNonQuery()
+            Using cmd As New SqlCommand
+                cmd.Connection = connection
+                cmd.CommandType = CommandType.StoredProcedure
+                cmd.CommandText = "[dbo].[sp_get_setupchecksheet_gettestertype]"
+                cmd.Parameters.Add("@qrCode", SqlDbType.VarChar, 9).Value = qrCode
 
-    '            connection.Close()
-    '        End Using
-    '    End Using
+                tbl.Load(cmd.ExecuteReader())
 
-    '    Return ret
+                connection.Close()
+            End Using
+        End Using
 
-    'End Function
+        Return tbl
+
+    End Function
 
     Public Shared Function SetSpecialFlow(lotId As Int32, stepNo As Int32, backStepNo As Int32, userId As Int32, flowPatternId As Int32, isSpecialFlow As Int32) As Integer
         'After SaveBtn is pressed (From SetupStep7CheckSheet9)
@@ -435,12 +428,39 @@ Public Class DBAccess
 
     End Function
 
+    Public Shared Function SetSocket(mcNo As String, qrCodeIn As String, opNo As String) As DataTable
+        'After ConfirmBtn is pressed (From ChangeSocket)
+        Dim tbl = New DataTable()
+
+        Using connection As New SqlConnection(My.Settings.APCsUserSPConnectionString)
+            connection.Open()
+
+            Using cmd As New SqlCommand
+                cmd.Connection = connection
+                cmd.CommandType = CommandType.StoredProcedure
+                cmd.CommandText = "[jig].[sp_set_socket_setup]"
+
+                cmd.Parameters.Add("@mc_name", SqlDbType.VarChar, 50).Value = mcNo
+                cmd.Parameters.Add("@QRCodeIn", SqlDbType.VarChar, 15).Value = qrCodeIn
+                cmd.Parameters.Add("@OPNo", SqlDbType.VarChar, 6).Value = opNo
+
+                tbl.Load(cmd.ExecuteReader())
+
+                connection.Close()
+            End Using
+        End Using
+
+        Return tbl
+
+    End Function
+
     Public Shared Function UpdateFTSetupReport(mcno As String, lotNo As String, PackageName As String, deviceName As String,
             programName As String, testerType As String, testFlow As String, oisRank As String, oisDevice As String,
             qRCodesocket1 As String, qrCodesocket2 As String, qrCodesocket3 As String, qrCodesocket4 As String,
-            QRCodesocketChannel1 As String, QRCodesocketChannel2 As String, QRCodesocketChannel3 As String, QRCodesocketChannel4 As String,
             qRCodesocket5 As String, qrCodesocket6 As String, qrCodesocket7 As String, qrCodesocket8 As String,
+            QRCodesocketChannel1 As String, QRCodesocketChannel2 As String, QRCodesocketChannel3 As String, QRCodesocketChannel4 As String,
             QRCodesocketChannel5 As String, QRCodesocketChannel6 As String, QRCodesocketChannel7 As String, QRCodesocketChannel8 As String,
+            socketChange As Integer,
             testerNoA As String, testerNoAQRcode As String, testerNoB As String, testerNoBQRcode As String, testerNoC As String, testerNoCQRcode As String, testerNoD As String, testerNoDQRcode As String,
             channelAFTB As String, ChannelAFTBQRcode As String, channelBFTB As String, ChannelBFTBQRcode As String, channelCFTB As String, ChannelCFTBQRcode As String, channelDFTB As String, ChannelDFTBQRcode As String,
             channelEFTB As String, ChannelEFTBQRcode As String, channelFFTB As String, ChannelFFTBQRcode As String, channelGFTB As String, ChannelGFTBQRcode As String, channelHFTB As String, ChannelHFTBQRcode As String,
@@ -630,6 +650,7 @@ Public Class DBAccess
                 cmd.Parameters.Add("@ConfirmedShonoGL", SqlDbType.VarChar, 15).Value = ConfirmedShonoGL
                 cmd.Parameters.Add("@ConfirmedShonoOp", SqlDbType.VarChar, 15).Value = ConfirmedShonoOp
                 cmd.Parameters.Add("@StatusShonoOP", SqlDbType.VarChar, 5).Value = StatusShonoOP
+                cmd.Parameters.Add("@SocketChange", SqlDbType.Int).Value = socketChange
 
                 If setupConfirmDate.HasValue Then
                     cmd.Parameters.Add("@SetupConfirmDate", SqlDbType.DateTime).Value = setupConfirmDate.Value
@@ -638,31 +659,6 @@ Public Class DBAccess
                 End If
 
                 row = cmd.ExecuteNonQuery()
-
-                connection.Close()
-            End Using
-        End Using
-
-        Return row
-
-    End Function
-
-    Public Shared Function SetupSocket(QRCodeIn As String, MCNo As String) As Integer
-        'After CancelBtn is pressed (From SetupMain)
-        Dim row As Integer
-
-        Using connection As New SqlConnection(My.Settings.SPConnectionString)
-            connection.Open()
-
-            Using cmd As New SqlCommand
-                cmd.Connection = connection
-                cmd.CommandType = CommandType.StoredProcedure
-                cmd.CommandText = "[jig].[sp_set_socket_setup]"
-
-                cmd.Parameters.Add("@QRCodeIn", SqlDbType.VarChar, 15).Value = QRCodeIn
-                cmd.Parameters.Add("@MCNo", SqlDbType.VarChar, 50).Value = MCNo
-
-                row = CInt(cmd.ExecuteScalar())
 
                 connection.Close()
             End Using

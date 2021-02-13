@@ -191,6 +191,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AssyInput.jpg" />
+    <Content Include="ChangeSocket.aspx" />
     <Content Include="ConfirmedReport.aspx" />
     <Content Include="ConfirmShono.aspx" />
     <Content Include="Default.aspx" />
@@ -309,6 +310,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ChangeSocket.aspx.designer.vb">
+      <DependentUpon>ChangeSocket.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ChangeSocket.aspx.vb">
+      <DependentUpon>ChangeSocket.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
     <Compile Include="ConfirmedReport.aspx.designer.vb">
       <DependentUpon>ConfirmedReport.aspx</DependentUpon>
     </Compile>

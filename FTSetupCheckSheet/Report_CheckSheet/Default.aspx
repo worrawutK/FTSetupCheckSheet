@@ -45,22 +45,16 @@
 
    <div class="row">
         <div class="col-md-4 col-md-offset-1 text-center">
-          <div class="container1">
-             <asp:HyperLink NavigateUrl="~/SetupMain.aspx" runat="server" style="width: 350px; height: 100px; font-family: 'Waffle Regular';font-weight: bold;" Font-Size="15pt" ForeColor="#999999">SCAN QRCODE</asp:HyperLink>
-          </div>
-        </div>
+            <div class="container1">
+                <asp:HyperLink NavigateUrl="~/SetupMain.aspx" runat="server" style="width: 350px; height: 100px; font-family: 'Waffle Regular';font-weight: bold;" Font-Size="15pt" ForeColor="#999999">SCAN QRCODE</asp:HyperLink>
+            </div>
+        </div>       
 
-       <%--<div class="col-md-4 text-center">
-          <div class="container1">
-             <asp:HyperLink NavigateUrl="~/SetupStep7CheckSheet1.aspx" runat="server" style="width: 350px; height: 100px; font-family: 'Waffle Regular';font-weight: bold;" Font-Size="15pt" ForeColor="#999999">CHECK SHEET</asp:HyperLink>
-          </div>
-        </div>--%>
-
-       <div class="col-md-4 col-md-offset-2 text-center">
-          <div class="container1">
-             <asp:HyperLink NavigateUrl="~/ShowDataSetup.aspx" runat="server" style="width: 350px; height: 100px; font-family: 'Waffle Regular';font-weight: bold;" Font-Size="15pt" ForeColor="#999999">DATA SET-UP</asp:HyperLink>
-          </div>
+        <div class="col-md-4 col-md-offset-2 text-center">
+            <div class="container1">
+                <asp:HyperLink NavigateUrl="~/ShowDataSetup.aspx" runat="server" style="width: 350px; height: 100px; font-family: 'Waffle Regular';font-weight: bold;" Font-Size="15pt" ForeColor="#999999">DATA SET-UP</asp:HyperLink>
+            </div>
         </div>
-     </div><br /><br />
-  
+    </div>
+    <br /><br />  
 </asp:Content>

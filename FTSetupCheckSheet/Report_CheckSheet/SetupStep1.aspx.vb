@@ -49,7 +49,7 @@ Public Class SetupStep1
             m_Data.OISDevice = data(1).ToUpper().Trim()
             m_Data.OISRank = data(2).ToUpper().Trim()
             m_Data.TestFlow = data(3).ToUpper().Trim()
-            m_Data.TesterType = data(5).ToUpper().Trim()
+            'm_Data.TesterType = data(5).ToUpper().Trim()
             m_Data.SetupStartDate = Now
             m_Data.ProgramName = data(7).ToUpper().Trim()
 

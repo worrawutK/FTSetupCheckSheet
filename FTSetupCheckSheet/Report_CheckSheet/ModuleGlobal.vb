@@ -8,6 +8,7 @@
     Public Const SESSION_KEY_DATA As String = "DATA"
     Public Const SESSION_KEY_NEW_DATA_SETUP As String = "NEW_SETUP_DATA"
     Public Const SESSION_KEY_OLD_DATA As String = "OLD_DATA"
+    Public Const SESSION_SOCKET_DATA As String = "SOCKET"
 
     'reference to EQP.EquipmentType on 2016-11-01
 

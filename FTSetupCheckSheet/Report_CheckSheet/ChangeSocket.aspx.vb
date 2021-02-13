@@ -1,17 +1,15 @@
-﻿
-Public Class SetupMain
+﻿Public Class ChangeSocket
     Inherits System.Web.UI.Page
 
     Private m_Data As FTSetupReport
     Private m_OldData As FTSetupReportHistory
-
-    Private Const BUTTON_TEXT_SETUP As String = "SET-UP"
-    Private Const BUTTON_TEXT_CANCEL As String = "CANCEL"
+    Private m_Socket As List(Of Socket)
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
 
         Dim tmp As Object = Session(SESSION_KEY_DATA)
         Dim tmp2 As Object = Session(SESSION_KEY_OLD_DATA)
+        Dim tmp3 As Object = Session(SESSION_SOCKET_DATA)
 
         If tmp Is Nothing Then
             m_Data = New FTSetupReport()
@@ -19,21 +17,98 @@ Public Class SetupMain
 
             m_OldData = New FTSetupReportHistory()
             Session(SESSION_KEY_OLD_DATA) = m_OldData
+
+            m_Socket = New List(Of Socket)()
+            Session(SESSION_SOCKET_DATA) = m_Socket
         Else
             m_Data = CType(tmp, FTSetupReport)
             m_OldData = CType(tmp2, FTSetupReportHistory)
+            m_Socket = CType(tmp3, List(Of Socket))
         End If
 
         If Not IsPostBack Then
             TextBoxMCNo.Text = m_Data.MCNo
-            Devicetext.Text = m_Data.DeviceName
-            TestflowTextBox.Text = m_Data.TestFlow
-            TesterTypeTextBox.Text = m_Data.TesterType
-            TextBoxSetupStatus.Text = m_Data.SetupStatus
-            SetStatusColor(TextBoxSetupStatus.Text)
+            TextBoxSocketCH1.Text = m_Data.QRCodesocket1
+            TextBoxSocketCH2.Text = m_Data.QRCodesocket2
+            TextBoxSocketCH3.Text = m_Data.QRCodesocket3
+            TextBoxSocketCH4.Text = m_Data.QRCodesocket4
+            TextBoxSocketCH5.Text = m_Data.QRCodesocket5
+            TextBoxSocketCH6.Text = m_Data.QRCodesocket6
+            TextBoxSocketCH7.Text = m_Data.QRCodesocket7
+            TextBoxSocketCH8.Text = m_Data.QRCodesocket8
+            SetDefaultSocket()
+
+            If m_Data.MCNo.StartsWith("FT") OrElse m_Data.MCNo.StartsWith("TP") Then
+                panelSocket5.Style.Item("display") = "block"
+                panelSocket6.Style.Item("display") = "block"
+                panelSocket7.Style.Item("display") = "block"
+                panelSocket8.Style.Item("display") = "block"
+            End If
         End If
 
         QRcodeTextBox.Focus()
+    End Sub
+
+    Protected Sub SetDefaultSocket()
+
+        If m_Socket.Count() = 0 Then
+            Dim data As New Socket With {
+                .SocketName = m_Data.QRCodesocket1,
+                .QRCodesocketChannel = m_Data.QRCodesocketChannel1,
+                .Channel = 1
+            }
+            m_Socket.Add(data)
+
+            data = New Socket With {
+                .SocketName = m_Data.QRCodesocket2,
+                .QRCodesocketChannel = m_Data.QRCodesocketChannel2,
+                .Channel = 2
+            }
+            m_Socket.Add(data)
+
+            data = New Socket With {
+                .SocketName = m_Data.QRCodesocket3,
+                .QRCodesocketChannel = m_Data.QRCodesocketChannel3,
+                .Channel = 3
+            }
+            m_Socket.Add(data)
+
+            data = New Socket With {
+                .SocketName = m_Data.QRCodesocket4,
+                .QRCodesocketChannel = m_Data.QRCodesocketChannel4,
+                .Channel = 4
+            }
+            m_Socket.Add(data)
+
+            data = New Socket With {
+                .SocketName = m_Data.QRCodesocket5,
+                .QRCodesocketChannel = m_Data.QRCodesocketChannel5,
+                .Channel = 5
+            }
+            m_Socket.Add(data)
+
+            data = New Socket With {
+                .SocketName = m_Data.QRCodesocket6,
+                .QRCodesocketChannel = m_Data.QRCodesocketChannel6,
+                .Channel = 6
+            }
+            m_Socket.Add(data)
+
+            data = New Socket With {
+                .SocketName = m_Data.QRCodesocket7,
+                .QRCodesocketChannel = m_Data.QRCodesocketChannel7,
+                .Channel = 7
+            }
+            m_Socket.Add(data)
+
+            data = New Socket With {
+                .SocketName = m_Data.QRCodesocket8,
+                .QRCodesocketChannel = m_Data.QRCodesocketChannel8,
+                .Channel = 8
+            }
+            m_Socket.Add(data)
+        End If
+
     End Sub
 
     Protected Sub QRcodeTextBox_TextChanged(sender As Object, e As EventArgs) Handles QRcodeTextBox.TextChanged
@@ -52,379 +127,276 @@ Public Class SetupMain
                     m_Data.MCNo = row("Name").ToString()
 
                     GetFTSetupReport()
-                    GetFTSetupReportHistory()
 
                     TextBoxMCNo.Text = m_Data.MCNo
-                    Devicetext.Text = m_Data.DeviceName
-                    TestflowTextBox.Text = m_Data.TestFlow
-                    TesterTypeTextBox.Text = m_Data.TesterType
-                    TextBoxSetupStatus.Text = m_Data.SetupStatus
-                    SetStatusColor(TextBoxSetupStatus.Text)
+                    TextBoxSocketCH1.Text = m_Data.QRCodesocket1
+                    TextBoxSocketCH2.Text = m_Data.QRCodesocket2
+                    TextBoxSocketCH3.Text = m_Data.QRCodesocket3
+                    TextBoxSocketCH4.Text = m_Data.QRCodesocket4
+                    TextBoxSocketCH5.Text = m_Data.QRCodesocket5
+                    TextBoxSocketCH6.Text = m_Data.QRCodesocket6
+                    TextBoxSocketCH7.Text = m_Data.QRCodesocket7
+                    TextBoxSocketCH8.Text = m_Data.QRCodesocket8
+                    SetDefaultSocket()
 
                 End If
             End Using
         End If
     End Sub
 
-    Protected Sub ButtonSetup_Click(sender As Object, e As EventArgs) Handles ButtonSetup.Click
+    Protected Sub TextBoxSocketCH1_TextChanged(sender As Object, e As EventArgs) Handles TextBoxSocketCH1.TextChanged
+        TextBoxSocketCH2.Focus()
 
-        If m_Data Is Nothing OrElse String.IsNullOrEmpty(m_Data.MCNo) Then
-            Exit Sub
-        End If
+        If Not String.IsNullOrEmpty(TextBoxSocketCH1.Text) Then
+            Dim qrCode As String = TextBoxSocketCH1.Text.ToUpper.Trim
+            m_Socket(0).QRCodesocketChannel = qrCode
 
-        Select Case ButtonSetup.Text
-            Case BUTTON_TEXT_CANCEL
+            Using dt As DataTable = DBAccess.GetOSPSocketSystem(qrCode)
 
-                GetFTSetupReportHistory()
+                If dt.Rows.Count = 1 Then
 
-                Dim mcNo As String = m_Data.MCNo
+                    Dim row As DataRow = dt.Rows(0)
 
-                '009363 clear special flow old goodngtest lot
-                If m_OldData.LotNo <> "" And m_OldData.SetupStatus = "GOODNGTEST" Then
-                    Dim currentTransLotsTbl As DataTable
+                    If row("Is_Pass").ToString().Equals("TRUE") Then
 
-                    Try
-                        currentTransLotsTbl = DBAccess.GetCurrentTransLots(m_OldData.LotNo)
-                    Catch ex As Exception
-                        ShowErrorMessage("Failed to get CurrentTransLots :" & ex.Message)
-                        Exit Sub
-                    End Try
+                        Dim data_SmallCode As String = row("SmallCode").ToString
+                        m_Socket(0).SocketName = data_SmallCode
 
-                    If currentTransLotsTbl.Rows.Count = 0 Then
-                        ShowErrorMessage(String.Format("ไม่พบ Lot No ที่จะนำไปลบ flow GO/NG Sample Judge โปรดตรวจสอบที่ ATOM : [cellcon].[sp_get_current_trans_lots] <br/>"))
-                        Exit Sub
-                    ElseIf currentTransLotsTbl.Rows.Count > 1 Then
-                        ShowErrorMessage(String.Format("พบ Lot No : " + currentTransLotsTbl.Rows.Count.ToString() + " rows โปรดแจ้ง SYSTEM : [cellcon].[sp_get_current_trans_lots] <br/>"))
-                        Exit Sub
+                    Else
+                        m_Socket(0).SocketName = ""
                     End If
 
-                    Dim currentTransLotsRow As DataRow = currentTransLotsTbl.Rows(0)
+                Else
+                    m_Socket(0).SocketName = ""
+                End If
 
-                    Dim lotId As Int32 = Int32.Parse(currentTransLotsRow("LotId").ToString())
-                    Dim specialflowId As Int32 = Int32.Parse(currentTransLotsRow("SpecialFlowId").ToString())
-                    Dim flowId As Int32 = Int32.Parse(currentTransLotsRow("FlowId").ToString())
+                TextBoxSocketCH1.Text = m_Socket(0).SocketName
 
-                    'Any SpecialflowId but flowId = 366 (GO/NG Sample Judge)
-                    If specialflowId <> 0 AndAlso flowId = 366 Then
-                        RemoveSpecialFlow(lotId, specialflowId, flowId)
+            End Using
+        End If
+    End Sub
+
+    Protected Sub TextBoxSocketCH2_TextChanged(sender As Object, e As EventArgs) Handles TextBoxSocketCH2.TextChanged
+        TextBoxSocketCH3.Focus()
+
+        If Not String.IsNullOrEmpty(TextBoxSocketCH2.Text) Then
+            Dim qrCode As String = TextBoxSocketCH2.Text.ToUpper.Trim
+            m_Socket(1).QRCodesocketChannel = qrCode
+
+            Using dt As DataTable = DBAccess.GetOSPSocketSystem(qrCode)
+
+                If dt.Rows.Count = 1 Then
+
+                    Dim row As DataRow = dt.Rows(0)
+
+                    If row("Is_Pass").ToString().Equals("TRUE") Then
+
+                        Dim data_SmallCode As String = row("SmallCode").ToString
+                        m_Socket(1).SocketName = data_SmallCode
+
+                    Else
+                        m_Socket(1).SocketName = ""
                     End If
 
-                    'Clear Next Lot 
-                    SetNextLotHere(mcNo, "")
-
+                Else
+                    m_Socket(1).SocketName = ""
                 End If
 
-                '009363 clear all data before save to database
-                m_Data = New FTSetupReport()
-                m_Data.MCNo = mcNo
-                m_Data.SetupStartDate = Now
-                m_Data.SetupEndDate = Now
-                m_Data.SetupStatus = SETUP_STATUS_CANCELED
+                TextBoxSocketCH2.Text = m_Socket(1).SocketName
 
-                SetFTReport()
+            End Using
+        End If
+    End Sub
 
-                TextBoxMCNo.Text = m_Data.MCNo
-                Devicetext.Text = m_Data.DeviceName
-                TestflowTextBox.Text = m_Data.TestFlow
-                TesterTypeTextBox.Text = m_Data.TesterType
-                TextBoxSetupStatus.Text = m_Data.SetupStatus
-                SetStatusColor(TextBoxSetupStatus.Text)
+    Protected Sub TextBoxSocketCH3_TextChanged(sender As Object, e As EventArgs) Handles TextBoxSocketCH3.TextChanged
+        TextBoxSocketCH4.Focus()
 
-            Case BUTTON_TEXT_SETUP
-                Dim newData As FTSetupReport = CType(Session(SESSION_KEY_NEW_DATA_SETUP), FTSetupReport)
+        If Not String.IsNullOrEmpty(TextBoxSocketCH3.Text) Then
+            Dim qrCode As String = TextBoxSocketCH3.Text.ToUpper.Trim
+            m_Socket(2).QRCodesocketChannel = qrCode
 
-                If newData Is Nothing OrElse newData.MCNo <> m_Data.MCNo OrElse newData.SetupStatus = "CANCELED" Then
-                    newData = New FTSetupReport()
-                    newData.MCNo = m_Data.MCNo
-                    newData.SetupStartDate = Now
-                    Session(SESSION_KEY_NEW_DATA_SETUP) = newData
+            Using dt As DataTable = DBAccess.GetOSPSocketSystem(qrCode)
+
+                If dt.Rows.Count = 1 Then
+
+                    Dim row As DataRow = dt.Rows(0)
+
+                    If row("Is_Pass").ToString().Equals("TRUE") Then
+
+                        Dim data_SmallCode As String = row("SmallCode").ToString
+                        m_Socket(2).SocketName = data_SmallCode
+
+                    Else
+                        m_Socket(2).SocketName = ""
+                    End If
+
+                Else
+                    m_Socket(2).SocketName = ""
                 End If
 
-                Response.Redirect("~/SetupStep1.aspx")
-        End Select
-    End Sub
+                TextBoxSocketCH3.Text = m_Socket(2).SocketName
 
-    Protected Sub ButtonConfirm_Click(sender As Object, e As EventArgs) Handles ButtonConfirm.Click
-        Response.Redirect("~/SetupConfirm.aspx")
-    End Sub
-
-    Private Sub SetStatusColor(statusText As String)
-
-        Dim lstErr As New List(Of String)
-
-        HideErrorMessage()
-
-        Select Case statusText
-            Case SETUP_STATUS_WAITING
-                TextBoxSetupStatus.ForeColor = Drawing.Color.Orange
-                ButtonConfirm.Visible = True
-                ButtonSetup.Text = BUTTON_TEXT_CANCEL
-            Case SETUP_STATUS_GOODNGTEST
-                TextBoxSetupStatus.ForeColor = Drawing.Color.Green
-                ButtonConfirm.Visible = False
-                ButtonSetup.Text = BUTTON_TEXT_CANCEL
-
-                lstErr.Add(">>> M/C Status = " + m_Data.SetupStatus + " ด้วย LotNo = " + m_Data.LotNo + " <<< <br/>")
-                lstErr.Add("- กรุณาทำ GO/NG Sample Judge")
-
-            Case SETUP_STATUS_CONFIRMED
-                TextBoxSetupStatus.ForeColor = Drawing.Color.Green
-                ButtonConfirm.Visible = False
-                ButtonSetup.Text = BUTTON_TEXT_SETUP
-
-            Case SETUP_STATUS_CANCELED
-                TextBoxSetupStatus.ForeColor = Drawing.Color.Blue
-                ButtonConfirm.Visible = False
-                ButtonSetup.Text = BUTTON_TEXT_SETUP
-            Case Else
-                TextBoxSetupStatus.ForeColor = Drawing.Color.Black
-                ButtonConfirm.Visible = False
-                ButtonSetup.Text = BUTTON_TEXT_SETUP
-        End Select
-
-        If m_Data.StatusShonoOP = "0" Then
-            lstErr.Add("- กรุณาถ่ายรูปทำ Shoko")
+            End Using
         End If
-
-        If (lstErr.Count() > 0) And (statusText = SETUP_STATUS_GOODNGTEST OrElse statusText = SETUP_STATUS_CONFIRMED) Then
-            ShowErrorMessage(String.Join("<br/>", lstErr))
-        End If
-
     End Sub
 
-    'For Matching EQP when Save at SetupStep7CheckSheet9
-    Private Sub GetFTSetupReportHistory()
-        Dim row As DataRow
-        Using dt3 As DataTable = DBAccess.GetFTSetupReportHistoryByMCNo(m_Data.MCNo)
+    Protected Sub TextBoxSocketCH4_TextChanged(sender As Object, e As EventArgs) Handles TextBoxSocketCH4.TextChanged
+        TextBoxSocketCH5.Focus()
 
-            If dt3.Rows.Count = 1 Then
+        If Not String.IsNullOrEmpty(TextBoxSocketCH4.Text) Then
+            Dim qrCode As String = TextBoxSocketCH4.Text.ToUpper.Trim
+            m_Socket(3).QRCodesocketChannel = qrCode
 
-                row = dt3.Rows(0)
+            Using dt As DataTable = DBAccess.GetOSPSocketSystem(qrCode)
 
-                m_OldData.LotNo = row("LotNo").ToString().ToUpper
-                m_OldData.DeviceName = row("DeviceName").ToString().ToUpper
-                m_OldData.ProgramName = row("ProgramName").ToString().ToUpper
-                m_OldData.SetupStatus = row("SetupStatus").ToString().ToUpper
+                If dt.Rows.Count = 1 Then
 
-                'EQP
-                m_OldData.TesterNoA = row("TesterNoA").ToString().ToUpper
-                m_OldData.TesterNoAQRcode = row("TesterNoAQRcode").ToString().ToUpper
-                m_OldData.TesterNoB = row("TesterNoB").ToString().ToUpper
-                m_OldData.TesterNoBQRcode = row("TesterNoBQRcode").ToString().ToUpper
-                m_OldData.TesterNoC = row("TesterNoC").ToString().ToUpper
-                m_OldData.TesterNoCQRcode = row("TesterNoCQRcode").ToString().ToUpper
-                m_OldData.TesterNoD = row("TesterNoD").ToString().ToUpper
-                m_OldData.TesterNoDQRcode = row("TesterNoDQRcode").ToString().ToUpper
-                m_OldData.ChannelAFTB = row("ChannelAFTB").ToString().ToUpper
-                m_OldData.ChannelAFTBQRcode = row("ChannelAFTBQRcode").ToString().ToUpper
-                m_OldData.ChannelBFTB = row("ChannelBFTB").ToString().ToUpper
-                m_OldData.ChannelBFTBQRcode = row("ChannelBFTBQRcode").ToString().ToUpper
-                m_OldData.ChannelCFTB = row("ChannelCFTB").ToString().ToUpper
-                m_OldData.ChannelCFTBQRcode = row("ChannelCFTBQRcode").ToString().ToUpper
-                m_OldData.ChannelDFTB = row("ChannelDFTB").ToString().ToUpper
-                m_OldData.ChannelDFTBQRcode = row("ChannelDFTBQRcode").ToString().ToUpper
-                m_OldData.ChannelEFTB = row("ChannelEFTB").ToString().ToUpper
-                m_OldData.ChannelEFTBQRcode = row("ChannelEFTBQRcode").ToString().ToUpper
-                m_OldData.ChannelFFTB = row("ChannelFFTB").ToString().ToUpper
-                m_OldData.ChannelFFTBQRcode = row("ChannelFFTBQRcode").ToString().ToUpper
-                m_OldData.ChannelGFTB = row("ChannelGFTB").ToString().ToUpper
-                m_OldData.ChannelGFTBQRcode = row("ChannelGFTBQRcode").ToString().ToUpper
-                m_OldData.ChannelHFTB = row("ChannelHFTB").ToString().ToUpper
-                m_OldData.ChannelHFTBQRcode = row("ChannelHFTBQRcode").ToString().ToUpper
-                m_OldData.TestBoxA = row("TestBoxA").ToString().ToUpper
-                m_OldData.TestBoxAQRcode = row("TestBoxAQRcode").ToString().ToUpper
-                m_OldData.TestBoxB = row("TestBoxB").ToString().ToUpper
-                m_OldData.TestBoxBQRcode = row("TestBoxBQRcode").ToString().ToUpper
-                m_OldData.TestBoxC = row("TestBoxC").ToString().ToUpper
-                m_OldData.TestBoxCQRcode = row("TestBoxCQRcode").ToString().ToUpper
-                m_OldData.TestBoxD = row("TestBoxD").ToString().ToUpper
-                m_OldData.TestBoxDQRcode = row("TestBoxDQRcode").ToString().ToUpper
-                m_OldData.TestBoxE = row("TestBoxE").ToString().ToUpper
-                m_OldData.TestBoxEQRcode = row("TestBoxEQRcode").ToString().ToUpper
-                m_OldData.TestBoxF = row("TestBoxF").ToString().ToUpper
-                m_OldData.TestBoxFQRcode = row("TestBoxFQRcode").ToString().ToUpper
-                m_OldData.TestBoxG = row("TestBoxG").ToString().ToUpper
-                m_OldData.TestBoxGQRcode = row("TestBoxGQRcode").ToString().ToUpper
-                m_OldData.TestBoxH = row("TestBoxH").ToString().ToUpper
-                m_OldData.TestBoxHQRcode = row("TestBoxHQRcode").ToString().ToUpper
-                m_OldData.AdaptorA = row("AdaptorA").ToString().ToUpper
-                m_OldData.AdaptorAQRcode = row("AdaptorAQRcode").ToString().ToUpper
-                m_OldData.AdaptorB = row("AdaptorB").ToString().ToUpper
-                m_OldData.AdaptorBQRcode = row("AdaptorBQRcode").ToString().ToUpper
-                m_OldData.DutcardA = row("DutcardA").ToString().ToUpper
-                m_OldData.DutcardAQRcode = row("DutcardAQRcode").ToString().ToUpper
-                m_OldData.DutcardB = row("DutcardB").ToString().ToUpper
-                m_OldData.DutcardBQRcode = row("DutcardBQRcode").ToString().ToUpper
-                m_OldData.BridgecableA = row("BridgecableA").ToString().ToUpper
-                m_OldData.BridgecableAQRcode = row("BridgecableAQRcode").ToString().ToUpper
-                m_OldData.BridgecableB = row("BridgecableB").ToString().ToUpper
-                m_OldData.BridgecableBQRcode = row("BridgecableBQRcode").ToString().ToUpper
-                'Option
-                m_OldData.OptionName1 = row("OptionName1").ToString().ToUpper
-                m_OldData.OptionName2 = row("OptionName2").ToString().ToUpper
-                m_OldData.OptionName3 = row("OptionName3").ToString().ToUpper
-                m_OldData.OptionName4 = row("OptionName4").ToString().ToUpper
-                m_OldData.OptionName5 = row("OptionName5").ToString().ToUpper
-                m_OldData.OptionName6 = row("OptionName6").ToString().ToUpper
-                m_OldData.OptionName7 = row("OptionName7").ToString().ToUpper
-                m_OldData.OptionType1 = row("OptionType1").ToString().ToUpper
-                m_OldData.OptionType1QRcode = row("OptionType1QRcode").ToString().ToUpper
-                m_OldData.OptionType2 = row("OptionType2").ToString().ToUpper
-                m_OldData.OptionType2QRcode = row("OptionType2QRcode").ToString().ToUpper
-                m_OldData.OptionType3 = row("OptionType3").ToString().ToUpper
-                m_OldData.OptionType3QRcode = row("OptionType3QRcode").ToString().ToUpper
-                m_OldData.OptionType4 = row("OptionType4").ToString().ToUpper
-                m_OldData.OptionType4QRcode = row("OptionType4QRcode").ToString().ToUpper
-                m_OldData.OptionType5 = row("OptionType5").ToString().ToUpper
-                m_OldData.OptionType5QRcode = row("OptionType5QRcode").ToString().ToUpper
-                m_OldData.OptionType6 = row("OptionType6").ToString().ToUpper
-                m_OldData.OptionType6QRcode = row("OptionType6QRcode").ToString().ToUpper
-                m_OldData.OptionType7 = row("OptionType7").ToString().ToUpper
-                m_OldData.OptionType7QRcode = row("OptionType7QRcode").ToString().ToUpper
-                m_OldData.OptionSetting1 = row("OptionSetting1").ToString().ToUpper
-                m_OldData.OptionSetting2 = row("OptionSetting2").ToString().ToUpper
-                m_OldData.OptionSetting3 = row("OptionSetting3").ToString().ToUpper
-                m_OldData.OptionSetting4 = row("OptionSetting4").ToString().ToUpper
-                m_OldData.OptionSetting5 = row("OptionSetting5").ToString().ToUpper
-                m_OldData.OptionSetting6 = row("OptionSetting6").ToString().ToUpper
-                m_OldData.OptionSetting7 = row("OptionSetting7").ToString().ToUpper
-                'Socket
-                m_OldData.QRCodesocket1 = row("QRCodesocket1").ToString().ToUpper
-                m_OldData.QRCodesocket2 = row("QRCodesocket2").ToString().ToUpper
-                m_OldData.QRCodesocket3 = row("QRCodesocket3").ToString().ToUpper
-                m_OldData.QRCodesocket4 = row("QRCodesocket4").ToString().ToUpper
-                m_OldData.QRCodesocketChannel1 = row("QRCodesocketChannel1").ToString().ToUpper
-                m_OldData.QRCodesocketChannel2 = row("QRCodesocketChannel2").ToString().ToUpper
-                m_OldData.QRCodesocketChannel3 = row("QRCodesocketChannel3").ToString().ToUpper
-                m_OldData.QRCodesocketChannel4 = row("QRCodesocketChannel4").ToString().ToUpper
-                m_OldData.QRCodesocket5 = row("QRCodesocket5").ToString().ToUpper
-                m_OldData.QRCodesocket6 = row("QRCodesocket6").ToString().ToUpper
-                m_OldData.QRCodesocket7 = row("QRCodesocket7").ToString().ToUpper
-                m_OldData.QRCodesocket8 = row("QRCodesocket8").ToString().ToUpper
-                m_OldData.QRCodesocketChannel5 = row("QRCodesocketChannel5").ToString().ToUpper
-                m_OldData.QRCodesocketChannel6 = row("QRCodesocketChannel6").ToString().ToUpper
-                m_OldData.QRCodesocketChannel7 = row("QRCodesocketChannel7").ToString().ToUpper
-                m_OldData.QRCodesocketChannel8 = row("QRCodesocketChannel8").ToString().ToUpper
-                'Shoko
-                m_OldData.ConfirmedShonoSection = row("ConfirmedShonoSection").ToString().ToUpper
-                m_OldData.ConfirmedShonoGL = row("ConfirmedShonoGL").ToString().ToUpper
-                m_OldData.ConfirmedShonoOp = row("ConfirmedShonoOp").ToString().ToUpper
-                m_OldData.StatusShonoOP = row("StatusShonoOP").ToString().ToUpper
+                    Dim row As DataRow = dt.Rows(0)
 
-            Else
-                'first time of MC
-                m_OldData.LotNo = ""
-                m_OldData.DeviceName = ""
-                m_OldData.ProgramName = ""
-                m_OldData.SetupStatus = ""
+                    If row("Is_Pass").ToString().Equals("TRUE") Then
 
-                'EQP
-                m_OldData.TesterNoA = ""
-                m_OldData.TesterNoAQRcode = ""
-                m_OldData.TesterNoB = ""
-                m_OldData.TesterNoBQRcode = ""
-                m_OldData.TesterNoC = ""
-                m_OldData.TesterNoCQRcode = ""
-                m_OldData.TesterNoD = ""
-                m_OldData.TesterNoDQRcode = ""
-                m_OldData.ChannelAFTB = ""
-                m_OldData.ChannelAFTBQRcode = ""
-                m_OldData.ChannelBFTB = ""
-                m_OldData.ChannelBFTBQRcode = ""
-                m_OldData.ChannelCFTB = ""
-                m_OldData.ChannelCFTBQRcode = ""
-                m_OldData.ChannelDFTB = ""
-                m_OldData.ChannelDFTBQRcode = ""
-                m_OldData.ChannelEFTB = ""
-                m_OldData.ChannelEFTBQRcode = ""
-                m_OldData.ChannelFFTB = ""
-                m_OldData.ChannelFFTBQRcode = ""
-                m_OldData.ChannelGFTB = ""
-                m_OldData.ChannelGFTBQRcode = ""
-                m_OldData.ChannelHFTB = ""
-                m_OldData.ChannelHFTBQRcode = ""
-                m_OldData.TestBoxA = ""
-                m_OldData.TestBoxAQRcode = ""
-                m_OldData.TestBoxB = ""
-                m_OldData.TestBoxBQRcode = ""
-                m_OldData.TestBoxC = ""
-                m_OldData.TestBoxCQRcode = ""
-                m_OldData.TestBoxD = ""
-                m_OldData.TestBoxDQRcode = ""
-                m_OldData.TestBoxE = ""
-                m_OldData.TestBoxEQRcode = ""
-                m_OldData.TestBoxF = ""
-                m_OldData.TestBoxFQRcode = ""
-                m_OldData.TestBoxG = ""
-                m_OldData.TestBoxGQRcode = ""
-                m_OldData.TestBoxH = ""
-                m_OldData.TestBoxHQRcode = ""
-                m_OldData.AdaptorA = ""
-                m_OldData.AdaptorAQRcode = ""
-                m_OldData.AdaptorB = ""
-                m_OldData.AdaptorBQRcode = ""
-                m_OldData.DutcardA = ""
-                m_OldData.DutcardAQRcode = ""
-                m_OldData.DutcardB = ""
-                m_OldData.DutcardBQRcode = ""
-                m_OldData.BridgecableA = ""
-                m_OldData.BridgecableAQRcode = ""
-                m_OldData.BridgecableB = ""
-                m_OldData.BridgecableBQRcode = ""
-                'Option
-                m_OldData.OptionName1 = ""
-                m_OldData.OptionName2 = ""
-                m_OldData.OptionName3 = ""
-                m_OldData.OptionName4 = ""
-                m_OldData.OptionName5 = ""
-                m_OldData.OptionName6 = ""
-                m_OldData.OptionName7 = ""
-                m_OldData.OptionType1 = ""
-                m_OldData.OptionType1QRcode = ""
-                m_OldData.OptionType2 = ""
-                m_OldData.OptionType2QRcode = ""
-                m_OldData.OptionType3 = ""
-                m_OldData.OptionType3QRcode = ""
-                m_OldData.OptionType4 = ""
-                m_OldData.OptionType4QRcode = ""
-                m_OldData.OptionType5 = ""
-                m_OldData.OptionType5QRcode = ""
-                m_OldData.OptionType6 = ""
-                m_OldData.OptionType6QRcode = ""
-                m_OldData.OptionType7 = ""
-                m_OldData.OptionType7QRcode = ""
-                m_OldData.OptionSetting1 = ""
-                m_OldData.OptionSetting2 = ""
-                m_OldData.OptionSetting3 = ""
-                m_OldData.OptionSetting4 = ""
-                m_OldData.OptionSetting5 = ""
-                m_OldData.OptionSetting6 = ""
-                m_OldData.OptionSetting7 = ""
-                'Socket
-                m_OldData.QRCodesocket1 = ""
-                m_OldData.QRCodesocket2 = ""
-                m_OldData.QRCodesocket3 = ""
-                m_OldData.QRCodesocket4 = ""
-                m_OldData.QRCodesocketChannel1 = ""
-                m_OldData.QRCodesocketChannel2 = ""
-                m_OldData.QRCodesocketChannel3 = ""
-                m_OldData.QRCodesocketChannel4 = ""
-                m_OldData.QRCodesocket5 = ""
-                m_OldData.QRCodesocket6 = ""
-                m_OldData.QRCodesocket7 = ""
-                m_OldData.QRCodesocket8 = ""
-                m_OldData.QRCodesocketChannel5 = ""
-                m_OldData.QRCodesocketChannel6 = ""
-                m_OldData.QRCodesocketChannel7 = ""
-                m_OldData.QRCodesocketChannel8 = ""
-                'Shoko
-                m_OldData.ConfirmedShonoSection = ""
-                m_OldData.ConfirmedShonoGL = ""
-                m_OldData.ConfirmedShonoOp = ""
-                m_OldData.StatusShonoOP = ""
-            End If
-        End Using
-        Session(SESSION_KEY_OLD_DATA) = m_OldData
+                        Dim data_SmallCode As String = row("SmallCode").ToString
+                        m_Socket(3).SocketName = data_SmallCode
+
+                    Else
+                        m_Socket(3).SocketName = ""
+                    End If
+
+                Else
+                    m_Socket(3).SocketName = ""
+                End If
+
+                TextBoxSocketCH4.Text = m_Socket(3).SocketName
+
+            End Using
+        End If
+    End Sub
+
+    Protected Sub TextBoxSocketCH5_TextChanged(sender As Object, e As EventArgs) Handles TextBoxSocketCH5.TextChanged
+        TextBoxSocketCH6.Focus()
+
+        If Not String.IsNullOrEmpty(TextBoxSocketCH5.Text) Then
+            Dim qrCode As String = TextBoxSocketCH5.Text.ToUpper.Trim
+            m_Socket(4).QRCodesocketChannel = qrCode
+
+            Using dt As DataTable = DBAccess.GetOSPSocketSystem(qrCode)
+
+                If dt.Rows.Count = 1 Then
+
+                    Dim row As DataRow = dt.Rows(0)
+
+                    If row("Is_Pass").ToString().Equals("TRUE") Then
+
+                        Dim data_SmallCode As String = row("SmallCode").ToString
+                        m_Socket(4).SocketName = data_SmallCode
+
+                    Else
+                        m_Socket(4).SocketName = ""
+                    End If
+
+                Else
+                    m_Socket(4).SocketName = ""
+                End If
+
+                TextBoxSocketCH5.Text = m_Socket(4).SocketName
+
+            End Using
+        End If
+    End Sub
+
+    Protected Sub TextBoxSocketCH6_TextChanged(sender As Object, e As EventArgs) Handles TextBoxSocketCH6.TextChanged
+        TextBoxSocketCH7.Focus()
+
+        If Not String.IsNullOrEmpty(TextBoxSocketCH6.Text) Then
+            Dim qrCode As String = TextBoxSocketCH6.Text.ToUpper.Trim
+            m_Socket(5).QRCodesocketChannel = qrCode
+
+            Using dt As DataTable = DBAccess.GetOSPSocketSystem(qrCode)
+
+                If dt.Rows.Count = 1 Then
+
+                    Dim row As DataRow = dt.Rows(0)
+
+                    If row("Is_Pass").ToString().Equals("TRUE") Then
+
+                        Dim data_SmallCode As String = row("SmallCode").ToString
+                        m_Socket(5).SocketName = data_SmallCode
+
+                    Else
+                        m_Socket(5).SocketName = ""
+                    End If
+
+                Else
+                    m_Socket(5).SocketName = ""
+                End If
+
+                TextBoxSocketCH6.Text = m_Socket(5).SocketName
+
+            End Using
+        End If
+    End Sub
+
+    Protected Sub TextBoxSocketCH7_TextChanged(sender As Object, e As EventArgs) Handles TextBoxSocketCH7.TextChanged
+        TextBoxSocketCH8.Focus()
+
+        If Not String.IsNullOrEmpty(TextBoxSocketCH7.Text) Then
+            Dim qrCode As String = TextBoxSocketCH7.Text.ToUpper.Trim
+            m_Socket(6).QRCodesocketChannel = qrCode
+
+            Using dt As DataTable = DBAccess.GetOSPSocketSystem(qrCode)
+
+                If dt.Rows.Count = 1 Then
+
+                    Dim row As DataRow = dt.Rows(0)
+
+                    If row("Is_Pass").ToString().Equals("TRUE") Then
+
+                        Dim data_SmallCode As String = row("SmallCode").ToString
+                        m_Socket(6).SocketName = data_SmallCode
+
+                    Else
+                        m_Socket(6).SocketName = ""
+                    End If
+
+                Else
+                    m_Socket(6).SocketName = ""
+                End If
+
+                TextBoxSocketCH7.Text = m_Socket(6).SocketName
+
+            End Using
+        End If
+    End Sub
+
+    Protected Sub TextBoxSocketCH8_TextChanged(sender As Object, e As EventArgs) Handles TextBoxSocketCH8.TextChanged
+
+        If Not String.IsNullOrEmpty(TextBoxSocketCH8.Text) Then
+            Dim qrCode As String = TextBoxSocketCH8.Text.ToUpper.Trim
+            m_Socket(7).QRCodesocketChannel = qrCode
+
+            Using dt As DataTable = DBAccess.GetOSPSocketSystem(qrCode)
+
+                If dt.Rows.Count = 1 Then
+
+                    Dim row As DataRow = dt.Rows(0)
+
+                    If row("Is_Pass").ToString().Equals("TRUE") Then
+
+                        Dim data_SmallCode As String = row("SmallCode").ToString
+                        m_Socket(7).SocketName = data_SmallCode
+
+                    Else
+                        m_Socket(7).SocketName = ""
+                    End If
+
+                Else
+                    m_Socket(7).SocketName = ""
+                End If
+
+                TextBoxSocketCH8.Text = m_Socket(7).SocketName
+
+            End Using
+        End If
     End Sub
 
     Private Sub GetFTSetupReport()
@@ -442,7 +414,9 @@ Public Class SetupMain
                 m_Data.SetupStatus = row("SetupStatus").ToString().ToUpper
                 m_Data.StatusShonoOP = row("StatusShonoOP").ToString().ToUpper
 
-                If m_Data.SetupStatus = "WAITING" Then 'For Confirm Data immediately
+                If m_Data.SetupStatus <> "CONFIRMED" AndAlso m_Data.SetupStatus <> "GOODNGTEST" Then
+                    ShowErrorMessage("กรุณาทำ SetupCheckSheet ให้เสร็จสมบูรณ์ก่อน")
+                Else
                     m_Data.PackageName = row("PackageName").ToString().ToUpper
                     m_Data.ProgramName = row("ProgramName").ToString().ToUpper
                     m_Data.QRCodesocket1 = row("QRCodesocket1").ToString().ToUpper
@@ -579,52 +553,13 @@ Public Class SetupMain
                 End If
 
             Else
-                'first time of MC
-                m_Data.DeviceName = ""
-                m_Data.TestFlow = ""
-                m_Data.TesterType = ""
-                m_Data.OISRank = ""
-                m_Data.OISDevice = ""
-                m_Data.SetupStatus = ""
-
-                DBAccess.CreateBlankFTSetupRecord(m_Data.MCNo)
-
+                ShowErrorMessage("ไม่พบการทำ SetupCheckSheet ของเครื่อง " + m_Data.MCNo)
             End If
         End Using
     End Sub
 
-    Private Sub RemoveSpecialFlow(lotId As Int32, specialflowId As Int32, flowId As Int32)
-        'Clear Special Flow here
-        Try
-            Dim result As Integer = DBAccess.ClearSpecialFlow(lotId, specialflowId, flowId)
-
-            If result = 1 Then
-                ShowErrorMessage("ไม่สามารถลบ Flows GO/NG Sample Judge ได้ Lot เป็น Multi-Special Flows")
-                Exit Sub
-            ElseIf result = 2 Then
-                ShowErrorMessage("ไม่สามารถลบ Flows GO/NG Sample Judge ได้ Lot เป็น Processing")
-                Exit Sub
-            End If
-        Catch ex As Exception
-            ShowErrorMessage("Failed to clear special flow : " & ex.Message)
-            Exit Sub
-        End Try
-    End Sub
-
-    Private Sub SetNextLotHere(mcNo As String, lotNo As String)
-        'Set Next Lot here
-        Try
-            DBAccess.SetNextLot(mcNo, lotNo)
-        Catch ex As Exception
-            ShowErrorMessage("Failed to Add Next Lots :" & ex.Message)
-            Exit Sub
-        End Try
-    End Sub
-
     Private Sub SetFTReport()
-        '1. save to database with status = 'CANCELED' before clear all data 
         Try
-            '2. do cancel no need reson
             Dim affRow As Integer = DBAccess.UpdateFTSetupReport(m_Data.MCNo,
                                                                  m_Data.LotNo,
                                                                  m_Data.PackageName,
@@ -769,10 +704,40 @@ Public Class SetupMain
                                                                  m_Data.SetupConfirmDate)
 
             Session(SESSION_KEY_DATA) = m_Data
+            Session(SESSION_KEY_NEW_DATA_SETUP) = Nothing
+            Session(SESSION_KEY_OLD_DATA) = m_OldData
+
+            HideErrorMessage()
+
+            Response.Redirect("~/SetupMain.aspx", False)
+        Catch ex As Exception
+            ShowErrorMessage("Update Failed : " & HttpUtility.HtmlEncode(ex.Message & vbNewLine & ex.StackTrace))
+        End Try
+    End Sub
+
+    Private Sub SetSocket()
+        Dim opNo As String = TextBoxOPNo.Text
+
+        If m_Data.QRCodesocketChannel1.Equals(m_Socket(0).QRCodesocketChannel) Then
+
+        End If
+
+        Try
 
         Catch ex As Exception
-            ShowErrorMessage("Update Failed : " & ex.Message)
+            ShowErrorMessage("SetSocket Failed : " & HttpUtility.HtmlEncode(ex.Message & vbNewLine & ex.StackTrace))
         End Try
+
+    End Sub
+
+    Private Sub ButtonConfirm_Click(sender As Object, e As EventArgs) Handles ButtonConfirm.Click
+
+        SetSocket()
+
+        m_Data.SocketChange = 1
+        SetFTReport()
+
+        Response.Redirect("~/Default.aspx")
     End Sub
 
     Private Sub ShowErrorMessage(errMessage As String)

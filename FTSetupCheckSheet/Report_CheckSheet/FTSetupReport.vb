@@ -130,46 +130,6 @@ Public Class FTSetupReport
     End Property
     Private m_QRCodesocket4 As String = ""
 
-    Public Property QRCodesocketChannel1() As String
-        Get
-            Return m_QRCodesocketChannel1
-        End Get
-        Set
-            m_QRCodesocketChannel1 = Value
-        End Set
-    End Property
-    Private m_QRCodesocketChannel1 As String = ""
-
-    Public Property QRCodesocketChannel2() As String
-        Get
-            Return m_QRCodesocketChannel2
-        End Get
-        Set
-            m_QRCodesocketChannel2 = Value
-        End Set
-    End Property
-    Private m_QRCodesocketChannel2 As String = ""
-
-    Public Property QRCodesocketChannel3() As String
-        Get
-            Return m_QRCodesocketChannel3
-        End Get
-        Set
-            m_QRCodesocketChannel3 = Value
-        End Set
-    End Property
-    Private m_QRCodesocketChannel3 As String = ""
-
-    Public Property QRCodesocketChannel4() As String
-        Get
-            Return m_QRCodesocketChannel4
-        End Get
-        Set
-            m_QRCodesocketChannel4 = Value
-        End Set
-    End Property
-    Private m_QRCodesocketChannel4 As String = ""
-
     Public Property QRCodesocket5() As String
         Get
             Return m_QRCodesocket5
@@ -210,6 +170,46 @@ Public Class FTSetupReport
     End Property
     Private m_QRCodesocket8 As String = ""
 
+    Public Property QRCodesocketChannel1() As String
+        Get
+            Return m_QRCodesocketChannel1
+        End Get
+        Set
+            m_QRCodesocketChannel1 = Value
+        End Set
+    End Property
+    Private m_QRCodesocketChannel1 As String = ""
+
+    Public Property QRCodesocketChannel2() As String
+        Get
+            Return m_QRCodesocketChannel2
+        End Get
+        Set
+            m_QRCodesocketChannel2 = Value
+        End Set
+    End Property
+    Private m_QRCodesocketChannel2 As String = ""
+
+    Public Property QRCodesocketChannel3() As String
+        Get
+            Return m_QRCodesocketChannel3
+        End Get
+        Set
+            m_QRCodesocketChannel3 = Value
+        End Set
+    End Property
+    Private m_QRCodesocketChannel3 As String = ""
+
+    Public Property QRCodesocketChannel4() As String
+        Get
+            Return m_QRCodesocketChannel4
+        End Get
+        Set
+            m_QRCodesocketChannel4 = Value
+        End Set
+    End Property
+    Private m_QRCodesocketChannel4 As String = ""
+
     Public Property QRCodesocketChannel5() As String
         Get
             Return m_QRCodesocketChannel5
@@ -249,6 +249,16 @@ Public Class FTSetupReport
         End Set
     End Property
     Private m_QRCodesocketChannel8 As String = ""
+
+    Public Property SocketChange() As Integer
+        Get
+            Return m_SocketChange
+        End Get
+        Set
+            m_SocketChange = Value
+        End Set
+    End Property
+    Private m_SocketChange As Integer = 0
 
     Public Property TesterNoA() As String
         Get
@@ -2498,6 +2508,39 @@ Public Class FTSetupReportHistory
 
 End Class
 
+Public Class Socket
+
+    Public Property SocketName() As String
+        Get
+            Return m_SocketName
+        End Get
+        Set
+            m_SocketName = Value
+        End Set
+    End Property
+    Private m_SocketName As String = ""
+
+    Public Property QRCodesocketChannel() As String
+        Get
+            Return m_QRCodesocketChannel
+        End Get
+        Set
+            m_QRCodesocketChannel = Value
+        End Set
+    End Property
+    Private m_QRCodesocketChannel As String = ""
+
+    Public Property Channel() As Integer
+        Get
+            Return m_Channel
+        End Get
+        Set
+            m_Channel = Value
+        End Set
+    End Property
+    Private m_Channel As Integer = 0
+
+End Class
 '=======================================================
 'Service provided by Telerik (www.telerik.com)
 'Conversion powered by NRefactory.
