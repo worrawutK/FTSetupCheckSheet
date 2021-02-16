@@ -11,7 +11,7 @@ Public Class SetupStep1
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
 
-        OISTextBox.Focus()
+        QRcodeTextBox.Focus()
         ButtonSkip.Enabled = False
 
         Dim tmp As Object = Session(SESSION_KEY_NEW_DATA_SETUP)
@@ -25,37 +25,116 @@ Public Class SetupStep1
         End If
 
         If Not IsPostBack Then
+            LotnoTextbox.Text = m_Data.LotNo
+            PackagenameTextBox.Text = m_Data.PackageName
+            DeviceNameTextBox.Text = m_Data.DeviceName
             TestflowTextBox.Text = m_Data.TestFlow
-            TesterTypetext.Text = m_Data.TesterType
-            OISRankTextBox.Text = m_Data.OISRank
         End If
 
     End Sub
 
-    Protected Sub OISTextBox_TextChanged(sender As Object, e As EventArgs) Handles OISTextBox.TextChanged
+    Protected Sub WorkingSlipTextBox_TextChanged(sender As Object, e As EventArgs) Handles QRcodeTextBox.TextChanged
 
-        If Not String.IsNullOrEmpty(OISTextBox.Text) Then
+        If Not String.IsNullOrEmpty(QRcodeTextBox.Text) Then
 
-            '0  1         2   3     4        5       6          7
-            'QC,BD62012FS,/-S,AUTO1,SSOP-A24,ICT2000,F2 BD62012,FD62012B
-            Dim data As String() = OISTextBox.Text.Split(","c)
+            Dim qrTest As String = QRcodeTextBox.Text
 
-            OISTextBox.Text = ""
+            If qrTest.Length = 252 OrElse qrTest.Length = 332 OrElse qrTest.Length = 50 Then
+                m_Data.LotNo = qrTest.Substring(30, 10).ToUpper().Trim()
+            Else
+                If qrTest.Trim().Length = 10 Then
+                    m_Data.LotNo = qrTest.Trim()
+                Else
+                    QRcodeTextBox.Text = ""
+                    Exit Sub
+                End If
+            End If
 
-            If data.Length <> 8 Then
+            Dim apcsdbDenpyoTbl As DataTable
+
+            Try
+                apcsdbDenpyoTbl = DBAccess.GetWorkingSlipQRCode(m_Data.LotNo)
+            Catch ex As Exception
+                QRcodeTextBox.Text = ""
+                ShowErrorMessage("Failed to get ApcsdbDenpyo :" & ex.Message)
+                Exit Sub
+            End Try
+
+            If apcsdbDenpyoTbl.Rows.Count = 0 Then
+                QRcodeTextBox.Text = ""
+                ShowErrorMessage(String.Format("ไม่พบ Lot No : " + m_Data.LotNo + " กรุณาลองอีกครั้ง : [cellcon].[sp_get_denpyo] <br/>"))
+                Exit Sub
+            ElseIf apcsdbDenpyoTbl.Rows.Count > 1 Then
+                QRcodeTextBox.Text = ""
+                ShowErrorMessage(String.Format("พบ Lot No : " + apcsdbDenpyoTbl.Rows.Count.ToString() + " rows โปรดแจ้ง SYSTEM : [cellcon].[sp_get_denpyo] <br/>"))
                 Exit Sub
             End If
 
-            m_Data.OISDevice = data(1).ToUpper().Trim()
-            m_Data.OISRank = data(2).ToUpper().Trim()
-            m_Data.TestFlow = data(3).ToUpper().Trim()
-            'm_Data.TesterType = data(5).ToUpper().Trim()
-            m_Data.SetupStartDate = Now
-            m_Data.ProgramName = data(7).ToUpper().Trim()
+            Dim apcsdbDenpyoRow As DataRow = apcsdbDenpyoTbl.Rows(0)
 
+            m_Data.PackageName = apcsdbDenpyoRow("PackageName").ToString().Trim()
+            m_Data.DeviceName = apcsdbDenpyoRow("DeviceName").ToString().Trim()
+
+            Dim testFlow As String = apcsdbDenpyoRow("FlowName").ToString().Trim()
+
+            If (String.IsNullOrEmpty(testFlow)) Then
+                ShowErrorMessage("ไม่พบ Flow โปรดตรวจสอบที่ ATOM : [cellcon].[sp_get_current_trans_lots] <br/>")
+                Exit Sub
+            End If
+
+            Dim fileReaderFlow As String = My.Computer.FileSystem.ReadAllText("\\10.28.33.113\www\FTSetupCheckSheet\_backup\CommonFlow.txt")
+
+            'OS+AUTO(1),AUTO(1)
+            Dim wordsFlow As String() = fileReaderFlow.Split(New String() {Environment.NewLine}, StringSplitOptions.None)
+            For index = 0 To wordsFlow.Length - 1
+
+                Dim wording As String() = wordsFlow(index).Split(","c)
+
+                If wording(0).Equals(testFlow) Then
+                    Select Case wording.Length
+                        Case 2
+                            testFlow = wording(1)
+                        Case Else
+                            ShowErrorMessage("โปรดแจ้ง SYSTEM : \_backup\CommonFlow มี Length เป็น " + wording.Length.ToString())
+                    End Select
+                End If
+            Next
+
+            'AUTO(2)ASISAMPLE -> AUTO2ASISAMPLE
+            If testFlow.Contains("AUTO(") Then
+                testFlow = testFlow.Replace("(", "")
+                testFlow = testFlow.Replace(")", "")
+            End If
+
+            m_Data.TestFlow = testFlow
+
+            LotnoTextbox.Text = m_Data.LotNo
+            PackagenameTextBox.Text = m_Data.PackageName
+            DeviceNameTextBox.Text = m_Data.DeviceName            
             TestflowTextBox.Text = m_Data.TestFlow
-            TesterTypetext.Text = m_Data.TesterType
-            OISRankTextBox.Text = m_Data.OISRank
+
+            QRcodeTextBox.Text = ""
+
+            ''0  1         2   3     4        5       6          7
+            ''QC,BD62012FS,/-S,AUTO1,SSOP-A24,ICT2000,F2 BD62012,FD62012B
+            'Dim data As String() = OISTextBox.Text.Split(","c)
+
+            'OISTextBox.Text = ""
+
+            'If data.Length <> 8 Then
+            '    Exit Sub
+            'End If
+
+            'm_Data.OISDevice = data(1).ToUpper().Trim()
+            'm_Data.OISRank = data(2).ToUpper().Trim()
+            'm_Data.TestFlow = data(3).ToUpper().Trim()
+            ''m_Data.TesterType = data(5).ToUpper().Trim()
+            'm_Data.SetupStartDate = Now
+            'm_Data.ProgramName = data(7).ToUpper().Trim()
+
+            'TestflowTextBox.Text = m_Data.TestFlow
+            'TesterTypetext.Text = m_Data.TesterType
+            'OISRankTextBox.Text = m_Data.OISRank
 
             ButtonSkip.Enabled = True
             ButtonNext.Enabled = True
@@ -239,5 +318,14 @@ Public Class SetupStep1
             End If
         End Using
         Session(SESSION_KEY_DATA) = m_Data
+    End Sub
+
+    Private Sub ShowErrorMessage(errMessage As String)
+        ErrorMessageLabel.Text = errMessage
+        panelError.Style.Item("display") = "block"
+    End Sub
+
+    Private Sub HideErrorMessage()
+        panelError.Style.Item("display") = "none"
     End Sub
 End Class

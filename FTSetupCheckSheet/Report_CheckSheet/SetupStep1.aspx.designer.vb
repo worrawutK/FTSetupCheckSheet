@@ -14,13 +14,58 @@ Option Explicit On
 Partial Public Class SetupStep1
 
     '''<summary>
-    '''OISTextBox control.
+    '''QRcodeTextBox control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents OISTextBox As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents QRcodeTextBox As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''panelError control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panelError As Global.System.Web.UI.HtmlControls.HtmlGenericControl
+
+    '''<summary>
+    '''ErrorMessageLabel control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents ErrorMessageLabel As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''LotnoTextbox control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents LotnoTextbox As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''PackagenameTextBox control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents PackagenameTextBox As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''DeviceNameTextBox control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents DeviceNameTextBox As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''TestflowTextBox control.
@@ -30,24 +75,6 @@ Partial Public Class SetupStep1
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents TestflowTextBox As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''TesterTypetext control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents TesterTypetext As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''OISRankTextBox control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents OISRankTextBox As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''ButtonPrevious control.

@@ -32,6 +32,15 @@ Partial Public Class SetupStep2
     Protected WithEvents ErrorMessageLabel As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''TesterTypetext control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents TesterTypetext As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
     '''TesternoATextBox control.
     '''</summary>
     '''<remarks>
