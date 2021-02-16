@@ -251,7 +251,7 @@ Public Class SetupStep2
         TesternoCTextBox.BackColor = Drawing.Color.White
         TesternoDTextBox.BackColor = Drawing.Color.White
 
-        Dim testerType As String
+        Dim testerType As String = ""
 
         If Not String.IsNullOrWhiteSpace(m_Data.TesterNoAQRcode) Then
             Dim dt As DataTable = DBAccess.GetTesterTypebyQRCode(m_Data.TesterNoAQRcode)
@@ -266,7 +266,7 @@ Public Class SetupStep2
             Dim dt As DataTable = DBAccess.GetTesterTypebyQRCode(m_Data.TesterNoBQRcode)
             If dt.Rows.Count = 1 Then
                 Dim row As DataRow = dt.Rows(0)
-                If String.IsNullOrEmpty(testerType) Then
+                If String.IsNullOrWhiteSpace(testerType) Then
                     testerType = row("TesterType").ToString()
                 Else
                     If Not testerType = row("TesterType").ToString() Then
@@ -281,7 +281,7 @@ Public Class SetupStep2
             Dim dt As DataTable = DBAccess.GetTesterTypebyQRCode(m_Data.TesterNoCQRcode)
             If dt.Rows.Count = 1 Then
                 Dim row As DataRow = dt.Rows(0)
-                If String.IsNullOrEmpty(testerType) Then
+                If String.IsNullOrWhiteSpace(testerType) Then
                     testerType = row("TesterType").ToString()
                 Else
                     If Not testerType = row("TesterType").ToString() Then
@@ -296,7 +296,7 @@ Public Class SetupStep2
             Dim dt As DataTable = DBAccess.GetTesterTypebyQRCode(m_Data.TesterNoDQRcode)
             If dt.Rows.Count = 1 Then
                 Dim row As DataRow = dt.Rows(0)
-                If String.IsNullOrEmpty(testerType) Then
+                If String.IsNullOrWhiteSpace(testerType) Then
                     testerType = row("TesterType").ToString()
                 Else
                     If Not testerType = row("TesterType").ToString() Then
