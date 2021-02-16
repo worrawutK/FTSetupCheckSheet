@@ -28,6 +28,7 @@ Public Class SetupStep2
             TesternoBTextBox.Text = m_Data.TesterNoB
             TesternoCTextBox.Text = m_Data.TesterNoC
             TesternoDTextBox.Text = m_Data.TesterNoD
+            TesterTypetext.Text = m_Data.TesterType
 
             If m_Data.MCNo.StartsWith("FT") OrElse m_Data.MCNo.StartsWith("TP") Then
                 panelTesternoC.Style.Item("display") = "none"
@@ -320,7 +321,6 @@ Public Class SetupStep2
             Next
 
             ShowErrorMessage(a)
-            Return ret
         End If
 
         Return ret

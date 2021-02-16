@@ -7,11 +7,16 @@
     </div>
 
 <div class="container"> 
-   <div class="panel-group"> 
+    <div class="panel-group"> 
         <div class="panel panel-danger" id="panelError" runat="server" style="display:none">
             <div class="panel-heading">ERROR !!</div>
             <asp:Label ID="ErrorMessageLabel" runat="server" Text="THERE IS ERROR MESSAGE !!!!" ForeColor="Red" Font-Size="Large"></asp:Label>
         </div> 
+
+        <div class="panel panel-primary">
+            <label class="col-sm-2 control-label" for="lg">TESTER TYPE</label>
+            <asp:TextBox ID="TesterTypetext" runat="server" CssClass="form-control" AutoPostBack="True" ReadOnly="True"></asp:TextBox>
+        </div><br />
 
         <div class="panel panel-info">
             <div class="panel-heading">(2.1) TESTER NO  (ﾃｽﾀｰ№) : A channel </div>
@@ -37,6 +42,7 @@
             <asp:Button ID="ButtonPrevious" CssClass="btn btn-default pull-left " runat="server" Text="Previous" />
             <asp:Button ID="ButtonNext" CssClass="btn btn-default pull-right" runat="server" Text="Next" />
         </div><br />
-  </div>
- </div>
+    </div>
+</div>
+
 </asp:Content>

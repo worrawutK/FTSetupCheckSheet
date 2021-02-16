@@ -18,11 +18,6 @@
               <asp:TextBox ID="TestflowTextBox" runat="server" CssClass="form-control" AutoPostBack="True" ReadOnly="True"></asp:TextBox>
         </div><br />
 
-        <div class="form-group form-group-lg">
-              <label class="col-sm-2 control-label" for="lg">TESTER TYPE</label>
-              <asp:TextBox ID="TesterTypetext" runat="server" CssClass="form-control" AutoPostBack="True" ReadOnly="True"></asp:TextBox>
-        </div><br />
-
          <div class="form-group form-group-lg">
               <label class="col-sm-2 control-label" for="lg">OIS RANK</label>
               <asp:TextBox ID="OISRankTextBox" runat="server" CssClass="form-control" AutoPostBack="True" ReadOnly="True"></asp:TextBox>

@@ -26,7 +26,6 @@ Public Class SetupStep1
 
         If Not IsPostBack Then
             TestflowTextBox.Text = m_Data.TestFlow
-            TesterTypetext.Text = m_Data.TesterType
             OISRankTextBox.Text = m_Data.OISRank
         End If
 
@@ -54,7 +53,7 @@ Public Class SetupStep1
             m_Data.ProgramName = data(7).ToUpper().Trim()
 
             TestflowTextBox.Text = m_Data.TestFlow
-            TesterTypetext.Text = m_Data.TesterType
+            'TesterTypetext.Text = m_Data.TesterType
             OISRankTextBox.Text = m_Data.OISRank
 
             ButtonSkip.Enabled = True
