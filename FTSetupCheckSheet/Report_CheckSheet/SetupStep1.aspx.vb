@@ -49,6 +49,18 @@ Public Class SetupStep1
             m_Data.OISDevice = data(1).ToUpper().Trim()
             m_Data.OISRank = data(2).ToUpper().Trim()
             m_Data.TestFlow = data(3).ToUpper().Trim()
+
+            Dim fileReaderFlow As String = My.Computer.FileSystem.ReadAllText("\\10.28.33.113\www\FTSetupCheckSheet\_backup\CommonFlow.txt")
+            Dim wordsFlow As String() = fileReaderFlow.Split(New String() {Environment.NewLine}, StringSplitOptions.None)
+
+            For index = 0 To wordsFlow.Length - 1
+                Dim wordings As String() = wordsFlow(index).Split(","c)
+                If wordings(0).Equals(m_Data.TestFlow) Then
+                    m_Data.TestFlow = wordings(1)
+                    Exit For
+                End If
+            Next
+
             m_Data.TesterType = data(5).ToUpper().Trim()
             m_Data.SetupStartDate = Now
             m_Data.ProgramName = data(7).ToUpper().Trim()
