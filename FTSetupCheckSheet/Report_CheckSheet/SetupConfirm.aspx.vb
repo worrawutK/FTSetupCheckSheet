@@ -669,6 +669,17 @@ Public Class SetupConfirm
                 SetupStatus = SETUP_STATUS_CONFIRMED
             End If
 
+            Dim fileReaderCommonFlow As String = My.Computer.FileSystem.ReadAllText("\\10.28.33.113\www\FTSetupCheckSheet\_backup\CommonFlow.txt")
+            Dim wordsCommonFlow As String() = fileReaderCommonFlow.Split(New String() {Environment.NewLine}, StringSplitOptions.None)
+
+            For index = 0 To wordsCommonFlow.Length - 1
+                Dim wordings As String() = wordsCommonFlow(index).Split(","c)
+                If wordings(0).Equals(flowName) Then
+                    flowName = wordings(1)
+                    Exit For
+                End If
+            Next
+
             If flowName.Contains("AUTO(") Then
                 Dim splitFlowName As String() = flowName.Split(CType("(", Char()))
 
