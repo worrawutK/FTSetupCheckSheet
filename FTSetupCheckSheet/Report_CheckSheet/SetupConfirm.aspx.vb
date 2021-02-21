@@ -669,6 +669,9 @@ Public Class SetupConfirm
                 SetupStatus = SETUP_STATUS_CONFIRMED
             End If
 
+            Dim strFlow As String() = flowName.Split(" "c)
+            flowName = strFlow(0)
+
             Dim fileReaderCommonFlow As String = My.Computer.FileSystem.ReadAllText("\\10.28.33.113\www\FTSetupCheckSheet\_backup\CommonFlow.txt")
             Dim wordsCommonFlow As String() = fileReaderCommonFlow.Split(New String() {Environment.NewLine}, StringSplitOptions.None)
 
