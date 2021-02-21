@@ -12,7 +12,7 @@ Option Explicit On
 
 
 Partial Public Class SetupStep7CheckSheet9
-    
+
     '''<summary>
     '''panelError control.
     '''</summary>
@@ -21,7 +21,7 @@ Partial Public Class SetupStep7CheckSheet9
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents panelError As Global.System.Web.UI.HtmlControls.HtmlGenericControl
-    
+
     '''<summary>
     '''ErrorMessageLabel control.
     '''</summary>
@@ -30,7 +30,7 @@ Partial Public Class SetupStep7CheckSheet9
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents ErrorMessageLabel As Global.System.Web.UI.WebControls.Label
-    
+
     '''<summary>
     '''selecBge5s control.
     '''</summary>
@@ -39,7 +39,7 @@ Partial Public Class SetupStep7CheckSheet9
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents selecBge5s As Global.System.Web.UI.HtmlControls.HtmlSelect
-    
+
     '''<summary>
     '''selecCheckSheet control.
     '''</summary>
@@ -48,7 +48,7 @@ Partial Public Class SetupStep7CheckSheet9
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents selecCheckSheet As Global.System.Web.UI.HtmlControls.HtmlSelect
-    
+
     '''<summary>
     '''ButtonPrevious control.
     '''</summary>
@@ -57,13 +57,13 @@ Partial Public Class SetupStep7CheckSheet9
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents ButtonPrevious As Global.System.Web.UI.WebControls.Button
-    
+
     '''<summary>
-    '''Savebutton_Check control.
+    '''Confirmbutton_Check control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents Savebutton_Check As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents Confirmbutton_Check As Global.System.Web.UI.WebControls.Button
 End Class

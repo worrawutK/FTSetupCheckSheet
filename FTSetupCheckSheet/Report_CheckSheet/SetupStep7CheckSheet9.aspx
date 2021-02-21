@@ -38,7 +38,7 @@
         
         <div class="panel">
             <asp:Button ID="ButtonPrevious" CssClass="btn btn-default pull-left" runat="server" Text="Previous" BorderColor="Black" BorderStyle="Groove" BorderWidth="2px" />
-            <asp:Button ID="Savebutton_Check" runat="server" Text="SAVE" CssClass="btn btn-primary pull-right" Font-Bold="True" /><br />
+            <asp:Button ID="Confirmbutton_Check" runat="server" Text="CONFIRM" CssClass="btn btn-primary pull-right" Font-Bold="True" /><br />
         </div>
 
         </div>
