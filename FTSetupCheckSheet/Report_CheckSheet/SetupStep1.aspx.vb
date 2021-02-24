@@ -50,34 +50,29 @@ Public Class SetupStep1
                 End If
             End If
 
-            Dim apcsdbDenpyoTbl As DataTable
+            Dim currentTransLotsTbl As DataTable
 
             Try
-                apcsdbDenpyoTbl = DBAccess.GetWorkingSlipQRCode(m_Data.LotNo)
+                currentTransLotsTbl = DBAccess.GetCurrentTransLots(m_Data.LotNo)
             Catch ex As Exception
-                QRcodeTextBox.Text = ""
-                ShowErrorMessage("Failed to get ApcsdbDenpyo :" & ex.Message)
+                ShowErrorMessage("Failed to get CurrentTransLots :" & ex.Message)
                 Exit Sub
             End Try
 
-            If apcsdbDenpyoTbl.Rows.Count = 0 Then
-                QRcodeTextBox.Text = ""
-                ShowErrorMessage(String.Format("ไม่พบ Lot No : " + m_Data.LotNo + " กรุณาลองอีกครั้ง : [cellcon].[sp_get_denpyo] <br/>"))
+            If currentTransLotsTbl.Rows.Count = 0 Then
+                ShowErrorMessage(String.Format("ไม่พบ Lot No : " + m_Data.LotNo + " โปรดตรวจสอบที่ ATOM : [cellcon].[sp_get_current_trans_lots] <br/>"))
                 Exit Sub
-            ElseIf apcsdbDenpyoTbl.Rows.Count > 1 Then
-                QRcodeTextBox.Text = ""
-                ShowErrorMessage(String.Format("พบ Lot No : " + apcsdbDenpyoTbl.Rows.Count.ToString() + " rows โปรดแจ้ง SYSTEM : [cellcon].[sp_get_denpyo] <br/>"))
+            ElseIf currentTransLotsTbl.Rows.Count > 1 Then
+                ShowErrorMessage(String.Format("พบ Lot No : " + currentTransLotsTbl.Rows.Count.ToString() + " rows โปรดแจ้ง SYSTEM : [cellcon].[sp_get_current_trans_lots] <br/>"))
                 Exit Sub
             End If
 
-            Dim apcsdbDenpyoRow As DataRow = apcsdbDenpyoTbl.Rows(0)
+            Dim currentTransLotsRow As DataRow = currentTransLotsTbl.Rows(0)
+            Dim packageName As String = currentTransLotsRow("Package").ToString().Trim()
+            Dim deviceName As String = currentTransLotsRow("Device").ToString().Trim()
+            Dim flowName As String = currentTransLotsRow("FlowName").ToString().Trim()
 
-            m_Data.PackageName = apcsdbDenpyoRow("PackageName").ToString().Trim()
-            m_Data.DeviceName = apcsdbDenpyoRow("DeviceName").ToString().Trim()
-
-            Dim testFlow As String = apcsdbDenpyoRow("FlowName").ToString().Trim()
-
-            If (String.IsNullOrEmpty(testFlow)) Then
+            If (String.IsNullOrEmpty(flowName)) Then
                 ShowErrorMessage("ไม่พบ Flow โปรดตรวจสอบที่ ATOM : [cellcon].[sp_get_current_trans_lots] <br/>")
                 Exit Sub
             End If
@@ -90,10 +85,10 @@ Public Class SetupStep1
 
                 Dim wording As String() = wordsFlow(index).Split(","c)
 
-                If wording(0).Equals(testFlow) Then
+                If wording(0).Equals(flowName) Then
                     Select Case wording.Length
                         Case 2
-                            testFlow = wording(1)
+                            flowName = wording(1)
                         Case Else
                             ShowErrorMessage("โปรดแจ้ง SYSTEM : \_backup\CommonFlow มี Length เป็น " + wording.Length.ToString())
                     End Select
@@ -101,40 +96,24 @@ Public Class SetupStep1
             Next
 
             'AUTO(2)ASISAMPLE -> AUTO2ASISAMPLE
-            If testFlow.Contains("AUTO(") Then
-                testFlow = testFlow.Replace("(", "")
-                testFlow = testFlow.Replace(")", "")
+            If flowName.Contains("AUTO(") Then
+                flowName = flowName.Replace("(", "")
+                flowName = flowName.Replace(")", "")
             End If
 
-            m_Data.TestFlow = testFlow
+            'Query ProgramName
+
+            m_Data.PackageName = packageName
+            m_Data.DeviceName = deviceName
+            m_Data.TestFlow = flowName
 
             LotnoTextbox.Text = m_Data.LotNo
             PackagenameTextBox.Text = m_Data.PackageName
-            DeviceNameTextBox.Text = m_Data.DeviceName            
+            DeviceNameTextBox.Text = m_Data.DeviceName
             TestflowTextBox.Text = m_Data.TestFlow
+            ProgramNameTextBox.Text = m_Data.ProgramName
 
             QRcodeTextBox.Text = ""
-
-            ''0  1         2   3     4        5       6          7
-            ''QC,BD62012FS,/-S,AUTO1,SSOP-A24,ICT2000,F2 BD62012,FD62012B
-            'Dim data As String() = OISTextBox.Text.Split(","c)
-
-            'OISTextBox.Text = ""
-
-            'If data.Length <> 8 Then
-            '    Exit Sub
-            'End If
-
-            'm_Data.OISDevice = data(1).ToUpper().Trim()
-            'm_Data.OISRank = data(2).ToUpper().Trim()
-            'm_Data.TestFlow = data(3).ToUpper().Trim()
-            ''m_Data.TesterType = data(5).ToUpper().Trim()
-            'm_Data.SetupStartDate = Now
-            'm_Data.ProgramName = data(7).ToUpper().Trim()
-
-            'TestflowTextBox.Text = m_Data.TestFlow
-            'TesterTypetext.Text = m_Data.TesterType
-            'OISRankTextBox.Text = m_Data.OISRank
 
             ButtonSkip.Enabled = True
             ButtonNext.Enabled = True
@@ -172,6 +151,7 @@ Public Class SetupStep1
                 Dim row As DataRow = dt2.Rows(0)
 
                 'EQP
+                m_Data.TesterType = row("TesterType").ToString().ToUpper
                 m_Data.TesterNoA = row("TesterNoA").ToString().ToUpper
                 m_Data.TesterNoAQRcode = row("TesterNoAQRcode").ToString().ToUpper
                 m_Data.TesterNoB = row("TesterNoB").ToString().ToUpper

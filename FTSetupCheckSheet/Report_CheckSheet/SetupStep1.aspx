@@ -36,11 +36,16 @@
         <div class="panel panel-primary">
             <div class="panel-heading">TEST FLOW</div>
             <asp:TextBox ID="TestflowTextBox" runat="server" CssClass="form-control" ReadOnly="True"></asp:TextBox>
-        </div><br />        
+        </div>
+
+        <div class="panel panel-primary">
+            <div class="panel-heading">PROGRAM NAME</div>
+            <asp:TextBox ID="ProgramNameTextBox" runat="server" CssClass="form-control" ReadOnly="True"></asp:TextBox>
+        </div><br />
 
         <asp:Button ID="ButtonPrevious" CssClass="btn btn-default pull-left" runat="server" Text="Previous" BorderColor="Black" BorderStyle="Groove" BorderWidth="2px" />
         <asp:Button ID="ButtonNext" CssClass="btn btn-default pull-right" runat="server" Text="Next" BorderColor="Black" BorderStyle="Groove" BorderWidth="2px" />
-        <asp:Button ID="ButtonSkip" CssClass="btn btn-default pull-right" runat="server" Text="Old Equipment" BorderColor="Black" BorderStyle="Groove" BorderWidth="2px" /><br />
+        <asp:Button ID="ButtonSkip" CssClass="btn btn-default pull-right" runat="server" Text="Old Equipment" BorderColor="Black" BorderStyle="Groove" BorderWidth="2px" style="margin-right:5px;" />
 
         </div>
     </div><br />
