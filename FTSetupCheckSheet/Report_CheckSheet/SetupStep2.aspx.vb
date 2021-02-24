@@ -157,7 +157,11 @@ Public Class SetupStep2
 
     Private Sub ButtonNext_Click(sender As Object, e As EventArgs) Handles ButtonNext.Click
         If UpdateSessionData() Then
-            Response.Redirect("~/SetupStep3.aspx")
+            If Not String.IsNullOrWhiteSpace(TesterTypetext.Text) Then
+                Response.Redirect("~/SetupStep3.aspx")
+            Else
+                ShowErrorMessage("TesterType := '" + TesterTypetext.Text + "' กรุณาแสกน Tester No ใหม่อีกครั้ง")
+            End If
         End If
 
         'If Not TesterNoIsDuplicated() Then
