@@ -94,6 +94,7 @@ Public Class SetupStep1
                 Dim row As DataRow = dt2.Rows(0)
 
                 'EQP
+                m_Data.TesterType = row("TesterType").ToString().ToUpper
                 m_Data.TesterNoA = row("TesterNoA").ToString().ToUpper
                 m_Data.TesterNoAQRcode = row("TesterNoAQRcode").ToString().ToUpper
                 m_Data.TesterNoB = row("TesterNoB").ToString().ToUpper
