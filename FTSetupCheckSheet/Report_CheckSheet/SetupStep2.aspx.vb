@@ -160,7 +160,7 @@ Public Class SetupStep2
             If Not String.IsNullOrWhiteSpace(TesterTypetext.Text) Then
                 Response.Redirect("~/SetupStep3.aspx")
             Else
-                ShowErrorMessage("TesterType := '" + TesterTypetext.Text + "' กรุณาแสกน Tester No ใหม่อีกครั้ง")
+                ShowErrorMessage("TesterType = '" + TesterTypetext.Text + "' กรุณาแสกน Tester No ใหม่อีกครั้ง")
             End If
         End If
 
