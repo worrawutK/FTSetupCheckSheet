@@ -50,8 +50,6 @@ Public Class SetupConfirm
 
         If qrTest.Length = 252 OrElse qrTest.Length = 332 OrElse qrTest.Length = 50 Then
             m_Data.LotNo = qrTest.Substring(30, 10).ToUpper().Trim()
-            'm_Data.PackageName = QRcodeTextBox.Text.Substring(0, 10).ToUpper().Trim()
-            'm_Data.DeviceName = QRcodeTextBox.Text.Substring(232, 20).ToUpper().Trim()
         Else
             If qrTest.Trim().Length = 10 Then
                 m_Data.LotNo = qrTest.Trim()
@@ -61,30 +59,33 @@ Public Class SetupConfirm
             End If
         End If
 
-        Dim apcsdbDenpyoTbl As DataTable
+        Dim currentTransLotsTbl As DataTable
 
         Try
-            apcsdbDenpyoTbl = DBAccess.GetWorkingSlipQRCode(m_Data.LotNo)
+            currentTransLotsTbl = DBAccess.GetCurrentTransLots(m_Data.LotNo)
         Catch ex As Exception
-            QRcodeTextBox.Text = ""
-            ShowErrorMessage("Failed to get ApcsdbDenpyo :" & ex.Message)
+            ShowErrorMessage("Failed to get CurrentTransLots :" & ex.Message)
             Exit Sub
         End Try
 
-        If apcsdbDenpyoTbl.Rows.Count = 0 Then
-            QRcodeTextBox.Text = ""
-            ShowErrorMessage(String.Format("ไม่พบ Lot No : " + m_Data.LotNo + " กรุณาลองอีกครั้ง : [cellcon].[sp_get_denpyo] <br/>"))
+        If currentTransLotsTbl.Rows.Count = 0 Then
+            ShowErrorMessage(String.Format("ไม่พบ Lot No : " + m_Data.LotNo + " โปรดตรวจสอบที่ ATOM : [cellcon].[sp_get_current_trans_lots] <br/>"))
             Exit Sub
-        ElseIf apcsdbDenpyoTbl.Rows.Count > 1 Then
-            QRcodeTextBox.Text = ""
-            ShowErrorMessage(String.Format("พบ Lot No : " + apcsdbDenpyoTbl.Rows.Count.ToString() + " rows โปรดแจ้ง SYSTEM : [cellcon].[sp_get_denpyo] <br/>"))
+        ElseIf currentTransLotsTbl.Rows.Count > 1 Then
+            ShowErrorMessage(String.Format("พบ Lot No : " + currentTransLotsTbl.Rows.Count.ToString() + " rows โปรดแจ้ง SYSTEM : [cellcon].[sp_get_current_trans_lots] <br/>"))
             Exit Sub
         End If
 
-        Dim apcsdbDenpyoRow As DataRow = apcsdbDenpyoTbl.Rows(0)
+        Dim currentTransLotsRow As DataRow = currentTransLotsTbl.Rows(0)
 
-        m_Data.PackageName = apcsdbDenpyoRow("PackageName").ToString()
-        m_Data.DeviceName = apcsdbDenpyoRow("DeviceName").ToString()
+        'Now is Special Flow then Is it GO/NG Sample Judge
+        If (String.IsNullOrEmpty(currentTransLotsRow("FlowName").ToString().Trim())) Then
+            ShowErrorMessage("ไม่พบ Flow โปรดตรวจสอบที่ ATOM : [cellcon].[sp_get_current_trans_lots] <br/>")
+            Exit Sub
+        End If
+
+        m_Data.PackageName = currentTransLotsRow("Package").ToString().Trim()
+        m_Data.DeviceName = currentTransLotsRow("Device").ToString().Trim()
 
         DeviceNameTextBox.Text = m_Data.DeviceName
         PackagenameTextBox.Text = m_Data.PackageName
@@ -584,28 +585,50 @@ Public Class SetupConfirm
 
             Dim currentTransLotsRow As DataRow = currentTransLotsTbl.Rows(0)
 
-            Dim lotId As Int32 = Int32.Parse(currentTransLotsRow("LotId").ToString())
-            Dim backStepNo As Int32 = Int32.Parse(currentTransLotsRow("StepNo").ToString())
+            Dim lotId As Integer = Integer.Parse(currentTransLotsRow("LotId").ToString())
+            Dim backStepNo As Integer = Integer.Parse(currentTransLotsRow("StepNo").ToString())
             Dim flowName As String = currentTransLotsRow("FlowName").ToString().Trim()
             Dim wipState As String = currentTransLotsRow("WipState").ToString().Trim()
             Dim processState As String = currentTransLotsRow("ProcessState").ToString().Trim()
             Dim qualityState As String = currentTransLotsRow("QualityState").ToString().Trim()
-            Dim isSpecialFlow As Int32 = Int32.Parse(currentTransLotsRow("IsSpecialFlow").ToString())
-            Dim processCategory As Int32 = Int32.Parse(currentTransLotsRow("ProductionCategory").ToString())
+            Dim isSpecialFlow As Integer = Integer.Parse(currentTransLotsRow("IsSpecialFlow").ToString())
+            Dim processCategory As Integer = Integer.Parse(currentTransLotsRow("ProductionCategory").ToString())
             Dim lotOISRank As String = currentTransLotsRow("LotOISRank").ToString().Trim()
+            Dim fullRank As String = currentTransLotsRow("fullRank").ToString().Trim()
             Dim SetupStatus As String
-
-            'Now is Special Flow then Is it GO/NG Sample Judge
-            If (String.IsNullOrEmpty(flowName)) Then
-                ShowErrorMessage("ไม่พบ Flow โปรดตรวจสอบที่ ATOM : [cellcon].[sp_get_current_trans_lots] <br/>")
-                Exit Sub
-            End If
 
             'Split Device from Rank ex. BD450M2FP3-CE2 to (0) = BD450M2FP3, (1) = CE2
             Dim splitNewDeviceName As String() = m_Data.DeviceName.Split("-"c)
+            Dim device_withoutRank As String
 
-            If m_Data.OISDevice <> splitNewDeviceName(0) Then
-                ShowErrorMessage("Lot Device = '" + splitNewDeviceName(0) + "' not match with OIS Device = '" + m_Data.OISDevice + "' โปรดตรวจสอบ Device ของ Lot และ OIS <br/>")
+            Select Case splitNewDeviceName.Length
+                Case 1
+                    device_withoutRank = splitNewDeviceName(0)
+                Case 2
+                    If splitNewDeviceName(1).Equals(fullRank) Then
+                        device_withoutRank = splitNewDeviceName(0)
+                    Else
+                        device_withoutRank = m_Data.DeviceName
+                    End If
+                Case 3
+                    If splitNewDeviceName(2).Equals(fullRank) Then
+                        device_withoutRank = splitNewDeviceName(0) + "-" + splitNewDeviceName(1)
+                    Else
+                        device_withoutRank = m_Data.DeviceName
+                    End If
+                Case 4
+                    If splitNewDeviceName(3).Equals(fullRank) Then
+                        device_withoutRank = splitNewDeviceName(0) + "-" + splitNewDeviceName(1) + "-" + splitNewDeviceName(2)
+                    Else
+                        device_withoutRank = m_Data.DeviceName
+                    End If
+                Case Else
+                    ShowErrorMessage("splitNewDeviceName.Length = '" + splitNewDeviceName.Length.ToString + "' โปรดติดต่อ SYSTEM <br/>")
+                    Exit Sub
+            End Select
+
+            If m_Data.OISDevice <> device_withoutRank Then
+                ShowErrorMessage("Lot Device = '" + device_withoutRank + "' not match with OIS Device = '" + m_Data.OISDevice + "' โปรดตรวจสอบ Device ของ Lot และ OIS <br/>")
                 Exit Sub
             End If
 
@@ -640,9 +663,6 @@ Public Class SetupConfirm
             Dim wordsFlow As String() = fileReaderFlow.Split(New String() {Environment.NewLine}, StringSplitOptions.None)
             Dim flowChecked As Boolean = True
 
-            'wordsFlow(0) = AUTO2ASISAMPLE
-            'wordsFlow(1) = AUTO3ASI
-            'is(wordsFlow(0,1,..) == AUTO2)?
             For index = 0 To wordsFlow.Length - 1
                 If wordsFlow(index).Equals(m_Data.TestFlow) Then
                     flowChecked = False

@@ -24,11 +24,11 @@ Public Class SetupStep2
         End If
 
         If Not IsPostBack Then
+            TesterTypetext.Text = m_Data.TesterType
             TesternoATextBox.Text = m_Data.TesterNoA
             TesternoBTextBox.Text = m_Data.TesterNoB
             TesternoCTextBox.Text = m_Data.TesterNoC
             TesternoDTextBox.Text = m_Data.TesterNoD
-            TesterTypetext.Text = m_Data.TesterType
 
             If m_Data.MCNo.StartsWith("FT") OrElse m_Data.MCNo.StartsWith("TP") Then
                 panelTesternoC.Style.Item("display") = "none"
@@ -66,12 +66,11 @@ Public Class SetupStep2
                 End If
 
                 TesternoATextBox.Text = m_Data.TesterNoA
-
                 Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
 
             End Using
         End If
-
+        UpdateSessionData()
     End Sub
 
     Protected Sub BTestnoTextBox_TextChanged(sender As Object, e As EventArgs) Handles TesternoBTextBox.TextChanged
@@ -94,12 +93,12 @@ Public Class SetupStep2
                 End If
 
                 TesternoBTextBox.Text = m_Data.TesterNoB
-
                 Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
 
             End Using
 
         End If
+        UpdateSessionData()
     End Sub
 
     Protected Sub CTestnoTextBox_TextChanged(sender As Object, e As EventArgs) Handles TesternoCTextBox.TextChanged
@@ -122,12 +121,12 @@ Public Class SetupStep2
                 End If
 
                 TesternoCTextBox.Text = m_Data.TesterNoC
-
                 Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
 
             End Using
 
         End If
+        UpdateSessionData()
     End Sub
 
     Protected Sub DTestnoTextBox_TextChanged(sender As Object, e As EventArgs) Handles TesternoDTextBox.TextChanged
@@ -148,12 +147,12 @@ Public Class SetupStep2
                 End If
 
                 TesternoDTextBox.Text = m_Data.TesterNoD
-
                 Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
 
             End Using
 
         End If
+        UpdateSessionData()
     End Sub
 
     Private Sub ButtonNext_Click(sender As Object, e As EventArgs) Handles ButtonNext.Click
@@ -251,6 +250,7 @@ Public Class SetupStep2
         TesternoBTextBox.BackColor = Drawing.Color.White
         TesternoCTextBox.BackColor = Drawing.Color.White
         TesternoDTextBox.BackColor = Drawing.Color.White
+        HideErrorMessage()
 
         Dim testerType As String = ""
 
@@ -310,10 +310,13 @@ Public Class SetupStep2
 
         If ret = True Then
             m_Data.TesterType = testerType
+            TesterTypetext.Text = m_Data.TesterType
             Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
+
+            HideErrorMessage()
         Else
             m_Data.TesterType = ""
-
+            TesterTypetext.Text = m_Data.TesterType
             Dim a As String = ">>> มี TesterType ไม่ตรงกัน กรุณาแสกนใหม่ <<< <br/>"
 
             For Each str As String In lstTesterType

@@ -25,7 +25,6 @@ Public Class SetupStep6
         End If
 
         If Not IsPostBack Then
-            ProgramNameTextBox.Text = m_Data.ProgramName
             TypechangepackageTextBox.Text = m_Data.TypeChangePackage
             QRcodeSocket1TextBox.Text = m_Data.QRCodesocket1
             QRcodeSocket2TextBox.Text = m_Data.QRCodesocket2

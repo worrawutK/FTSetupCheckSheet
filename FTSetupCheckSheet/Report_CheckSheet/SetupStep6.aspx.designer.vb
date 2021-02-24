@@ -14,15 +14,6 @@ Option Explicit On
 Partial Public Class SetupStep6
 
     '''<summary>
-    '''ProgramNameTextBox control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents ProgramNameTextBox As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
     '''TypechangepackageTextBox control.
     '''</summary>
     '''<remarks>

@@ -9,7 +9,7 @@
  <div class="container">  
       <div class="panel-group">
          <div class="panel panel-success">
-            <div class="panel-heading" style="font-style: inherit; font-weight: bold; color: #FFFFFF; background-color:black;text-align:center"> (1)&nbsp;&nbsp;&nbsp; INPUT&nbsp; QRCODE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+            <div class="panel-heading" style="font-style: inherit; font-weight: bold; color: #FFFFFF; background-color:black;text-align:center"> &nbsp;&nbsp;&nbsp; INPUT&nbsp; QRCODE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
             <asp:TextBox ID="QRcodeTextBox" runat="server" CssClass="form-control" AutoPostBack="True"></asp:TextBox><br />
 
             <div class="panel panel-danger" id="panelError" runat="server" style="display:none">

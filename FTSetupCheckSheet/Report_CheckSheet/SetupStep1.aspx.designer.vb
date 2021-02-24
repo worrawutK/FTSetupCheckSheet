@@ -41,6 +41,15 @@ Partial Public Class SetupStep1
     Protected WithEvents OISRankTextBox As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''ProgramNameTextBox control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents ProgramNameTextBox As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
     '''ButtonPrevious control.
     '''</summary>
     '''<remarks>

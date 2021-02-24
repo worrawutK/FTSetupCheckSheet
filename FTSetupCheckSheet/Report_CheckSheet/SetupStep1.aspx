@@ -7,26 +7,32 @@
     </div>  
     
 <div class="container">  
-     <div class="panel-group">
-       <div class="panel panel-success">
-          <div class="panel-heading" style="font-style: inherit; font-weight: bold; color:#ffffff; background-color:lightseagreen; text-align:center"> (2)&nbsp;&nbsp; INPUT QRCODE OIS</div>
-          <asp:TextBox ID="OISTextBox" runat="server" CssClass="form-control" AutoPostBack="True"></asp:TextBox>
-       </div><br />
+    <div class="panel-group">
+        <div class="panel panel-success">
+            <div class="panel-heading" style="font-style: inherit; font-weight: bold; color:#ffffff; background-color:lightseagreen; text-align:center"> (1)&nbsp;&nbsp; INPUT QRCODE OIS</div>
+            <asp:TextBox ID="OISTextBox" runat="server" CssClass="form-control" AutoPostBack="True"></asp:TextBox>
+        </div><br />
 
         <div class="form-group form-group-lg">
-              <label class="col-sm-2 control-label" for="lg">TEST FLOW</label>
-              <asp:TextBox ID="TestflowTextBox" runat="server" CssClass="form-control" AutoPostBack="True" ReadOnly="True"></asp:TextBox>
+            <label class="col-sm-2 control-label" for="lg">TEST FLOW</label>
+            <asp:TextBox ID="TestflowTextBox" runat="server" CssClass="form-control" AutoPostBack="True" ReadOnly="True"></asp:TextBox>
         </div><br />
 
-         <div class="form-group form-group-lg">
-              <label class="col-sm-2 control-label" for="lg">OIS RANK</label>
-              <asp:TextBox ID="OISRankTextBox" runat="server" CssClass="form-control" AutoPostBack="True" ReadOnly="True"></asp:TextBox>
+        <div class="form-group form-group-lg">
+            <label class="col-sm-2 control-label" for="lg">OIS RANK</label>
+            <asp:TextBox ID="OISRankTextBox" runat="server" CssClass="form-control" AutoPostBack="True" ReadOnly="True"></asp:TextBox>
         </div><br />
 
-          <asp:Button ID="ButtonPrevious" CssClass="btn btn-default pull-left" runat="server" Text="Previous" BorderColor="Black" BorderStyle="Groove" BorderWidth="2px" />
-          <asp:Button ID="ButtonNext" CssClass="btn btn-default pull-right" runat="server" Text="Next" BorderColor="Black" BorderStyle="Groove" BorderWidth="2px" />
-		  <asp:Button ID="ButtonSkip" CssClass="btn btn-default pull-right" runat="server" Text="Old Equipment" BorderColor="Black" BorderStyle="Groove" BorderWidth="2px" /><br />
+        <div class="form-group form-group-lg">
+            <label class="col-sm-2 control-label" for="lg">PROGRAM NAME</label>
+            <asp:TextBox ID="ProgramNameTextBox" runat="server" CssClass="form-control" AutoPostBack="True" ReadOnly="True"></asp:TextBox>
+        </div><br />
+        
+        <asp:Button ID="ButtonPrevious" CssClass="btn btn-default pull-left" runat="server" Text="Previous" BorderColor="Black" BorderStyle="Groove" BorderWidth="2px" />
+        <asp:Button ID="ButtonNext" CssClass="btn btn-default pull-right" runat="server" Text="Next" BorderColor="Black" BorderStyle="Groove" BorderWidth="2px" />
+		<asp:Button ID="ButtonSkip" CssClass="btn btn-default pull-right" runat="server" Text="Old Equipment" BorderColor="Black" BorderStyle="Groove" BorderWidth="2px" /><br />
 
-         </div>
-     </div><br />
+    </div>
+</div><br />
+
 </asp:Content>
