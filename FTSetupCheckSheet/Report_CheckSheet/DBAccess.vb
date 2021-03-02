@@ -1,4 +1,6 @@
 ﻿Imports System.Data.SqlClient
+Imports iLibrary
+Imports Rohm.Common.Logging
 
 Public Class DBAccess
 
@@ -344,6 +346,18 @@ Public Class DBAccess
 
         Return tbl
 
+    End Function
+
+    Friend Shared Function GetProgramName(lotId As Integer, mcId As Integer) As String
+        Dim iLibrary As ApcsProService = New ApcsProService()
+        Dim getRecipe As GetRecipeResult = iLibrary.Get_Recipe(lotId, mcId, New Logger(), Now)
+        Dim programName As String = ""
+
+        If getRecipe.IsPass Then
+            programName = getRecipe.Recipe1
+        End If
+
+        Return programName
     End Function
 
     Public Shared Function SetSpecialFlow(lotId As Int32, stepNo As Int32, backStepNo As Int32, userId As Int32, flowPatternId As Int32, isSpecialFlow As Int32) As Integer

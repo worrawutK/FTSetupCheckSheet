@@ -84,7 +84,7 @@ Public Class SetupConfirm
             Exit Sub
         End If
 
-        m_Data.PackageName = currentTransLotsRow("Package").ToString().Trim()
+        m_Data.PackageName = currentTransLotsRow("PackageShortname").ToString().Trim()
         m_Data.DeviceName = currentTransLotsRow("Device").ToString().Trim()
 
         DeviceNameTextBox.Text = m_Data.DeviceName
