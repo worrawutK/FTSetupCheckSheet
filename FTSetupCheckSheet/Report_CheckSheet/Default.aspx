@@ -32,7 +32,7 @@
         <h2 class="text-center login-title" style="font-family: 'Waffle Regular'; font-weight: bold; margin-top: 0px; margin-bottom: 20px;">FL-FT-TP PROCESS</h2>
          <p class="text-center login-title" style="font-family: 'Waffle Regular'; font-weight: bold; margin-top: 0px; margin-bottom: 10px; font-size:55px;" >セットアップチェックシート</p>
         <h2 class="text-center login-title" style="font-family: 'Waffle Regular'; font-weight: bold; margin-top: 0px; margin-bottom: 20px;" >FL-FT-TP プロセス</h2>
-        <h3 class="text-center login-title" style="font-family: 'Waffle Regular'; font-weight: bold; margin-top: 0px; margin-bottom: 0px;" >Release Date: 2021/02/24</h3>
+        <h3 class="text-center login-title" style="font-family: 'Waffle Regular'; font-weight: bold; margin-top: 0px; margin-bottom: 0px;" >Release Date: 2021/03/03</h3>
     </div>
 
     <div class="row">

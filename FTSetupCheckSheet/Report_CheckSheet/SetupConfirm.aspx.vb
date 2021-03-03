@@ -351,21 +351,45 @@ Public Class SetupConfirm
             Exit Sub
         End If
 
-        'get BOM's main record without machine
-        Dim bomTbl As DataTable
+        Dim testerType As String
+        Dim bomTbl As DataTable = New DataTable()
+
+        'loop get Common TesterType
+        Dim testerCommon As DataTable
         Try
-            bomTbl = DBAccess.GetBOM(m_Data.DeviceName, m_Data.PackageName, m_Data.TestFlow, m_Data.TesterType, pcMain)
+            testerCommon = DBAccess.GetTesterTypeCommon(m_Data.TesterType)
+
+            If testerCommon.Rows.Count = 0 Then
+                ShowErrorMessage(String.Format("TesterTypeCommon not found <br/> TesterType:={0}<br/>", m_Data.TesterType))
+                Exit Sub
+            Else
+                For index = 0 To testerCommon.Rows.Count - 1
+                    testerType = testerCommon.Rows(index)("BomTesterType").ToString()
+
+                    Try
+                        bomTbl = DBAccess.GetBOM(m_Data.DeviceName, m_Data.PackageName, m_Data.TestFlow, testerType, pcMain)
+                    Catch ex As Exception
+                        ShowErrorMessage("Failed to get BOM :" & ex.Message)
+                        Exit Sub
+                    End Try
+
+                    If bomTbl.Rows.Count <> 0 Then
+                        Exit For
+                    End If
+                Next
+
+                If bomTbl.Rows.Count = 0 Then
+                    ShowErrorMessage(String.Format("BOM not found <br/> Device:={0}<br/> Package:={1}<br/> TestFlow:={2}<br/> TesterType:={3}<br/> PCMain:={4}",
+                                                    m_Data.DeviceName, m_Data.PackageName, m_Data.TestFlow, m_Data.TesterType, pcMain))
+                    Exit Sub
+                End If
+
+            End If
+
         Catch ex As Exception
-            ShowErrorMessage("Failed to get BOM :" & ex.Message)
+            ShowErrorMessage("Failed to get testerTypeCommon :" & ex.Message)
             Exit Sub
         End Try
-
-        If bomTbl.Rows.Count = 0 Then
-            'show error message
-            ShowErrorMessage(String.Format("BOM not found <br/> Device:={0}<br/> Package:={1}<br/> TestFlow:={2}<br/> TesterType:={3}<br/> PCMain:={4}",
-                m_Data.DeviceName, m_Data.PackageName, m_Data.TestFlow, m_Data.TesterType, pcMain))
-            Exit Sub
-        End If
 
         Dim bomId As Integer = -1
         Dim bomPcMachineType As String = ""

@@ -348,6 +348,29 @@ Public Class DBAccess
 
     End Function
 
+    Friend Shared Function GetTesterTypeCommon(testerType As String) As DataTable
+
+        Dim tbl = New DataTable()
+
+        Using connection As New SqlConnection(My.Settings.SPConnectionString)
+            connection.Open()
+
+            Using cmd As New SqlCommand
+                cmd.Connection = connection
+                cmd.CommandType = CommandType.StoredProcedure
+                cmd.CommandText = "[dbo].[sp_get_setupchecksheet_gettestertypecommon]"
+                cmd.Parameters.Add("@testerType", SqlDbType.VarChar, 50).Value = testerType
+
+                tbl.Load(cmd.ExecuteReader())
+
+                connection.Close()
+            End Using
+        End Using
+
+        Return tbl
+
+    End Function
+
     Friend Shared Function GetProgramName(lotId As Integer, mcId As Integer) As String
         Dim iLibrary As ApcsProService = New ApcsProService()
         Dim getRecipe As GetRecipeResult = iLibrary.Get_Recipe(lotId, mcId, New Logger(), Now)
