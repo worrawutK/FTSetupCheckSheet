@@ -256,14 +256,15 @@ Public Class SetupStep2
         TesternoDTextBox.BackColor = Drawing.Color.White
         HideErrorMessage()
 
-        Dim testerType As String = ""
+        Dim testerType() As String = {"", "", "", ""}
+        Dim int As Integer = 0
+        Dim tester As String = ""
 
         If Not String.IsNullOrWhiteSpace(m_Data.TesterNoAQRcode) Then
             Dim dt As DataTable = DBAccess.GetTesterTypebyQRCode(m_Data.TesterNoAQRcode)
             If dt.Rows.Count = 1 Then
                 Dim row As DataRow = dt.Rows(0)
-                testerType = row("TesterType").ToString()
-                lstTesterType.Add(" - Tester A : " + row("TesterType").ToString())
+                testerType(0) = row("TesterType").ToString()
             End If
         End If
 
@@ -271,14 +272,7 @@ Public Class SetupStep2
             Dim dt As DataTable = DBAccess.GetTesterTypebyQRCode(m_Data.TesterNoBQRcode)
             If dt.Rows.Count = 1 Then
                 Dim row As DataRow = dt.Rows(0)
-                If String.IsNullOrWhiteSpace(testerType) Then
-                    testerType = row("TesterType").ToString()
-                Else
-                    If Not testerType = row("TesterType").ToString() Then
-                        ret = False
-                    End If
-                End If
-                lstTesterType.Add(" - Tester B : " + row("TesterType").ToString())
+                testerType(1) = row("TesterType").ToString()
             End If
         End If
 
@@ -286,14 +280,7 @@ Public Class SetupStep2
             Dim dt As DataTable = DBAccess.GetTesterTypebyQRCode(m_Data.TesterNoCQRcode)
             If dt.Rows.Count = 1 Then
                 Dim row As DataRow = dt.Rows(0)
-                If String.IsNullOrWhiteSpace(testerType) Then
-                    testerType = row("TesterType").ToString()
-                Else
-                    If Not testerType = row("TesterType").ToString() Then
-                        ret = False
-                    End If
-                End If
-                lstTesterType.Add(" - Tester C : " + row("TesterType").ToString())
+                testerType(2) = row("TesterType").ToString()
             End If
         End If
 
@@ -301,36 +288,70 @@ Public Class SetupStep2
             Dim dt As DataTable = DBAccess.GetTesterTypebyQRCode(m_Data.TesterNoDQRcode)
             If dt.Rows.Count = 1 Then
                 Dim row As DataRow = dt.Rows(0)
-                If String.IsNullOrWhiteSpace(testerType) Then
-                    testerType = row("TesterType").ToString()
-                Else
-                    If Not testerType = row("TesterType").ToString() Then
-                        ret = False
-                    End If
-                End If
-                lstTesterType.Add(" - Tester D : " + row("TesterType").ToString())
+                testerType(3) = row("TesterType").ToString()
             End If
         End If
 
-        If ret = True Then
-            m_Data.TesterType = testerType
-            TesterTypetext.Text = m_Data.TesterType
-            Session(SESSION_KEY_NEW_DATA_SETUP) = m_Data
-
-            HideErrorMessage()
-        Else
-            m_Data.TesterType = ""
-            TesterTypetext.Text = m_Data.TesterType
-            Dim a As String = ">>> มี TesterType ไม่ตรงกัน กรุณาแสกนใหม่ <<< <br/>"
-
-            For Each str As String In lstTesterType
-                a = a & str & "<br/>"
-            Next
-
-            ShowErrorMessage(a)
+        If testerType(0) = "" And testerType(1) = "" And testerType(2) = "" And testerType(3) = "" Then
+            ret = False
+            TesterTypetext.Text = ""
+            ShowErrorMessage("ไม่พบ TesterType กรุณาแสกนใหม่อีกครั้ง")
+            Return ret
         End If
 
+        For i = 0 To testerType.Length - 1
+            If testerType(i) = "" Then
+                testerType(i) = "%"
+            Else
+                tester = testerType(i)
+                int += 1
+            End If
+        Next
+
+        If int = 1 Then
+            m_Data.TesterType = tester
+        Else
+            Dim testerCommon As DataTable
+            Try
+                testerCommon = DBAccess.GetTesterTypeCommon(testerType(0), testerType(1), testerType(2), testerType(3))
+
+                If testerCommon.Rows.Count = 0 Then
+
+                    m_Data.TesterType = ""
+
+                    If m_Data.MCNo.StartsWith("FT") OrElse m_Data.MCNo.StartsWith("TP") Then
+                        ShowErrorMessage(String.Format("TesterTypeCommon not found <br/> TesterType A:={0}<br/> TesterType B:={1}<br/>", testerType(0), testerType(1)))
+                    Else
+                        ShowErrorMessage(String.Format("TesterTypeCommon not found <br/> TesterType A:={0}<br/> TesterType B:={1}<br/> TesterType C:={2}<br/> TesterType D:={3}<br/>",
+                                                                                         testerType(0), testerType(1), testerType(2), testerType(3)))
+                    End If
+
+                    ret = False
+                ElseIf testerCommon.Rows.Count = 1 Then
+                    m_Data.TesterType = testerCommon.Rows(0)("BomTesterType").ToString()
+
+                Else
+                    m_Data.TesterType = ""
+
+                    Dim a As String = ">>> พบ TesterTypeCommon " + testerCommon.Rows.Count.ToString() + " rows กรุณาติดต่อ SYSTEM <<< <br/>"
+
+                    For i = 0 To testerCommon.Rows.Count - 1
+                        a = a & testerCommon.Rows(i)("BomTesterType").ToString() & "<br/>"
+                    Next
+
+                    ret = False
+                End If
+
+            Catch ex As Exception
+                ShowErrorMessage("Failed to get testerTypeCommon[SetupStep2] :" & ex.Message)
+            End Try
+
+        End If
+
+        TesterTypetext.Text = m_Data.TesterType
+
         Return ret
+
     End Function
 
     'Private Function TesterNoIsDuplicated() As Boolean

@@ -387,7 +387,7 @@ Public Class SetupConfirm
             End If
 
         Catch ex As Exception
-            ShowErrorMessage("Failed to get testerTypeCommon :" & ex.Message)
+            ShowErrorMessage("Failed to get testerTypeCommon[SetupConfirm] :" & ex.Message)
             Exit Sub
         End Try
 

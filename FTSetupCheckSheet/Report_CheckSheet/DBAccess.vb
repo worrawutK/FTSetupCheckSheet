@@ -348,7 +348,7 @@ Public Class DBAccess
 
     End Function
 
-    Friend Shared Function GetTesterTypeCommon(testerType As String) As DataTable
+    Friend Shared Function GetTesterTypeCommon(testerType As String, Optional testerType2 As String = "%", Optional testerType3 As String = "%", Optional testerType4 As String = "%") As DataTable
 
         Dim tbl = New DataTable()
 
@@ -360,6 +360,9 @@ Public Class DBAccess
                 cmd.CommandType = CommandType.StoredProcedure
                 cmd.CommandText = "[dbo].[sp_get_setupchecksheet_gettestertypecommon]"
                 cmd.Parameters.Add("@testerType", SqlDbType.VarChar, 50).Value = testerType
+                cmd.Parameters.Add("@testerType2", SqlDbType.VarChar, 50).Value = testerType2
+                cmd.Parameters.Add("@testerType3", SqlDbType.VarChar, 50).Value = testerType3
+                cmd.Parameters.Add("@testerType4", SqlDbType.VarChar, 50).Value = testerType4
 
                 tbl.Load(cmd.ExecuteReader())
 
